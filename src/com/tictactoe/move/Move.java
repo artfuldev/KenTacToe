@@ -23,4 +23,12 @@ public class Move {
 	public Table getTableNext() {
 		return tableNext;
 	}
+	public Table makeMove()
+	{
+		return tableNext;
+	}
+	public Table unmakeMove()
+	{
+		return tableCurrent;
+	}
 }

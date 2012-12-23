@@ -15,6 +15,7 @@ public class Main {
 		Game ticTacToe=new Game(userName);
 		ticTacToe.init();
 		ticTacToe.play();
+		inputStream.close();
 	}
 
 }

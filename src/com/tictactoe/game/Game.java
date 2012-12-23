@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.tictactoe.player.*;
 import com.tictactoe.search.*;
 import com.tictactoe.table.*;
+import com.tictactoe.move.*;
 
 public class Game {
 	private Table gameGrid;
@@ -12,7 +13,7 @@ public class Game {
 	private Player playerTwo;
 	private Player currentPlayer;
 	private Search currentSearch;
-	private boolean gameOver;
+	private boolean gameOver=false;
 	public Game()
 	{
 		gameGrid=new Table(3,3);
@@ -48,24 +49,38 @@ public class Game {
 	public void getInput()
 	{
 		int index=0;
+		@SuppressWarnings("unused")
+		Move moveToMake;
+		@SuppressWarnings("resource")
 		Scanner inputStream=new Scanner(System.in);
-		do{
+//		if(currentPlayer.getPlayerType()=="AI")
+//		{
+//			currentSearch=new Search(gameGrid,currentPlayer);
+//			moveToMake=currentSearch.getBestMove();
+//			gameGrid=moveToMake.getTableNext();
+//		}
+//		else
+		{
 			do{
-				System.out.println("Enter the index of the table you want to sign, "+currentPlayer.getPlayerName()+":");
-				index=inputStream.nextInt();
-			}while((index<0)||(index>9));
-		}while(!gameGrid.isEmpty(index));
-		gameGrid.updateTable(index, currentPlayer.getPlayerSign());
+				do{
+					System.out.println("Enter the index of the table you want to sign, "+currentPlayer.getPlayerName()+":");
+					index=inputStream.nextInt();
+				}while((index<0)||(index>9));
+			}while(!gameGrid.isEmpty(index));
+			gameGrid.updateTable(index, currentPlayer.getPlayerSign());
+		}
 		if(currentPlayer==playerOne)
 			currentPlayer=playerTwo;
 		else
 			currentPlayer=playerOne;
 		System.out.println("Grid updated...");
 		gameGrid.printTable();
+		if(gameGrid.isComplete()!=-1)
+			gameOver=true;
 	}
 	public void play()
 	{
-		for(int i=0;i<9;i++)
+		for(int i=0;((gameOver==false)&&(i<9));i++)
 			getInput();
 	}
 }

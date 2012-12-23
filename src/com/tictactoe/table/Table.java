@@ -230,6 +230,7 @@ public class Table {
 	private int noOfRows;
 	private int noOfCols;
 	private int sizeOfTable;//=rows=cols
+	private float score=0;
 	public Table()
 	{
 		System.exit(0);
@@ -307,5 +308,12 @@ public class Table {
 		if(getRow(rowIndex).getCell(colIndex).getValue()=='-')
 			return true;
 		return false;
+	}
+	public float getScore() {
+		//calculate score
+		return score;
+	}
+	public void setScore(float score) {
+		this.score = score;
 	}
 }
