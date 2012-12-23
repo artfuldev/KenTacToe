@@ -300,4 +300,12 @@ public class Table {
 				return cols[i].isComplete();
 		return -1;	
 	}
+	public boolean isEmpty(int index)
+	{
+		int rowIndex=(index-1)/3;
+		int colIndex=(index+2)%3;
+		if(getRow(rowIndex).getCell(colIndex).getValue()=='-')
+			return true;
+		return false;
+	}
 }

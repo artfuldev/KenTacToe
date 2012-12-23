@@ -19,6 +19,18 @@ public class Search {
 		this.currentState=new Table();
 		setCurrentState(currentState);
 	}
+	public Search(Table currentState,int searchDepth)
+	{
+		this.currentState=new Table();
+		setCurrentState(currentState);
+		setSearchDepth(searchDepth);
+	}
+	public Search(Table currentState,float time)
+	{
+		this.currentState=new Table();
+		setCurrentState(currentState);
+		setTime(time);
+	}
 	public Table getCurrentState() {
 		return currentState;
 	}

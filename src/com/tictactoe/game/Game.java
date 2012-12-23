@@ -1,5 +1,7 @@
 package com.tictactoe.game;
 
+import java.util.Scanner;
+
 import com.tictactoe.player.*;
 import com.tictactoe.search.*;
 import com.tictactoe.table.*;
@@ -8,7 +10,9 @@ public class Game {
 	private Table gameGrid;
 	private Player playerOne;
 	private Player playerTwo;
+	private Player currentPlayer;
 	private Search currentSearch;
+	private boolean gameOver;
 	public Game()
 	{
 		gameGrid=new Table(3,3);
@@ -37,7 +41,31 @@ public class Game {
 	{
 		System.out.println("Game Initialized...");
 		gameGrid.printTable();
-		System.out.println(playerOne.getPlayerName()+playerOne.getPlayerSign());
-		System.out.println(playerTwo.getPlayerName()+playerTwo.getPlayerSign());
+		System.out.println(playerOne.getPlayerName()+" "+playerOne.getPlayerSign());
+		System.out.println(playerTwo.getPlayerName()+" "+playerTwo.getPlayerSign());
+		currentPlayer=playerOne;
+	}
+	public void getInput()
+	{
+		int index=0;
+		Scanner inputStream=new Scanner(System.in);
+		do{
+			do{
+				System.out.println("Enter the index of the table you want to sign, "+currentPlayer.getPlayerName()+":");
+				index=inputStream.nextInt();
+			}while((index<0)||(index>9));
+		}while(!gameGrid.isEmpty(index));
+		gameGrid.updateTable(index, currentPlayer.getPlayerSign());
+		if(currentPlayer==playerOne)
+			currentPlayer=playerTwo;
+		else
+			currentPlayer=playerOne;
+		System.out.println("Grid updated...");
+		gameGrid.printTable();
+	}
+	public void play()
+	{
+		for(int i=0;i<9;i++)
+			getInput();
 	}
 }
