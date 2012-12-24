@@ -53,13 +53,13 @@ public class Game {
 		Move moveToMake;
 		@SuppressWarnings("resource")
 		Scanner inputStream=new Scanner(System.in);
-//		if(currentPlayer.getPlayerType()=="AI")
-//		{
-//			currentSearch=new Search(gameGrid,currentPlayer);
-//			moveToMake=currentSearch.getBestMove();
-//			gameGrid=moveToMake.getTableNext();
-//		}
-//		else
+		if(currentPlayer.getPlayerType()=="AI")
+		{
+			currentSearch=new Search(gameGrid,currentPlayer);
+			moveToMake=currentSearch.getBestMove();
+			gameGrid=moveToMake.getTableNext();
+		}
+		else
 		{
 			do{
 				do{

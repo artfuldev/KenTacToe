@@ -309,7 +309,50 @@ public class Table {
 			return true;
 		return false;
 	}
+	private int getNoOfXs()
+	{
+		int rowIndex,colIndex,returnValue=0;
+		for(int i=0;i<9;i++)
+		{
+			rowIndex=(i-1)/3;
+			colIndex=(i+2)%3;
+			if(getRow(rowIndex).getCell(colIndex).getValue()=='X')
+				returnValue++;
+		}
+		return returnValue;
+	}
+	private int getNoOfOs()
+	{
+		int rowIndex,colIndex,returnValue=0;
+		for(int i=0;i<9;i++)
+		{
+			rowIndex=(i-1)/3;
+			colIndex=(i+2)%3;
+			if((getRow(rowIndex).getCell(colIndex).getValue()!='X')&&(getRow(rowIndex).getCell(colIndex).getValue()!='-'))
+				returnValue++;
+		}
+		return returnValue;
+	}
+	private int getNoOfDs()
+	{
+		int rowIndex,colIndex,returnValue=0;
+		for(int i=0;i<9;i++)
+		{
+			rowIndex=(i-1)/3;
+			colIndex=(i+2)%3;
+			if(getRow(rowIndex).getCell(colIndex).getValue()=='-')
+				returnValue++;
+		}
+		return returnValue;
+	}
 	public float getScore() {
+		score+=(0.2*getNoOfOs());
+		score-=(0.3*getNoOfXs());
+		score-=(0.5*getNoOfDs());
+		if(isComplete()==0)
+			score+=9;
+		if(isComplete()==1)
+			score-=9;
 		//calculate score
 		return score;
 	}
