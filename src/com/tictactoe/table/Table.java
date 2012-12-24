@@ -19,8 +19,19 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 */
 	public class Cell implements Cloneable{
+		/**
+		 * Represents the value of the cell.
+		 * Represents a character.
+		 * Usually will be set to '-'(empty cell),'X'(user),OR 'O' or 'P'(AI)
+		 */
 		private char value;
+		/**
+		 * Holds the row index of the cell in the parent table.
+		 */
 		private int rowIndex;
+		/**
+		 * Holds the column index of the cell in the parent table.
+		 */
 		private int colIndex;
 		/**
 		 * Constructor of Cell.
@@ -109,6 +120,10 @@ public class Table implements Cloneable{
 		{
 			this.value=value;
 		}
+		/**
+		 * Clone method, which overrides Object clone(), is used in place of a copy constructor
+		 * @return Clone of the specified cell if possible, else <code>null</code>
+		 */
 		public Cell clone()
 		{
 			try {
@@ -129,7 +144,14 @@ public class Table implements Cloneable{
 	 *
 	 */
 	public class Col implements Cloneable{
+		/**
+		 * An array of type <code>Cell</code>.
+		 * Holds the cells of the column, row-wise
+		 */
 		private Cell cells[];
+		/**
+		 * Holds the column index of the colummn in its parent table.
+		 */
 		private int colIndex;
 		/**
 		 * Default constructor of class
@@ -166,7 +188,6 @@ public class Table implements Cloneable{
 		public int getColIndex() {
 			return colIndex;
 		}
-
 		/**
 		 * <code>getTable()</code> is used to get the parent <code>Table</code> of the column.
 		 * It returns a reference of type <code>Table</code>, which is the class which represents tables.
@@ -209,6 +230,10 @@ public class Table implements Cloneable{
 		public void setColIndex(int colIndex) {
 			this.colIndex = colIndex;
 		}
+		/**
+		 * Clone method, which overrides Object clone(), is used in place of a copy constructor
+		 * @return Clone of the specified column if possible, else <code>null</code>
+		 */
 		public Col clone()
 		{
 			try {
@@ -231,6 +256,10 @@ public class Table implements Cloneable{
 	 *
 	 */
 	public class Diag implements Cloneable{
+		/**
+		 * An array of type <code>Cell</code>.
+		 * Holds the cells of the diagonal, row-wise
+		 */
 		private Cell cells[];
 		/**
 		 * Default constructor of the <code>Diag</code> class
@@ -258,6 +287,12 @@ public class Table implements Cloneable{
 		{
 			return cells;
 		}
+		/**
+		 * This method is used to check if the diagonal is complete,
+		 * (i.e.) filled with the same characters.
+		 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
+		 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
+		 */
 		public int isComplete()
 		{
 			if(cells[0].getValue()!='-')
@@ -278,13 +313,27 @@ public class Table implements Cloneable{
 			}
 			return -1;	
 		}
+		/**
+		 * <code>getTable()</code> is used to get the parent <code>Table</code> of the diagonal.
+		 * It returns a reference of type <code>Table</code>, which is the class which represents tables.
+		 * @return	Table(parent) of the diagonal
+		 */
 		public Table getTable()
 		{
 			return Table.this;
 		}
+		/**
+		 * Generic setter method to set the cell of an index of a diagonal of the table
+		 * @param i index of the cell in the diagonal
+		 * @param cell Cell to be set
+		 */
 		public void setCell(int i, Cell cell) {
 			cells[i]=cell;
 		}
+		/**
+		 * Clone method, which overrides Object clone(), is used in place of a copy constructor
+		 * @return Clone of the specified diagonal if possible, else <code>null</code>
+		 */
 		public Diag clone()
 		{
 			try {
@@ -307,29 +356,64 @@ public class Table implements Cloneable{
 	 *
 	 */
 	public class Row implements Cloneable{
+		/**
+		 * An array of type <code>Cell</code>.
+		 * Holds the cells of the row, column-wise
+		 */
 		private Cell cells[];
+		/**
+		 * Holds the column index of the row in its parent table.
+		 */
 		private int rowIndex;
+		/**
+		 * Default constructor of the <code>Row</code> class
+		 */
 		public Row()
 		{
 			cells=new Cell[noOfCols];
 			for(int i=0;i<noOfCols;i++)
 				cells[i]=new Cell();
 		}
+		/**
+		 * This method is used to get a specific cell of a row(i) using its column index.
+		 * @param colIndex (j)
+		 * @return Cell of the particular column index(j) in the row(i),
+		 * (i.e.)Cell[i][j] of Table
+		 */
 		public Cell getCell(int colIndex)
 		{
 			return cells[colIndex];
 		}
+		/**
+		 * This method is used to get all the cells of the particular row.
+		 * @return All cells of the row
+		 */
 		public Cell[] getCells()
 		{
 			return cells;
 		}
+		/**
+		 * This method is used to get the row index of the row in table it pertains to.
+		 * @return Row index
+		 */
 		public int getRowIndex() {
 			return rowIndex;
 		}
+		/**
+		 * <code>getTable()</code> is used to get the parent <code>Table</code> of the row.
+		 * It returns a reference of type <code>Table</code>, which is the class which represents tables.
+		 * @return	Table(parent) of the row
+		 */
 		public Table getTable()
 		{
 			return Table.this;
 		}
+		/**
+		 * This method is used to check if the row is complete,
+		 * (i.e.) filled with the same characters.
+		 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
+		 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
+		 */
 		public int isComplete()
 		{
 			if(cells[0].getValue()!='-')
@@ -350,9 +434,17 @@ public class Table implements Cloneable{
 			}
 			return -1;	
 		}
+		/**
+		 * Generic setter method to set row index of the row of the table
+		 * @param rowIndex
+		 */
 		public void setRowIndex(int rowIndex) {
 			this.rowIndex = rowIndex;
 		}
+		/**
+		 * Clone method, which overrides Object clone(), is used in place of a copy constructor
+		 * @return Clone of the specified row if possible, else <code>null</code>
+		 */
 		public Row clone()
 		{
 			try {
@@ -366,17 +458,55 @@ public class Table implements Cloneable{
 			return null;
 		}
 	}
+	/**
+	 * An array of type <code>Row</code>.
+	 * Holds the rows of the table, column-wise.
+	 */
 	private Row rows[];
+	/**
+	 * An array of type <code>Col</code>.
+	 * Holds the columns of the table, row-wise.
+	 */
 	private Col cols[];
+	/**
+	 * An array of type <code>Diag</code>.
+	 * Holds the diagonals of the table, row-wise.
+	 */
 	private Diag diags[];
+	/**
+	 * Holds the number of rows of the table at any time.
+	 */
 	private int noOfRows;
+	/**
+	 * Holds the number of columns of the table at any time.
+	 */
 	private int noOfCols;
+	/**
+	 * Holds the number of (rows AND cols) of the table at any time.
+	 * Set to 0 if the number of rows and columns are not equal.
+	 */
 	private int sizeOfTable;//=rows=cols
+	/**
+	 * Represents the score of the table in a float value.
+	 */
 	private float score=0;
+	/**
+	 * Default Constructor of <code>Table</code> class.
+	 * Made to exit the program to prevent accidental debug errors.
+	 * Never used, simply defined to define other constructors.
+	 */
 	public Table()
 	{
 		System.exit(0);
 	}
+	/**
+	 * This is the constructor of class <code>Table</code> which is used in the program.
+	 * It takes two parameters which may not be equal and constructs a table with the specified number of rows and columns and sets proper references
+	 * to the cells of the table so that they can be accessed both by the <code>Row</code> objects and <code>Col</code> objects of the <code>Table</code> object.
+	 * Also, the constructor calls the <code>init()</code> function of the <code>Table</code> class, to initialize the <code>Table</code>.
+	 * @param noOfRows The number of rows in the table to be created.
+	 * @param noOfCols The number of columns in the table to be created.
+	 */
 	public Table(int noOfRows,int noOfCols)
 	{
 		this.noOfRows=noOfRows;
@@ -396,18 +526,42 @@ public class Table implements Cloneable{
 		diags[1]=new Diag();
 		init();
 	}
+	/**
+	 * This method is used to obtain the cells of a specific column of the table using its column index.
+	 * @param colIndex Index of the column in the table
+	 * @return Array of type <code>Cell</code> of the specified column of the table
+	 */
 	public Col getCol(int colIndex) {
 		return cols[colIndex];
 	}
+	/**
+	 * Generic get method to get the number of columns of the <code>Table</code>.
+	 * Almost never used.
+	 * @return The number of columns of the <code>Table</code>.
+	 */
 	public int getNoOfCols() {
 		return noOfCols;
 	}
+	/**
+	 * Generic get method to get the number of rows of the <code>Table</code>.
+	 * Almost never used.
+	 * @return The number of rows of the <code>Table</code>.
+	 */
 	public int getNoOfRows() {
 		return noOfRows;
 	}
+	/**
+	 * This method is used to obtain the cells of a specific row of the table using its column index.
+	 * @param rowIndex Index of the row in the table
+	 * @return Array of type <code>Cell</code> of the specified row of the table
+	 */
 	public Row getRow(int rowIndex) {
 		return rows[rowIndex];
 	}
+	/**
+	 * This method is used to initialize the </code>Table</code>.
+	 * References are set properly here.
+	 */
 	public void init()
 	{
 		for(int i=0;i<this.noOfRows;i++)
@@ -423,6 +577,10 @@ public class Table implements Cloneable{
 					diags[1].setCell(i,getRow(i).getCell(j));
 			}
 	}
+	/**
+	 * This method is used to print the <code>Table</code>, either for debugging or display purposes.
+	 * The printing is in the form of a matrix of the no. of rows and columns as of the table used.
+	 */
 	public void printTable()
 	{
 		for(int i=0;i<noOfRows;i++)
@@ -432,12 +590,23 @@ public class Table implements Cloneable{
 			System.out.println();
 		}
 	}
+	/**
+	 * This method is used to update a specific cell of the table with a specific value(character)
+	 * @param index Index of the cell of the table to be updated, can take values between 1 and 9.
+	 * @param updateChar Character to be updated in the specified <code>Cell</code>'s value data member.
+	 */
 	public void updateTable(int index, char updateChar)
 	{
 		int rowIndex=(index-1)/3;
 		int colIndex=(index+2)%3;
 		getRow(rowIndex).getCell(colIndex).setValue(updateChar);
 	}
+	/**
+	 * This method is used to check if the table is complete,
+	 * (i.e.) if any rows, columns or diagonals are filled with the same characters.
+	 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
+	 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
+	 */
 	public int isComplete()
 	{
 		for(int i=0;i<2;i++)
@@ -451,6 +620,11 @@ public class Table implements Cloneable{
 				return cols[i].isComplete();
 		return -1;	
 	}
+	/**
+	 * This method is used to check if a given cell of a table is empty.
+	 * @param index Index of the cell of the table, can take values from 1 to 9.
+	 * @return <code>True</code> if the specified <code>Cell</code> is empty, <code>False</code> otherwise.
+	 */
 	public boolean isEmpty(int index)
 	{
 		int rowIndex=(index-1)/3;
@@ -459,6 +633,12 @@ public class Table implements Cloneable{
 			return true;
 		return false;
 	}
+	/**
+	 * This method is used to get the total number of 'X's in the table.
+	 * Used in calculation of score.
+	 * Made private because it has no need elsewhere. 
+	 * @return The total number of 'X's in the table.
+	 */
 	private int getNoOfXs()
 	{
 		int rowIndex,colIndex,returnValue=0;
@@ -471,6 +651,12 @@ public class Table implements Cloneable{
 		}
 		return returnValue;
 	}
+	/**
+	 * This method is used to get the total number of 'O's or 'P's in the table.
+	 * Used in calculation of score.
+	 * Made private because it has no need elsewhere. 
+	 * @return The total number of 'O's or 'P's in the table.
+	 */
 	private int getNoOfOs()
 	{
 		int rowIndex,colIndex,returnValue=0;
@@ -483,18 +669,27 @@ public class Table implements Cloneable{
 		}
 		return returnValue;
 	}
+	/**
+	 * This method is used to get the total number of blank cells in the table.
+	 * Used in calculation of score, and in the generation of next possible moves. 
+	 * @return The total number of blank cells in the table.
+	 */
 	public int getNoOfDs()
 	{
-		int rowIndex,colIndex,returnValue=0;
+		int returnValue=0;
 		for(int i=0;i<9;i++)
 		{
-			rowIndex=(i-1)/3;
-			colIndex=(i+2)%3;
-			if(getRow(rowIndex).getCell(colIndex).getValue()=='-')
+			if(isEmpty(i+1))
 				returnValue++;
 		}
 		return returnValue;
 	}
+	/**
+	 * This method is used to get the score of the current Table.
+	 * The score calculation is made here.
+	 * **This implementation may be changed in the future.
+	 * @return Score of the table as a float value.
+	 */
 	public float getScore() {
 		score=0;
 		score+=(0.2*getNoOfOs());
@@ -507,9 +702,10 @@ public class Table implements Cloneable{
 		//calculate score
 		return score;
 	}
-	public void setScore(float score) {
-		this.score = score;
-	}
+	/**
+	 * Clone method, which overrides Object clone(), is used in place of a copy constructor
+	 * @return Clone of the specified table if possible, else <code>null</code>
+	 */	
 	public Table clone()
 	{
 		try {
