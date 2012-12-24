@@ -49,7 +49,6 @@ public class Game {
 	public void getInput()
 	{
 		int index=0;
-		@SuppressWarnings("unused")
 		Move moveToMake;
 		@SuppressWarnings("resource")
 		Scanner inputStream=new Scanner(System.in);

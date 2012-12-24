@@ -69,18 +69,18 @@ public class Search {
 	}
 	public Move getBestMove() {
 		bestScore=0;
+		bestMove=new Move();
 		float currentScore=0;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
 		{
-			currentState=moveStack[i].getTableNext();
-			currentScore=currentState.getScore();
+			currentScore=moveStack[i].getTableNext().getScore();
 			if(currentScore>bestScore)
 			{
-				bestScore=currentScore;
-				bestMove=moveStack[i];
+				setBestScore(currentScore);
+				setBestMove(moveStack[i]);
+				break;
 			}
-			currentState=moveStack[i].getTableCurrent();
 		}
 		return bestMove;
 	}
