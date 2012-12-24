@@ -10,7 +10,7 @@ package com.tictactoe.table;
  * not duplicates but references to the actual cells of the table itself.
  * @author Kenshin Himura
  */
-public class Table {
+public class Table{
 	/**
 	 * The <code>Cell</code> is the basic building block of the table.
 	 * In addition to remembering of which table it is a part, it also

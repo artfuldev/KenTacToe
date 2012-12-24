@@ -54,7 +54,7 @@ public class Search {
 	public void setTime(float time) {
 		this.time = time;
 	}
-	public Move getBestMove() {
+	public Move getBestMove(){
 		bestScore=0;
 		float currentScore=0;
 		moveGen();
@@ -76,15 +76,25 @@ public class Search {
 	{
 		maxMoves=currentState.getNoOfDs();
 		moveStack=new Move[maxMoves];
-		for(int i=0,j=0;i<maxMoves;i++)
+		int j=0;
+		for(int i=0;i<maxMoves;i++)
+		{
 			for(;j<9;j++)
-				if(currentState.isEmpty(j))
+				if(currentState.isEmpty(j+1))
 				{
 					Table nextState=currentState;
-					nextState.updateTable(j, currentPlayer.getPlayerSign());
+					//The previous line creates a reference and not a copy, hence original table is changed.
+					//We do not want that.
+					nextState.updateTable(j+1, currentPlayer.getPlayerSign());
 					moveStack[i]=new Move(currentState,nextState);
+					System.out.println("New Move Generated...");
+					moveStack[i].getTableCurrent().printTable();
+					System.out.println(" to ");
+					moveStack[i].getTableNext().printTable();
+					break;
 				}
-		//MoveStack Generated and filled with valid moves
+		}
+		//MoveStack Generated and filled with (in)valid moves (as of now)
 	}
 	public Player getCurrentPlayer() {
 		return currentPlayer;
