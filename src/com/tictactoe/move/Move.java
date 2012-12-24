@@ -12,8 +12,6 @@ public class Move {
 	}
 	public Move(Table tableFrom,Table tableTo)
 	{
-		tableCurrent=new Table();
-		tableNext=new Table();
 		tableCurrent=tableFrom;
 		tableNext=tableTo;
 	}

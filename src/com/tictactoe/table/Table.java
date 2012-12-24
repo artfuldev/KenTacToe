@@ -437,7 +437,7 @@ public class Table {
 		}
 		return returnValue;
 	}
-	private int getNoOfDs()
+	public int getNoOfDs()
 	{
 		int rowIndex,colIndex,returnValue=0;
 		for(int i=0;i<9;i++)

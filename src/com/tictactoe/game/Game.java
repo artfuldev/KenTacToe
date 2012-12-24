@@ -19,24 +19,28 @@ public class Game {
 		gameGrid=new Table(3,3);
 		playerOne=new Player("UserPlayer");
 		playerTwo=new Player();
+		currentSearch=new Search();
 	}
 	public Game(int gridSize)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		playerOne=new Player("UserPlayer");
 		playerTwo=new Player();
+		currentSearch=new Search();
 	}
 	public Game(int gridSize,String userName)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		playerOne=new Player(userName);
 		playerTwo=new Player();
+		currentSearch=new Search();
 	}
 	public Game(String userName)
 	{
 		gameGrid=new Table(3,3);
 		playerOne=new Player(userName);
 		playerTwo=new Player();
+		currentSearch=new Search();
 	}
 	public void init()
 	{

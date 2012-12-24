@@ -20,22 +20,9 @@ public class Search {
 	}
 	public Search(Table currentState,Player currentPlayer)
 	{
-		this.currentState=new Table();
-		this.setCurrentPlayer(new Player());
 		setCurrentState(currentState);
 		setCurrentPlayer(currentPlayer);
-	}
-	public Search(Table currentState,int searchDepth)
-	{
-		this.currentState=new Table();
-		setCurrentState(currentState);
-		setSearchDepth(searchDepth);
-	}
-	public Search(Table currentState,float time)
-	{
-		this.currentState=new Table();
-		setCurrentState(currentState);
-		setTime(time);
+		setSearchDepth(this.currentState.getNoOfDs());
 	}
 	public Table getCurrentState() {
 		return currentState;
@@ -69,7 +56,6 @@ public class Search {
 	}
 	public Move getBestMove() {
 		bestScore=0;
-		bestMove=new Move();
 		float currentScore=0;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
@@ -79,7 +65,6 @@ public class Search {
 			{
 				setBestScore(currentScore);
 				setBestMove(moveStack[i]);
-				break;
 			}
 		}
 		return bestMove;
@@ -89,9 +74,7 @@ public class Search {
 	}
 	public void moveGen()
 	{
-		for(int i=0;i<9;i++)
-			if(currentState.isEmpty(i))
-				maxMoves++;
+		maxMoves=currentState.getNoOfDs();
 		moveStack=new Move[maxMoves];
 		for(int i=0,j=0;i<maxMoves;i++)
 			for(;j<9;j++)
