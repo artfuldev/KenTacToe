@@ -55,7 +55,7 @@ public class Search {
 		this.time = time;
 	}
 	public Move getBestMove(){
-		bestScore=0;
+		bestScore=-100;
 		float currentScore=0;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
@@ -76,15 +76,17 @@ public class Search {
 	{
 		maxMoves=currentState.getNoOfDs();
 		moveStack=new Move[maxMoves];
-		int j=0;
+		int j=-1;
 		for(int i=0;i<maxMoves;i++)
 		{
-			for(;j<9;j++)
+			for(;j<8;)
+			{
+				j++;
 				if(currentState.isEmpty(j))
 				{
 					Table nextState=currentState.clone();
-					//Just changed, have to check...
-					//[UPDATE]:Checked, not working
+					//clone() is working properly now. Redesigned it like a copy constructor.
+					//init() really helped.
 					nextState.updateTable(j, currentPlayer.getPlayerSign());
 					moveStack[i]=new Move(currentState,nextState);
 					System.out.println("New Move Generated...");
@@ -93,8 +95,9 @@ public class Search {
 					moveStack[i].getTableNext().printTable();
 					break;
 				}
+			}
 		}
-		//MoveStack Generated and filled with (in)valid moves (as of now)
+		//MoveStack Generated and filled with valid moves
 	}
 	public Player getCurrentPlayer() {
 		return currentPlayer;

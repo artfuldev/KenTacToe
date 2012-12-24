@@ -85,5 +85,11 @@ public class Game {
 	{
 		for(int i=0;((gameOver==false)&&(i<9));i++)
 			getInput();
+		if(gameGrid.isComplete()==1)
+			System.out.println("User won!");
+		else if(gameGrid.isComplete()==0)
+			System.out.println("AI won!");
+		else
+			System.out.println("Game drawn!");
 	}
 }
