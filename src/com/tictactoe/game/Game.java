@@ -69,8 +69,8 @@ public class Game {
 					System.out.println("Enter the index of the table you want to sign, "+currentPlayer.getPlayerName()+":");
 					index=inputStream.nextInt();
 				}while((index<0)||(index>9));
-			}while(!gameGrid.isEmpty(index));
-			gameGrid.updateTable(index, currentPlayer.getPlayerSign());
+			}while(!gameGrid.isEmpty(index-1));
+			gameGrid.updateTable(index-1, currentPlayer.getPlayerSign());
 		}
 		if(currentPlayer==playerOne)
 			currentPlayer=playerTwo;

@@ -80,12 +80,12 @@ public class Search {
 		for(int i=0;i<maxMoves;i++)
 		{
 			for(;j<9;j++)
-				if(currentState.isEmpty(j+1))
+				if(currentState.isEmpty(j))
 				{
 					Table nextState=currentState.clone();
 					//Just changed, have to check...
 					//[UPDATE]:Checked, not working
-					nextState.updateTable(j+1, currentPlayer.getPlayerSign());
+					nextState.updateTable(j, currentPlayer.getPlayerSign());
 					moveStack[i]=new Move(currentState,nextState);
 					System.out.println("New Move Generated...");
 					moveStack[i].getTableCurrent().printTable();

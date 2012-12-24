@@ -174,6 +174,15 @@ public class Table implements Cloneable{
 			return cells[rowIndex];
 		}
 		/**
+		 * This method is used to set a cell to the column by specifying its row index
+		 * @param rowIndex row index of the cell
+		 * @param cell Cell to be set
+		 */
+		public void setCell(int rowIndex, Cell cell)
+		{
+			this.cells[rowIndex]=cell;
+		}
+		/**
 		 * This method is used to get all the cells of the particular column.
 		 * @return All cells of column
 		 */
@@ -266,8 +275,8 @@ public class Table implements Cloneable{
 		 */
 		public Diag()
 		{
-			cells=new Cell[sizeOfTable];
-			for(int i=0;i<sizeOfTable;i++)
+			cells=new Cell[noOfRows];
+			for(int i=0;i<noOfRows;i++)
 				cells[i]=new Cell();
 		}
 		/**
@@ -279,7 +288,8 @@ public class Table implements Cloneable{
 		public Cell getCell(int index)
 		{
 			return cells[index];
-		}/**
+		}
+		/**
 		 * This method is used to get all the cells of the particular diagonal.
 		 * @return All cells of the diagonal
 		 */
@@ -328,7 +338,7 @@ public class Table implements Cloneable{
 		 * @param cell Cell to be set
 		 */
 		public void setCell(int i, Cell cell) {
-			cells[i]=cell;
+			this.cells[i]=cell;
 		}
 		/**
 		 * Clone method, which overrides Object clone(), is used in place of a copy constructor
@@ -338,7 +348,7 @@ public class Table implements Cloneable{
 		{
 			try {
 				Diag returnDiag=(Diag)super.clone();
-				for(int i=0;i<sizeOfTable;i++)
+				for(int i=0;i<noOfRows;i++)
 					returnDiag.cells[i]=cells[i].clone();
 				return returnDiag;
 			} catch (CloneNotSupportedException e) {
@@ -383,6 +393,15 @@ public class Table implements Cloneable{
 		public Cell getCell(int colIndex)
 		{
 			return cells[colIndex];
+		}
+		/**
+		 * This method is used to set a cell to the row by specifying its col index
+		 * @param colIndex column index of the cell
+		 * @param cell Cell to be set
+		 */
+		public void setCell(int colIndex, Cell cell)
+		{
+			this.cells[colIndex]=cell;
 		}
 		/**
 		 * This method is used to get all the cells of the particular row.
@@ -459,6 +478,11 @@ public class Table implements Cloneable{
 		}
 	}
 	/**
+	 * An array of type <code>Cell</code>.
+	 * Holds the cells of the table, row-wise,column-wise, maximum of noOfRowsxnoOfColumns cells
+	 */
+	private Cell cells[];
+	/**
 	 * An array of type <code>Row</code>.
 	 * Holds the rows of the table, column-wise.
 	 */
@@ -482,10 +506,10 @@ public class Table implements Cloneable{
 	 */
 	private int noOfCols;
 	/**
-	 * Holds the number of (rows AND cols) of the table at any time.
-	 * Set to 0 if the number of rows and columns are not equal.
+	 * Holds the number of cells (rows * cols) of the table at any time.
+	 * Set to 0 if the number of rows and columns are zero.
 	 */
-	private int sizeOfTable;//=rows=cols
+	private int sizeOfTable;
 	/**
 	 * Represents the score of the table in a float value.
 	 */
@@ -511,19 +535,19 @@ public class Table implements Cloneable{
 	{
 		this.noOfRows=noOfRows;
 		this.noOfCols=noOfCols;
-		if(noOfRows==noOfCols)
-			this.sizeOfTable=noOfRows;
-		else
-			this.sizeOfTable=0;//if not a square table, diagonal cannot be drawn.
+		this.sizeOfTable=noOfRows*noOfCols;
 		rows=new Row[this.noOfRows];
 		for(int i=0;i<noOfRows;i++)
 			rows[i]=new Row();
 		cols=new Col[this.noOfCols];
 		for(int i=0;i<noOfCols;i++)
 			cols[i]=new Col();
+		cells=new Cell[this.sizeOfTable];
+		for(int i=0;i<sizeOfTable;i++)
+			cells[i]=new Cell();
 		diags=new Diag[2];
-		diags[0]=new Diag();
-		diags[1]=new Diag();
+		for(int i=0;i<2;i++)
+			diags[i]=new Diag();
 		init();
 	}
 	/**
@@ -564,17 +588,23 @@ public class Table implements Cloneable{
 	 */
 	public void init()
 	{
+		int index;
 		for(int i=0;i<this.noOfRows;i++)
 			for(int j=0;j<this.noOfCols;j++)
 			{
+				index=(i*3)+j;
+				getRow(i).setCell(j, cells[index]);
+				getCol(j).setCell(i, cells[index]);
 				getRow(i).getCell(j).setColIndex(j);
 				getRow(i).getCell(j).setRowIndex(i);
+				getRow(i).setRowIndex(i);
+				getCol(j).setColIndex(j);
 				//left diagonal
 				if(i==j)
-					diags[0].setCell(i,getRow(i).getCell(j));
+					diags[0].setCell(i,cells[index]);
 				//right diagonal
 				if((i+j)==noOfRows)
-					diags[1].setCell(i,getRow(i).getCell(j));
+					diags[1].setCell(i,cells[index]);
 			}
 	}
 	/**
@@ -592,14 +622,12 @@ public class Table implements Cloneable{
 	}
 	/**
 	 * This method is used to update a specific cell of the table with a specific value(character)
-	 * @param index Index of the cell of the table to be updated, can take values between 1 and 9.
+	 * @param index Index of the cell of the table to be updated, can take values between 0 to (sizeOfTable-1).
 	 * @param updateChar Character to be updated in the specified <code>Cell</code>'s value data member.
 	 */
 	public void updateTable(int index, char updateChar)
 	{
-		int rowIndex=(index-1)/3;
-		int colIndex=(index+2)%3;
-		getRow(rowIndex).getCell(colIndex).setValue(updateChar);
+		cells[index].setValue(updateChar);
 	}
 	/**
 	 * This method is used to check if the table is complete,
@@ -622,14 +650,12 @@ public class Table implements Cloneable{
 	}
 	/**
 	 * This method is used to check if a given cell of a table is empty.
-	 * @param index Index of the cell of the table, can take values from 1 to 9.
+	 * @param index Index of the cell of the table, can take values from 0 to (sizeOfTable-1).
 	 * @return <code>True</code> if the specified <code>Cell</code> is empty, <code>False</code> otherwise.
 	 */
 	public boolean isEmpty(int index)
 	{
-		int rowIndex=(index-1)/3;
-		int colIndex=(index+2)%3;
-		if(getRow(rowIndex).getCell(colIndex).getValue()=='-')
+		if(cells[index].getValue()=='-')
 			return true;
 		return false;
 	}
@@ -641,12 +667,10 @@ public class Table implements Cloneable{
 	 */
 	private int getNoOfXs()
 	{
-		int rowIndex,colIndex,returnValue=0;
+		int returnValue=0;
 		for(int i=0;i<9;i++)
 		{
-			rowIndex=(i-1)/3;
-			colIndex=(i+2)%3;
-			if(getRow(rowIndex).getCell(colIndex).getValue()=='X')
+			if(cells[i].getValue()=='X')
 				returnValue++;
 		}
 		return returnValue;
@@ -659,12 +683,10 @@ public class Table implements Cloneable{
 	 */
 	private int getNoOfOs()
 	{
-		int rowIndex,colIndex,returnValue=0;
+		int returnValue=0;
 		for(int i=0;i<9;i++)
 		{
-			rowIndex=(i-1)/3;
-			colIndex=(i+2)%3;
-			if((getRow(rowIndex).getCell(colIndex).getValue()!='X')&&(getRow(rowIndex).getCell(colIndex).getValue()!='-'))
+			if((cells[i].getValue()!='X')&&(cells[i].getValue()!='-'))
 				returnValue++;
 		}
 		return returnValue;
@@ -679,7 +701,7 @@ public class Table implements Cloneable{
 		int returnValue=0;
 		for(int i=0;i<9;i++)
 		{
-			if(isEmpty(i+1))
+			if(isEmpty(i))
 				returnValue++;
 		}
 		return returnValue;
