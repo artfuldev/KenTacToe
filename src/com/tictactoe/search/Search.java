@@ -82,9 +82,9 @@ public class Search {
 			for(;j<9;j++)
 				if(currentState.isEmpty(j+1))
 				{
-					Table nextState=currentState;
-					//The previous line creates a reference and not a copy, hence original table is changed.
-					//We do not want that.
+					Table nextState=currentState.clone();
+					//Just changed, have to check...
+					//[UPDATE]:Checked, not working
 					nextState.updateTable(j+1, currentPlayer.getPlayerSign());
 					moveStack[i]=new Move(currentState,nextState);
 					System.out.println("New Move Generated...");
