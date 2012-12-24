@@ -18,7 +18,7 @@ public class Table implements Cloneable{
 	 * which can be set during construction of the table.
 	 * @author Kenshin Himura
 	 */
-	public class Cell {
+	public class Cell implements Cloneable{
 		private char value;
 		private int rowIndex;
 		private int colIndex;
@@ -109,16 +109,16 @@ public class Table implements Cloneable{
 		{
 			this.value=value;
 		}
-//		public Cell clone()
-//		{
-//			try {
-//				Cell returnCell=(Cell)super.clone();
-//				return returnCell;
-//			} catch (CloneNotSupportedException e) {
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
+		public Cell clone()
+		{
+			try {
+				Cell returnCell=(Cell)super.clone();
+				return returnCell;
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 	/**
 	 * The <code>Col</code> class represents the column of a table.
@@ -128,7 +128,7 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 *
 	 */
-	public class Col {
+	public class Col implements Cloneable{
 		private Cell cells[];
 		private int colIndex;
 		/**
@@ -209,18 +209,18 @@ public class Table implements Cloneable{
 		public void setColIndex(int colIndex) {
 			this.colIndex = colIndex;
 		}
-//		public Col clone()
-//		{
-//			try {
-//				Col returnCol=(Col)super.clone();
-//				for(int i=0;i<noOfRows;i++)
-//					returnCol.cells[i]=cells[i].clone();
-//				return returnCol;
-//			} catch (CloneNotSupportedException e) {
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
+		public Col clone()
+		{
+			try {
+				Col returnCol=(Col)super.clone();
+				for(int i=0;i<noOfRows;i++)
+					returnCol.cells[i]=cells[i].clone();
+				return returnCol;
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 	/**
 	 * The <code>Diag</code> class is simply the instance of a diagonal in square tables,
@@ -230,7 +230,7 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 *
 	 */
-	public class Diag {
+	public class Diag implements Cloneable{
 		private Cell cells[];
 		/**
 		 * Default constructor of the <code>Diag</code> class
@@ -285,18 +285,18 @@ public class Table implements Cloneable{
 		public void setCell(int i, Cell cell) {
 			cells[i]=cell;
 		}
-//		public Diag clone()
-//		{
-//			try {
-//				Diag returnDiag=(Diag)super.clone();
-//				for(int i=0;i<sizeOfTable;i++)
-//					returnDiag.cells[i]=cells[i].clone();
-//				return returnDiag;
-//			} catch (CloneNotSupportedException e) {
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
+		public Diag clone()
+		{
+			try {
+				Diag returnDiag=(Diag)super.clone();
+				for(int i=0;i<sizeOfTable;i++)
+					returnDiag.cells[i]=cells[i].clone();
+				return returnDiag;
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 	/**
 	 * The <code>Row</code> class represents the row of a table.
@@ -306,7 +306,7 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 *
 	 */
-	public class Row {
+	public class Row implements Cloneable{
 		private Cell cells[];
 		private int rowIndex;
 		public Row()
@@ -353,18 +353,18 @@ public class Table implements Cloneable{
 		public void setRowIndex(int rowIndex) {
 			this.rowIndex = rowIndex;
 		}
-//		public Row clone()
-//		{
-//			try {
-//				Row returnRow=(Row)super.clone();
-//				for(int i=0;i<noOfCols;i++)
-//					returnRow.cells[i]=cells[i].clone();
-//				return returnRow;
-//			} catch (CloneNotSupportedException e) {
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
+		public Row clone()
+		{
+			try {
+				Row returnRow=(Row)super.clone();
+				for(int i=0;i<noOfCols;i++)
+					returnRow.cells[i]=cells[i].clone();
+				return returnRow;
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 	private Row rows[];
 	private Col cols[];
@@ -514,9 +514,12 @@ public class Table implements Cloneable{
 	{
 		try {
 			Table returnTable=(Table)super.clone();
-			returnTable.cols=cols.clone();
-			returnTable.rows=rows.clone();
-			returnTable.diags=diags.clone();
+			for(int i=0;i<noOfRows;i++)
+				returnTable.cols[i]=cols[i].clone();
+			for(int i=0;i<noOfCols;i++)
+				returnTable.rows[i]=rows[i].clone();
+			for(int i=0;i<2;i++)
+				returnTable.diags[i]=diags[i].clone();
 			return returnTable;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
