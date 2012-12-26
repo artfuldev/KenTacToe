@@ -454,12 +454,11 @@ public class Table implements Cloneable{
 	private float score=0;
 	/**
 	 * Default Constructor of <code>Table</code> class.
-	 * Made to exit the program to prevent accidental debug errors.
-	 * Never used, simply defined to define other constructors.
+	 * Never used, simply defined to define parameterized constructors.
 	 */
 	public Table()
 	{
-		System.exit(0);
+		
 	}
 	/**
 	 * This is the constructor of class <code>Table</code> which is used in the program.
