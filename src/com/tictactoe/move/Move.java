@@ -13,7 +13,8 @@ import com.tictactoe.table.Table;
  * @author Kenshin Himura
  *
  */
-public class Move {
+public class Move
+{
 	/**
 	 * Holds the current table. Source of the move.
 	 */
@@ -48,7 +49,8 @@ public class Move {
 	 * Is generally used in place of unMakeMove() function here.
 	 * @return The current state of the table (before the move has been made).
 	 */
-	public Table getTableCurrent() {
+	public Table getTableCurrent()
+	{
 		return tableCurrent;
 	}
 	/**
@@ -57,7 +59,8 @@ public class Move {
 	 * Is generally used in place of makeMove() function here.
 	 * @return The next state of the table (after the move has been made).
 	 */
-	public Table getTableNext() {
+	public Table getTableNext()
+	{
 		return tableNext;
 	}
 }

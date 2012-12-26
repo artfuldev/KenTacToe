@@ -12,7 +12,8 @@ package com.tictactoe.player;
  * @author Kenshin Himura
  *
  */
-public class Player {
+public class Player
+{
 	/**
 	 * Holds the player's name. Used to provide a minor personalized experience
 	 * and may be used to display/update the High Scores table (just an idea!)
@@ -66,7 +67,8 @@ public class Player {
 	 * to be accessed by a public getter method.
 	 * @return Player's name
 	 */
-	public String getPlayerName() {
+	public String getPlayerName()
+	{
 		return playerName;
 	}
 	/**
@@ -75,7 +77,8 @@ public class Player {
 	 * merely as good programming practice.
 	 * @param playerName Name of the Player
 	 */
-	public void setPlayerName(String playerName) {
+	public void setPlayerName(String playerName)
+	{
 		this.playerName = playerName;
 	}
 	/**
@@ -83,7 +86,8 @@ public class Player {
 	 * to be accessed by a public getter method.
 	 * @return <code>"AI"</code> if player is AI, <code>"User"</code> if not
 	 */
-	public String getPlayerType() {
+	public String getPlayerType()
+	{
 		return playerType;
 	}
 	/**
@@ -92,7 +96,8 @@ public class Player {
 	 * merely as good programming practice.
 	 * @param playerType Type of the Player
 	 */
-	public void setPlayerType(String playerType) {
+	public void setPlayerType(String playerType)
+	{
 		this.playerType = playerType;
 	}
 	/**
@@ -100,7 +105,8 @@ public class Player {
 	 * to be accessed by a public getter method.
 	 * @return Player's Sign as a character
 	 */
-	public char getPlayerSign() {
+	public char getPlayerSign()
+	{
 		return playerSign;
 	}
 	/**
@@ -109,7 +115,8 @@ public class Player {
 	 * merely as good programming practice.
 	 * @param playerSign Sign of the Player
 	 */
-	public void setPlayerSign(char playerSign) {
+	public void setPlayerSign(char playerSign)
+	{
 		this.playerSign = playerSign;
 	}
 }

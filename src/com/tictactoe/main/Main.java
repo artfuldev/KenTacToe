@@ -3,12 +3,13 @@ package com.tictactoe.main;
 import java.util.Scanner;
 
 import com.tictactoe.game.*;
-public class Main {
-
+public class Main
+{
 	/**
-	 * @param args
+	 * Main function
 	 */
-	public static void main(String[] args){
+	public static void main()
+	{
 		Scanner inputStream=new Scanner(System.in);
 		System.out.println("Enter your name:");
 		String userName=inputStream.nextLine();

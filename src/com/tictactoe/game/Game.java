@@ -18,7 +18,8 @@ import com.tictactoe.move.*;
  * @author Kenshin Himura
  *
  */
-public class Game {
+public class Game
+{
 	/**
 	 * Stores the current table of the game.
 	 * Primarily used for displaying, processing and passing as argument to the

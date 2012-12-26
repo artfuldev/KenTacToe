@@ -10,7 +10,8 @@ package com.tictactoe.table;
  * not duplicates but references to the actual cells of the table itself.
  * @author Kenshin Himura
  */
-public class Table implements Cloneable{
+public class Table implements Cloneable
+{
 	/**
 	 * The <code>Cell</code> is the basic building block of the table.
 	 * In addition to remembering of which table it is a part, it also
@@ -18,7 +19,8 @@ public class Table implements Cloneable{
 	 * which can be set during construction of the table.
 	 * @author Kenshin Himura
 	 */
-	public class Cell {
+	public class Cell
+	{
 		/**
 		 * Represents the value of the cell.
 		 * Represents a character.
@@ -129,7 +131,8 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 *
 	 */
-	public class Col {
+	public class Col
+	{
 		/**
 		 * An array of type <code>Cell</code>.
 		 * Holds the cells of the column, row-wise
@@ -180,7 +183,8 @@ public class Table implements Cloneable{
 		 * This method is used to get the column index of the column in table it pertains to.
 		 * @return Column index
 		 */
-		public int getColIndex() {
+		public int getColIndex()
+		{
 			return colIndex;
 		}
 		/**
@@ -222,7 +226,8 @@ public class Table implements Cloneable{
 		 * Generic setter method to set column index of the column of the table
 		 * @param colIndex
 		 */
-		public void setColIndex(int colIndex) {
+		public void setColIndex(int colIndex)
+		{
 			this.colIndex = colIndex;
 		}
 	}
@@ -234,7 +239,8 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 *
 	 */
-	public class Diag {
+	public class Diag
+	{
 		/**
 		 * An array of type <code>Cell</code>.
 		 * Holds the cells of the diagonal, row-wise
@@ -307,7 +313,8 @@ public class Table implements Cloneable{
 		 * @param i index of the cell in the diagonal
 		 * @param cell Cell to be set
 		 */
-		public void setCell(int i, Cell cell) {
+		public void setCell(int i, Cell cell)
+		{
 			this.cells[i]=cell;
 		}
 	}
@@ -319,7 +326,8 @@ public class Table implements Cloneable{
 	 * @author Kenshin Himura
 	 *
 	 */
-	public class Row {
+	public class Row
+	{
 		/**
 		 * An array of type <code>Cell</code>.
 		 * Holds the cells of the row, column-wise
@@ -369,7 +377,8 @@ public class Table implements Cloneable{
 		 * This method is used to get the row index of the row in table it pertains to.
 		 * @return Row index
 		 */
-		public int getRowIndex() {
+		public int getRowIndex()
+		{
 			return rowIndex;
 		}
 		/**
@@ -411,7 +420,8 @@ public class Table implements Cloneable{
 		 * Generic setter method to set row index of the row of the table
 		 * @param rowIndex
 		 */
-		public void setRowIndex(int rowIndex) {
+		public void setRowIndex(int rowIndex)
+		{
 			this.rowIndex = rowIndex;
 		}
 	}
@@ -492,7 +502,8 @@ public class Table implements Cloneable{
 	 * @param colIndex Index of the column in the table
 	 * @return Array of type <code>Cell</code> of the specified column of the table
 	 */
-	public Col getCol(int colIndex) {
+	public Col getCol(int colIndex)
+	{
 		return cols[colIndex];
 	}
 	/**
@@ -500,7 +511,8 @@ public class Table implements Cloneable{
 	 * Almost never used.
 	 * @return The number of columns of the <code>Table</code>.
 	 */
-	public int getNoOfCols() {
+	public int getNoOfCols()
+	{
 		return noOfCols;
 	}
 	/**
@@ -508,7 +520,8 @@ public class Table implements Cloneable{
 	 * Almost never used.
 	 * @return The number of rows of the <code>Table</code>.
 	 */
-	public int getNoOfRows() {
+	public int getNoOfRows()
+	{
 		return noOfRows;
 	}
 	/**
@@ -516,7 +529,8 @@ public class Table implements Cloneable{
 	 * @param rowIndex Index of the row in the table
 	 * @return Array of type <code>Cell</code> of the specified row of the table
 	 */
-	public Row getRow(int rowIndex) {
+	public Row getRow(int rowIndex)
+	{
 		return rows[rowIndex];
 	}
 	/**
@@ -649,7 +663,8 @@ public class Table implements Cloneable{
 	 * **This implementation may be changed in the future.
 	 * @return Score of the table as a float value.
 	 */
-	public float getScore() {
+	public float getScore()
+	{
 		score=0;
 		score+=(0.2*getNoOfOs());
 		score-=(0.3*getNoOfXs());
@@ -693,7 +708,8 @@ public class Table implements Cloneable{
 	 * Very useful to check for game end.
 	 * @return Size of the table (no of rows * no of columns)
 	 */
-	public int getSizeOfTable() {
+	public int getSizeOfTable()
+	{
 		return sizeOfTable;
 	}
 }

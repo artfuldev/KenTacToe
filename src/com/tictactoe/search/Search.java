@@ -16,7 +16,8 @@ import com.tictactoe.table.*;
  * @author Kenshin Himura
  *
  */
-public class Search {
+public class Search
+{
 	/**
 	 * Holds the current player for whom it is searching, as this is
 	 * necessary for the search, especially if algorithms like NegaMax
@@ -96,7 +97,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @return Current State of the Search
 	 */
-	public Table getCurrentState() {
+	public Table getCurrentState()
+	{
 		return currentState;
 	}
 	/**
@@ -105,7 +107,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param currentState Current State of the Search
 	 */
-	public void setCurrentState(Table currentState) {
+	public void setCurrentState(Table currentState)
+	{
 		this.currentState = currentState;
 	}
 	/**
@@ -114,7 +117,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @return Current Best State of the Search
 	 */
-	public Table getBestState() {
+	public Table getBestState()
+	{
 		return bestState;
 	}
 	/**
@@ -123,7 +127,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param bestState Current Best State of the Search
 	 */
-	public void setBestState(Table bestState) {
+	public void setBestState(Table bestState)
+	{
 		this.bestState = bestState;
 	}
 	/**
@@ -132,7 +137,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @return Current Best Score of the Search
 	 */
-	public float getBestScore() {
+	public float getBestScore()
+	{
 		return bestScore;
 	}
 	/**
@@ -141,7 +147,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param bestScore Best Score of the Search
 	 */
-	public void setBestScore(float bestScore) {
+	public void setBestScore(float bestScore)
+	{
 		this.bestScore = bestScore;
 	}
 	/**
@@ -150,7 +157,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @return Depth of the Search
 	 */
-	public int getSearchDepth() {
+	public int getSearchDepth()
+	{
 		return searchDepth;
 	}
 	/**
@@ -159,7 +167,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param searchDepth Depth of the Search
 	 */
-	public void setSearchDepth(int searchDepth) {
+	public void setSearchDepth(int searchDepth)
+	{
 		this.searchDepth = searchDepth;
 	}
 	/**
@@ -168,7 +177,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @return Time Limit of the Search in milliseconds
 	 */
-	public float getTime() {
+	public float getTime()
+	{
 		return time;
 	}
 	/**
@@ -177,7 +187,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param time Time Limit of the Search in milliseconds
 	 */
-	public void setTime(float time) {
+	public void setTime(float time)
+	{
 		this.time = time;
 	}
 	/**
@@ -188,7 +199,8 @@ public class Search {
 	 * sets this as the best move, before returning it.
 	 * @return Best Move found in the current Search
 	 */
-	public Move getBestMove(){
+	public Move getBestMove()
+	{
 		bestScore=-100;
 		float currentScore=0;
 		moveGen();
@@ -209,7 +221,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param bestMove Best Move of the Search
 	 */
-	public void setBestMove(Move bestMove) {
+	public void setBestMove(Move bestMove)
+	{
 		this.bestMove = bestMove;
 	}
 	/**
@@ -237,12 +250,13 @@ public class Search {
 		}
 	}
 	/**
-	 * Generic getter method to get the current of the Search.
+	 * Generic getter method to get the current player of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
 	 * @return Current player of the Search
 	 */
-	public Player getCurrentPlayer() {
+	public Player getCurrentPlayer()
+	{
 		return currentPlayer;
 	}
 	/**
@@ -251,7 +265,8 @@ public class Search {
 	 * getter and setter methods.
 	 * @param currentPlayer Current player of the Search
 	 */
-	public void setCurrentPlayer(Player currentPlayer) {
+	public void setCurrentPlayer(Player currentPlayer)
+	{
 		this.currentPlayer = currentPlayer;
 	}
 }
