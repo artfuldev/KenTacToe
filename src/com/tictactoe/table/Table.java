@@ -606,7 +606,7 @@ public class Table implements Cloneable{
 	private int getNoOfXs()
 	{
 		int returnValue=0;
-		for(int i=0;i<9;i++)
+		for(int i=0;i<sizeOfTable;i++)
 		{
 			if(cells[i].getValue()=='X')
 				returnValue++;
@@ -622,7 +622,7 @@ public class Table implements Cloneable{
 	private int getNoOfOs()
 	{
 		int returnValue=0;
-		for(int i=0;i<9;i++)
+		for(int i=0;i<sizeOfTable;i++)
 		{
 			if((cells[i].getValue()!='X')&&(cells[i].getValue()!='-'))
 				returnValue++;
@@ -637,7 +637,7 @@ public class Table implements Cloneable{
 	public int getNoOfDs()
 	{
 		int returnValue=0;
-		for(int i=0;i<9;i++)
+		for(int i=0;i<sizeOfTable;i++)
 		{
 			if(isEmpty(i))
 				returnValue++;
@@ -656,9 +656,9 @@ public class Table implements Cloneable{
 		score-=(0.3*getNoOfXs());
 		score-=(0.5*getNoOfDs());
 		if(isComplete()==0)
-			score+=9;
+			score+=sizeOfTable;
 		if(isComplete()==1)
-			score-=9;
+			score-=sizeOfTable;
 		//calculate score
 		return score;
 	}
@@ -676,5 +676,25 @@ public class Table implements Cloneable{
 			}
 			returnTable.init();
 			return returnTable;
+	}
+	/**
+	 * This method returns the index of the first empty cell of the table.
+	 * Useful for some things, as we will see in the code.
+	 */
+	public int getFirstDashIndex()
+	{
+		int returnValue = 0;
+		for(int i=0;i<sizeOfTable;i++)
+			if(isEmpty(i))
+				returnValue=i;
+		return returnValue;
+	}
+	/**
+	 * This is the generic getter method for getting the size of the table.
+	 * Very useful to check for game end.
+	 * @return Size of the table (no of rows * no of columns)
+	 */
+	public int getSizeOfTable() {
+		return sizeOfTable;
 	}
 }
