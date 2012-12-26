@@ -530,7 +530,7 @@ public class Table implements Cloneable{
 		for(int i=0;i<this.noOfRows;i++)
 			for(int j=0;j<this.noOfCols;j++)
 			{
-				index=(i*3)+j;
+				index=(i*noOfRows)+j;
 				getRow(i).setCell(j, cells[index]);
 				getCol(j).setCell(i, cells[index]);
 				getRow(i).getCell(j).setColIndex(j);
