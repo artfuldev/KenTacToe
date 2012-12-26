@@ -1,5 +1,16 @@
 package com.tictactoe.player;
 
+/**
+ * The <code>Player</code> class is a must for every player-based game.
+ * It holds the player attributes and player-related methods.
+ * This class in particular, designed specifically for the Tic Tac Toe
+ * implementation has very few important attributes to make use of. Name and Type
+ * are a must. Sign of the player is also required (players siign in the boxes in Tic Tac Toe).
+ * Additionally, a static variable to count the number of Players may be used (if 2 AI are used,
+ * for training, etc.)
+ * @author Kenshin Himura
+ *
+ */
 public class Player {
 	private String playerName;
 	private String playerType;

@@ -85,14 +85,8 @@ public class Search {
 				if(currentState.isEmpty(j))
 				{
 					Table nextState=currentState.clone();
-					//clone() is working properly now. Redesigned it like a copy constructor.
-					//init() really helped.
 					nextState.updateTable(j, currentPlayer.getPlayerSign());
 					moveStack[i]=new Move(currentState,nextState);
-					System.out.println("New Move Generated...");
-					moveStack[i].getTableCurrent().printTable();
-					System.out.println(" to ");
-					moveStack[i].getTableNext().printTable();
 					break;
 				}
 			}
