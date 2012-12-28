@@ -208,10 +208,8 @@ public class Table implements Cloneable
 			{
 				int j=0;
 				for(int i=0;i<(noOfRows-1);i++)
-				{
 					if(cells[i].getValue()==cells[i+1].getValue())
 						j++;
-				}
 				if(j==(noOfRows-1))
 				{
 					if(cells[0].getValue()=='X')
@@ -285,10 +283,8 @@ public class Table implements Cloneable
 			{
 				int j=0;
 				for(int i=0;i<(noOfRows-1);i++)
-				{
 					if(cells[i].getValue()==cells[i+1].getValue())
 						j++;
-				}
 				if(j==(noOfRows-1))
 				{
 					if(cells[0].getValue()=='X')
@@ -402,10 +398,8 @@ public class Table implements Cloneable
 			{
 				int j=0;
 				for(int i=0;i<(noOfCols-1);i++)
-				{
 					if(cells[i].getValue()==cells[i+1].getValue())
 						j++;
-				}
 				if(j==(noOfCols-1))
 				{
 					if(cells[0].getValue()=='X')
@@ -620,10 +614,8 @@ public class Table implements Cloneable
 	{
 		int returnValue=0;
 		for(int i=0;i<sizeOfTable;i++)
-		{
 			if(cells[i].getValue()=='X')
 				returnValue++;
-		}
 		return returnValue;
 	}
 	/**
@@ -636,10 +628,8 @@ public class Table implements Cloneable
 	{
 		int returnValue=0;
 		for(int i=0;i<sizeOfTable;i++)
-		{
 			if((cells[i].getValue()!='X')&&(cells[i].getValue()!='-'))
 				returnValue++;
-		}
 		return returnValue;
 	}
 	/**
@@ -651,10 +641,8 @@ public class Table implements Cloneable
 	{
 		int returnValue=0;
 		for(int i=0;i<sizeOfTable;i++)
-		{
 			if(isEmpty(i))
 				returnValue++;
-		}
 		return returnValue;
 	}
 	/**
