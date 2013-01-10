@@ -1,5 +1,7 @@
 package com.tictactoe.table;
 
+import com.tictactoe.move.Move;
+
 /**
  * The <code>Table</code> class forms the basic framework of grid like structures.
  * Used to create a game grid in the tic tac toe game class.
@@ -548,7 +550,7 @@ public class Table implements Cloneable
 				if(i==j)
 					diags[0].setCell(i,cells[index]);
 				//right diagonal
-				if((i+j)==noOfRows)
+				if((i+j+1)==noOfRows)
 					diags[1].setCell(i,cells[index]);
 			}
 	}
@@ -654,15 +656,96 @@ public class Table implements Cloneable
 	public float getScore()
 	{
 		score=0;
-		score+=(0.2*getNoOfOs());
-		score-=(0.3*getNoOfXs());
-		score-=(0.5*getNoOfDs());
+		score+=(1*getNoOfOs());
+		score-=(1*getNoOfXs());
+		score-=(2*getNoOfDs());
+		score+=(10*getTwoOs());
+		score-=(10*getTwoXs());
 		if(isComplete()==0)
-			score+=sizeOfTable;
+			score+=(100*sizeOfTable);
 		if(isComplete()==1)
-			score-=sizeOfTable;
-		//calculate score
+			score-=(100*sizeOfTable);
 		return score;
+	}
+	/**
+	 * This function is used in the evaluation of a 3x3 tic-tac-toe
+	 * grid. It calculates the number of rows, columns and diagonals
+	 * two-thirds complete to add to the score.
+	 * @return The number of rows, columns and diagonals having two
+	 * O's
+	 */
+	public int getTwoOs()
+	{
+		int returnValue=0;
+		int count;
+		for(int i=0;i<noOfRows;i++)
+		{
+			count=0;
+			for(int j=0;j<noOfCols;j++)
+				if((rows[i].getCell(j).getValue()!='X')&&(rows[i].getCell(j).getValue()!='-'))
+					count++;
+			if(count>1)
+				returnValue++;
+		}
+		for(int i=0;i<noOfCols;i++)
+		{
+			count=0;
+			for(int j=0;j<noOfRows;j++)
+				if((cols[i].getCell(j).getValue()!='X')&&(cols[i].getCell(j).getValue()!='-'))
+					count++;
+			if(count>1)
+				returnValue++;
+		}
+		for(int i=0;i<2;i++)
+		{
+			count=0;
+			for(int j=0;j<noOfRows;j++)
+				if((diags[i].getCell(j).getValue()!='X')&&(diags[i].getCell(j).getValue()!='-'))
+					count++;
+			if(count>1)
+				returnValue++;
+		}
+		return returnValue;
+	}
+	/**
+	 * This function is used in the evaluation of a 3x3 tic-tac-toe
+	 * grid. It calculates the number of rows, columns and diagonals
+	 * two-thirds complete to subtract from the score.
+	 * @return The number of rows, columns and diagonals having two
+	 * X's
+	 */
+	public int getTwoXs()
+	{
+		int returnValue=0;
+		int count;
+		for(int i=0;i<noOfRows;i++)
+		{
+			count=0;
+			for(int j=0;j<noOfCols;j++)
+				if(rows[i].getCell(j).getValue()=='X')
+					count++;
+			if(count>1)
+				returnValue++;
+		}
+		for(int i=0;i<noOfCols;i++)
+		{
+			count=0;
+			for(int j=0;j<noOfRows;j++)
+				if(cols[i].getCell(j).getValue()=='X')
+					count++;
+			if(count>1)
+				returnValue++;
+		}
+		for(int i=0;i<2;i++)
+		{
+			count=0;
+			for(int j=0;j<noOfRows;j++)
+				if(diags[i].getCell(j).getValue()=='X')
+					count++;
+			if(count>1)
+				returnValue++;
+		}
+		return returnValue;
 	}
 	/**
 	 * Clone method, which overrides Object clone(), is used in place of a copy constructor
@@ -699,5 +782,23 @@ public class Table implements Cloneable
 	public int getSizeOfTable()
 	{
 		return sizeOfTable;
+	}
+	/**
+	 * A makeMove method, but this one returns the resulting table.
+	 * @param moveToMake The move to be made.
+	 * @return The table after the move has been made.
+	 */
+	public Table makeMove(Move moveToMake)
+	{
+		return moveToMake.getTableNext();
+	}
+	/**
+	 * An unMakeMove method, but this one returns the resulting table.
+	 * @param moveToUnMake The move to be un-made.
+	 * @return The table after the move has been un-made.
+	 */
+	public Table unMakeMove(Move moveToUnMake)
+	{
+		return moveToUnMake.getTableCurrent();
 	}
 }
