@@ -455,9 +455,9 @@ public class Table implements Cloneable
 	 */
 	private int sizeOfTable;
 	/**
-	 * Represents the score of the table in a float value.
+	 * Represents the score of the table as a signed double value.
 	 */
-	private float score=0;
+	private double score=0;
 	/**
 	 * Default Constructor of <code>Table</code> class.
 	 * Never used, simply defined to define parameterized constructors.
@@ -607,34 +607,6 @@ public class Table implements Cloneable
 		return false;
 	}
 	/**
-	 * This method is used to get the total number of 'X's in the table.
-	 * Used in calculation of score.
-	 * Made private because it has no need elsewhere. 
-	 * @return The total number of 'X's in the table.
-	 */
-	private int getNoOfXs()
-	{
-		int returnValue=0;
-		for(int i=0;i<sizeOfTable;i++)
-			if(cells[i].getValue()=='X')
-				returnValue++;
-		return returnValue;
-	}
-	/**
-	 * This method is used to get the total number of 'O's or 'P's in the table.
-	 * Used in calculation of score.
-	 * Made private because it has no need elsewhere. 
-	 * @return The total number of 'O's or 'P's in the table.
-	 */
-	private int getNoOfOs()
-	{
-		int returnValue=0;
-		for(int i=0;i<sizeOfTable;i++)
-			if((cells[i].getValue()!='X')&&(cells[i].getValue()!='-'))
-				returnValue++;
-		return returnValue;
-	}
-	/**
 	 * This method is used to get the total number of blank cells in the table.
 	 * Used in calculation of score, and in the generation of next possible moves. 
 	 * @return The total number of blank cells in the table.
@@ -653,98 +625,87 @@ public class Table implements Cloneable
 	 * **This implementation may be changed in the future.
 	 * @return Score of the table as a float value.
 	 */
-	public float getScore()
+	public double getScore()
 	{
 		score=0;
-		score+=(1*getNoOfOs());
-		score-=(1*getNoOfXs());
-		score-=(2*getNoOfDs());
-		score+=(10*getTwoOs());
-		score-=(10*getTwoXs());
-		if(isComplete()==0)
-			score+=(100*sizeOfTable);
-		if(isComplete()==1)
-			score-=(100*sizeOfTable);
+		score+=getOScore();
+		score-=getXScore();
 		return score;
 	}
 	/**
-	 * This function is used in the evaluation of a 3x3 tic-tac-toe
-	 * grid. It calculates the number of rows, columns and diagonals
-	 * two-thirds complete to add to the score.
-	 * @return The number of rows, columns and diagonals having two
-	 * O's
+	 * This function is used to get the X's score of the game.
+	 * @return X's score
 	 */
-	public int getTwoOs()
+	public double getXScore()
 	{
-		int returnValue=0;
-		int count;
-		for(int i=0;i<noOfRows;i++)
+		double returnValue=0;
+		int count1,count2,count3;
+		for(int i=1;i<noOfRows;i++)
 		{
-			count=0;
-			for(int j=0;j<noOfCols;j++)
-				if((rows[i].getCell(j).getValue()!='X')&&(rows[i].getCell(j).getValue()!='-'))
-					count++;
-			if(count>1)
-				returnValue++;
-		}
-		for(int i=0;i<noOfCols;i++)
-		{
-			count=0;
+			count1=0;
+			count2=0;
+			count3=0;
 			for(int j=0;j<noOfRows;j++)
-				if((cols[i].getCell(j).getValue()!='X')&&(cols[i].getCell(j).getValue()!='-'))
-					count++;
-			if(count>1)
-				returnValue++;
-		}
-		for(int i=0;i<2;i++)
-		{
-			count=0;
-			for(int j=0;j<noOfRows;j++)
-				if((diags[i].getCell(j).getValue()!='X')&&(diags[i].getCell(j).getValue()!='-'))
-					count++;
-			if(count>1)
-				returnValue++;
-		}
+				for(int k=0;k<noOfCols;k++)
+				{
+					if(rows[j].getCell(k).getValue()=='X')
+						count1++;
+					if(cols[j].getCell(k).getValue()=='X')
+						count2++;
+					if(j<2)
+						if(diags[j].getCell(k).getValue()=='X')
+							count3++;
+				}
+			if(count1>i)
+				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
+			if(count2>i)
+				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
+			if(count3>i)
+				returnValue+=(Math.pow((sizeOfTable+1),i)*i);				
+		}		
+		if(isComplete()==1)
+			returnValue+=(Math.pow((sizeOfTable+1),noOfRows)*noOfRows);
 		return returnValue;
 	}
 	/**
-	 * This function is used in the evaluation of a 3x3 tic-tac-toe
-	 * grid. It calculates the number of rows, columns and diagonals
-	 * two-thirds complete to subtract from the score.
-	 * @return The number of rows, columns and diagonals having two
-	 * X's
+	 * This function is used to get the O's score of the game.
+	 * @return O's score(AI)
 	 */
-	public int getTwoXs()
+	public double getOScore()
 	{
-		int returnValue=0;
-		int count;
-		for(int i=0;i<noOfRows;i++)
+		double returnValue=0;
+		int count1,count2,count3,index;
+		for(int i=1;i<noOfRows;i++)
 		{
-			count=0;
-			for(int j=0;j<noOfCols;j++)
-				if(rows[i].getCell(j).getValue()=='X')
-					count++;
-			if(count>1)
-				returnValue++;
-		}
-		for(int i=0;i<noOfCols;i++)
-		{
-			count=0;
+			count1=0;
+			count2=0;
+			count3=0;
 			for(int j=0;j<noOfRows;j++)
-				if(cols[i].getCell(j).getValue()=='X')
-					count++;
-			if(count>1)
-				returnValue++;
-		}
-		for(int i=0;i<2;i++)
-		{
-			count=0;
-			for(int j=0;j<noOfRows;j++)
-				if(diags[i].getCell(j).getValue()=='X')
-					count++;
-			if(count>1)
-				returnValue++;
-		}
+			{
+				for(int k=0;k<noOfCols;k++)
+				{
+					index=(j*noOfRows)+k;
+					if(!isEmpty(index))
+					{
+						if(rows[j].getCell(k).getValue()!='X')
+							count1++;
+						if(cols[j].getCell(k).getValue()!='X')
+							count2++;
+						if(j<2)
+							if(diags[j].getCell(k).getValue()!='X')
+								count3++;
+					}
+				}
+			}
+			if(count1>i)
+				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
+			if(count2>i)
+				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
+			if(count3>i)
+				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
+		}			
+		if(isComplete()==0)
+			returnValue+=(Math.pow((sizeOfTable+1),noOfRows)*noOfRows);
 		return returnValue;
 	}
 	/**
