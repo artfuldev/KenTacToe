@@ -32,6 +32,11 @@ public class Search
 	 */
 	private Table currentState;
 	/**
+	 * Holds the current search-state of the table used in the search.
+	 * Keeps changing as the search progresses.
+	 */
+	private Table currentSearchState;
+	/**
 	 * The current best state of the search, may be updated as and when
 	 * search gets deeper or shallower, with respect to the best move
 	 * found.
@@ -55,6 +60,11 @@ public class Search
 	 * the search. Will most likely be specified in milliseconds.
 	 */
 	private float time;
+	/**
+	 * Used as a current-score keeper. Was easier to have it global,
+	 * so made it as a data member of the search class.
+	 */
+	private float currentScore;
 	/**
 	 * The moveStack is an array of objects of type <code>Move</code>
 	 * and is produced by adding all legal moves on the current state
@@ -90,6 +100,7 @@ public class Search
 		setCurrentState(currentState);
 		setCurrentPlayer(currentPlayer);
 		setSearchDepth(this.currentState.getNoOfDs());
+		setCurrentSearchState(getCurrentState());
 	}
 	/**
 	 * Generic getter method to get the current state of the Search.
@@ -172,6 +183,38 @@ public class Search
 		this.searchDepth = searchDepth;
 	}
 	/**
+	 * Generic getter method of the currentSearchState data member
+	 * @return The current search state, as an object of type <code>Table</code>.
+	 */
+	public Table getCurrentSearchState()
+	{
+		return currentSearchState;
+	}
+	/**
+	 * Generic setter method of the currentSearchState data member
+	 * @param currentSearchState current search state, as an object of type <code>Table</code>.
+	 */
+	public void setCurrentSearchState(Table currentSearchState)
+	{
+		this.currentSearchState = currentSearchState;
+	}
+	/**
+	 * Generic getter method to access the currentScore of the search.
+	 * @return The current score of the <code>Search</code>
+	 */
+	public float getCurrentScore()
+	{
+		return currentScore;
+	}
+	/**
+	 * Generic setter method to set the currentScore of the search.
+	 * @param currentScore The current score of the <code>Search</code>
+	 */
+	public void setCurrentScore(float currentScore)
+	{
+		this.currentScore = currentScore;
+	}
+	/**
 	 * Generic getter method to get the time limit of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
@@ -201,12 +244,13 @@ public class Search
 	 */
 	public Move getBestMove()
 	{
-		bestScore=-100;
-		float currentScore=0;
+		bestScore=-100000;
+		currentScore=bestScore;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
 		{
-			currentScore=moveStack[i].getTableNext().getScore();
+			currentSearchState=currentState.makeMove(moveStack[i]);
+			currentScore=negaMax(currentSearchState,searchDepth,currentPlayer);
 			if(currentScore>bestScore)
 			{
 				setBestScore(currentScore);
@@ -214,6 +258,77 @@ public class Search
 			}
 		}
 		return bestMove;
+	}
+	/**
+	 * Basic negaMax function to determine best score and move
+	 * @param nodeTable Current node of search tree
+	 * @param depth Depth of search
+	 * @param current Current player (for sign change and move generation)
+	 * @return The best score in negaMax fashion
+	 */
+	private float negaMax(Table nodeTable, int depth, Player current)
+	{
+		Table node=nodeTable.clone();
+		if((depth==0)||(node.isComplete()!=-1))
+			return node.getScore();
+		float alpha=-100000;
+		Player tempPlayer;
+		if(current.getPlayerSign()!='X')
+			tempPlayer=new Player("Temp");
+		else
+			tempPlayer=new Player();
+		Search tempSearch=new Search(node, tempPlayer);
+		tempSearch.moveGen();
+		for(int i=0;i<tempSearch.getMaxMoves();i++)
+			alpha=Math.max(alpha,-negaMax(node.makeMove(tempSearch.getMove(i)),depth-1,tempPlayer));
+		return alpha;
+	}
+	/**
+	 * This function is used to get a move of the move stack generated.
+	 * It is useful in generating and obtaining all moves to be used in the
+	 * negaMax function.
+	 * @param moveNo The index of the move in the move stack.
+	 * @return The move found in the specified index of the moveStack.
+	 */
+	public Move getMove(int moveNo)
+	{
+		return moveStack[moveNo];
+	}
+	/**
+	 * Generic getter method to access the moveStack generated in a search.
+	 * Used by the miniMax or negaMax (or other future) search functions.
+	 * @return The generated stack of moves
+	 */
+	public Move[] getMoveStack()
+	{
+		return moveStack;
+	}
+	/**
+	 * Generic setter method to set the moveStack in a search.
+	 * Not used by me. Simply declared as a good programming practice.
+	 * @param moveStack The stack of moves to be set
+	 */
+	public void setMoveStack(Move[] moveStack)
+	{
+		this.moveStack = moveStack;
+	}
+	/**
+	 * Generic getter method to access the maxMoves in a search.
+	 * Used by the miniMax or negaMax (or other future) search functions.
+	 * @return The maximum number of generated moves
+	 */
+	public int getMaxMoves()
+	{
+		return maxMoves;
+	}
+	/**
+	 * Generic setter method to set the maximum number of moves in a
+	 * search
+	 * @param maxMoves Maximum number of legal moves
+	 */
+	public void setMaxMoves(int maxMoves)
+	{
+		this.maxMoves = maxMoves;
 	}
 	/**
 	 * Generic setter method to set the best move of the Search.
@@ -229,25 +344,25 @@ public class Search
 	 * This method generates the legal moves for the current Search object
 	 * and pushes the moves to the moveStack.
 	 */
-	public void moveGen()
+	private void moveGen()
 	{
-		maxMoves=currentState.getNoOfDs();
-		moveStack=new Move[maxMoves];
-		int j=-1;
-		for(int i=0;i<maxMoves;i++)
-		{
-			for(;j<8;)
+			maxMoves=currentSearchState.getNoOfDs();
+			moveStack=new Move[maxMoves];
+			int j=-1;
+			for(int i=0;i<maxMoves;i++)
 			{
-				j++;
-				if(currentState.isEmpty(j))
+				for(;j<8;)
 				{
-					Table nextState=currentState.clone();
-					nextState.updateTable(j, currentPlayer.getPlayerSign());
-					moveStack[i]=new Move(currentState,nextState);
-					break;
+					j++;
+					if(currentSearchState.isEmpty(j))
+					{
+						Table nextState=currentSearchState.clone();
+						nextState.updateTable(j, currentPlayer.getPlayerSign());
+						moveStack[i]=new Move(currentSearchState,nextState);
+						break;
+					}
 				}
 			}
-		}
 	}
 	/**
 	 * Generic getter method to get the current player of the Search.
