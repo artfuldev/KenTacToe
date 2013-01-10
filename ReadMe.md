@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 1.3
+* Application Version: 1.4
 * ReadMe Version: 1.3
 
 ##Description
@@ -12,6 +12,12 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 
 
 ##Updates
+
+###Version 1.4
+* Evaluation function made more robust.
+* Added extra features to evaluate.
+* Minor bugs removed.
+* AI still buggy, have to fine-tune the evaluation.
 
 ###Version 1.3
 * Minor bug and stability updates.
