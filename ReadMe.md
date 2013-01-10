@@ -1,8 +1,8 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*, Girish Koundinya *(pending contribution)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 1.2
-* ReadMe Version: 1.1
+* Application Version: 1.3
+* ReadMe Version: 1.2
 
 ##Description
 A basic Tic Tac Toe (TTT) game engine with a vision to be able to present an AI capable of playing Tic Tac Toe with humans on boards upto 255x255 boxes.
@@ -25,6 +25,12 @@ Efforts are being made to make the source code readble by adding comments wherev
 ###Version 1.2
 * Minimax with Alpha-Beta Pruning implemented, though a bit buggy.
 * More robust evaluation function for 3x3 boxes.
+
+###Version 1.3
+* Minor bug and stability updates.
+* Evaluation function updated to work with any grid size (not restricted to 3x3 box any more).
+* AI almost still the same, with little to no modification.
+* Scoring system has been updated to double type instead of float to allow for more range of numbers to be used.
 
 ##Visions
 * PVS with Alpha Beta Negamax approach envisioned.
