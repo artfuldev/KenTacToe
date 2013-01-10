@@ -25,7 +25,7 @@ public class Search
 	/**
 	 * Used to hold the score of the best state found so far in the search.
 	 */
-	private float bestScore;
+	private double bestScore;
 	/**
 	 * The current best state of the search, may be updated as and when
 	 * search gets deeper or shallower, with respect to the best move
@@ -42,7 +42,7 @@ public class Search
 	 * Used as a current-score keeper. Was easier to have it global,
 	 * so made it as a data member of the search class.
 	 */
-	private float currentScore;
+	private double currentScore;
 	/**
 	 * Holds the current search-state of the table used in the search.
 	 * Keeps changing as the search progresses.
@@ -111,7 +111,7 @@ public class Search
 	 * @param current Current player (for sign change and move generation)
 	 * @return The best score in negaMax fashion
 	 */
-	private float alphaBeta(Table nodeTable, int depth, float alpha, float beta, Player current)
+	private double alphaBeta(Table nodeTable, int depth, double alpha, double beta, Player current)
 	{
 		Table node=nodeTable.clone();
 		if((depth==0)||(node.isComplete()!=-1))
@@ -154,19 +154,18 @@ public class Search
 	 */
 	public Move getBestMove()
 	{
-		bestScore=-1000;
+		double infinity=Math.pow((currentState.getSizeOfTable()+1),(currentState.getNoOfRows()+1));
+		bestScore=-infinity;
 		currentScore=bestScore;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
 		{
 			currentSearchState=currentState.makeMove(moveStack[i]);
-			currentScore=alphaBeta(currentSearchState,searchDepth,-1000,1000,currentPlayer);
+			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
 			if(currentScore>bestScore)
 			{
 				setBestScore(currentScore);
 				setBestMove(moveStack[i]);
-				if(currentScore>900)
-					break;
 			}
 		}
 		return bestMove;
@@ -177,7 +176,7 @@ public class Search
 	 * getter and setter methods.
 	 * @return Current Best Score of the Search
 	 */
-	public float getBestScore()
+	public double getBestScore()
 	{
 		return bestScore;
 	}
@@ -205,7 +204,7 @@ public class Search
 	 * Generic getter method to access the currentScore of the search.
 	 * @return The current score of the <code>Search</code>
 	 */
-	public float getCurrentScore()
+	public double getCurrentScore()
 	{
 		return currentScore;
 	}
@@ -314,11 +313,11 @@ public class Search
 	 * Generic setter method to set the best score of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
-	 * @param bestScore Best Score of the Search
+	 * @param currentScore2 Best Score of the Search
 	 */
-	public void setBestScore(float bestScore)
+	public void setBestScore(double currentScore2)
 	{
-		this.bestScore = bestScore;
+		this.bestScore = currentScore2;
 	}
 	/**
 	 * Generic setter method to set the current best state of the Search.
