@@ -134,7 +134,7 @@ public class Game
 		{
 			currentSearch=new Search(gameGrid,currentPlayer);
 			moveToMake=currentSearch.getBestMove();
-			gameGrid=moveToMake.getTableNext();
+			gameGrid=gameGrid.makeMove(moveToMake);
 		}
 		else
 		{
