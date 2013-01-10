@@ -13,13 +13,13 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 
 ##Updates
 Efforts are being made to make the source code readble by adding comments wherever required.
-(1.0)
+###1.0
 * Game fully functional now. Rules are followed, AI picks move (though not the best!). Game ends when win conditions are met. AI to be implemented with minimax or something soon. Version updated to 1.0.
 * Table.java now with full commentary.
 * All java files are now with full @javadoc commentary. Enjoy learning!
-(1.1)
+###1.1
 * NegaMax search implemented.
-(1.2)
+###1.2
 * Minimax with Alpha-Beta Pruning implemented, though a bit buggy.
 * More robust evaluation function for 3x3 boxes.
 
