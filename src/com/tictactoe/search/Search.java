@@ -19,11 +19,35 @@ import com.tictactoe.table.*;
 public class Search
 {
 	/**
+	 * Holds the current best move found in the search.
+	 */
+	private Move bestMove;
+	/**
+	 * Used to hold the score of the best state found so far in the search.
+	 */
+	private float bestScore;
+	/**
+	 * The current best state of the search, may be updated as and when
+	 * search gets deeper or shallower, with respect to the best move
+	 * found.
+	 */
+	private Table bestState;
+	/**
 	 * Holds the current player for whom it is searching, as this is
 	 * necessary for the search, especially if algorithms like NegaMax
 	 * are used.
 	 */
 	private Player currentPlayer;
+	/**
+	 * Used as a current-score keeper. Was easier to have it global,
+	 * so made it as a data member of the search class.
+	 */
+	private float currentScore;
+	/**
+	 * Holds the current search-state of the table used in the search.
+	 * Keeps changing as the search progresses.
+	 */
+	private Table currentSearchState;
 	/**
 	 * Holds the current state of the table used in the game. Passed
 	 * as argument during construction and MUST remain unchanged, as
@@ -32,24 +56,18 @@ public class Search
 	 */
 	private Table currentState;
 	/**
-	 * Holds the current search-state of the table used in the search.
-	 * Keeps changing as the search progresses.
+	 * This holds the maximum number of possible legal moves for the given
+	 * state and so by default acts as the sizeOf() or length member of the
+	 * moveStack array.
 	 */
-	private Table currentSearchState;
+	private int maxMoves;
 	/**
-	 * The current best state of the search, may be updated as and when
-	 * search gets deeper or shallower, with respect to the best move
-	 * found.
+	 * The moveStack is an array of objects of type <code>Move</code>
+	 * and is produced by adding all legal moves on the current state
+	 * and pushing them to the moveStack. This is performed by the moveGen()
+	 * method.
 	 */
-	private Table bestState;
-	/**
-	 * Holds the current best move found in the search.
-	 */
-	private Move bestMove;
-	/**
-	 * Used to hold the score of the best state found so far in the search.
-	 */
-	private float bestScore;
+	private Move moveStack[];
 	/**
 	 * Holds the required search depth for the current instance of class
 	 * <code>Search</code>.
@@ -60,24 +78,6 @@ public class Search
 	 * the search. Will most likely be specified in milliseconds.
 	 */
 	private float time;
-	/**
-	 * Used as a current-score keeper. Was easier to have it global,
-	 * so made it as a data member of the search class.
-	 */
-	private float currentScore;
-	/**
-	 * The moveStack is an array of objects of type <code>Move</code>
-	 * and is produced by adding all legal moves on the current state
-	 * and pushing them to the moveStack. This is performed by the moveGen()
-	 * method.
-	 */
-	private Move moveStack[];
-	/**
-	 * This holds the maximum number of possible legal moves for the given
-	 * state and so by default acts as the sizeOf() or length member of the
-	 * moveStack array.
-	 */
-	private int maxMoves;
 	/**
 	 * Default constructor of <code>Search</code> class. No use in default
 	 * construction of a search object, so an empty constructor is made, to enable
@@ -103,44 +103,73 @@ public class Search
 		setCurrentSearchState(getCurrentState());
 	}
 	/**
-	 * Generic getter method to get the current state of the Search.
-	 * It, being a private variable, can only be accessed using public
-	 * getter and setter methods.
-	 * @return Current State of the Search
+	 * Mini-max with alpha beta pruning to determine best score and move
+	 * @param nodeTable Current node of search tree
+	 * @param depth Depth of search
+	 * @param alpha Initial alpha cut-off value
+	 * @param beta Initial beta cut-off value
+	 * @param current Current player (for sign change and move generation)
+	 * @return The best score in negaMax fashion
 	 */
-	public Table getCurrentState()
+	private float alphaBeta(Table nodeTable, int depth, float alpha, float beta, Player current)
 	{
-		return currentState;
+		Table node=nodeTable.clone();
+		if((depth==0)||(node.isComplete()!=-1))
+			return node.getScore();
+		Player tempPlayer;
+		if(current.getPlayerType()!="User")
+			tempPlayer=new Player("Temp");
+		else
+			tempPlayer=new Player();
+		Search tempSearch=new Search(node, tempPlayer);
+		tempSearch.moveGen();
+		if(tempPlayer.getPlayerType()=="User")
+		{
+			for(int i=0;i<tempSearch.getMaxMoves();i++)
+			{
+				alpha=Math.max(alpha,alphaBeta(node.makeMove(tempSearch.getMove(i)),depth-1,alpha,beta,tempPlayer));
+				if(beta<=alpha)
+					break;
+			}
+			return alpha;
+		}
+		else
+		{
+			for(int i=0;i<tempSearch.getMaxMoves();i++)
+			{
+				beta=Math.min(beta,alphaBeta(node.makeMove(tempSearch.getMove(i)),depth-1,alpha,beta,tempPlayer));
+				if(alpha>=beta)
+					break;
+			}
+			return beta;
+		}
 	}
 	/**
-	 * Generic setter method to set the current state of the Search.
-	 * It, being a private variable, can only be accessed using public
-	 * getter and setter methods.
-	 * @param currentState Current State of the Search
+	 * The generic getter for the bestMove variable has been modified such
+	 * that it generates moves using the moveGen() function, and reads
+	 * every move from the moveStack, evaluates the resulting states (table
+	 * positions) and then picks the best move out of the moveStack and
+	 * sets this as the best move, before returning it.
+	 * @return Best Move found in the current Search
 	 */
-	public void setCurrentState(Table currentState)
+	public Move getBestMove()
 	{
-		this.currentState = currentState;
-	}
-	/**
-	 * Generic getter method to get the current best state of the Search.
-	 * It, being a private variable, can only be accessed using public
-	 * getter and setter methods.
-	 * @return Current Best State of the Search
-	 */
-	public Table getBestState()
-	{
-		return bestState;
-	}
-	/**
-	 * Generic setter method to set the current best state of the Search.
-	 * It, being a private variable, can only be accessed using public
-	 * getter and setter methods.
-	 * @param bestState Current Best State of the Search
-	 */
-	public void setBestState(Table bestState)
-	{
-		this.bestState = bestState;
+		bestScore=-1000;
+		currentScore=bestScore;
+		moveGen();
+		for(int i=0;i<maxMoves;i++)
+		{
+			currentSearchState=currentState.makeMove(moveStack[i]);
+			currentScore=alphaBeta(currentSearchState,searchDepth,-1000,1000,currentPlayer);
+			if(currentScore>bestScore)
+			{
+				setBestScore(currentScore);
+				setBestMove(moveStack[i]);
+				if(currentScore>900)
+					break;
+			}
+		}
+		return bestMove;
 	}
 	/**
 	 * Generic getter method to get the current best score of the Search.
@@ -153,50 +182,24 @@ public class Search
 		return bestScore;
 	}
 	/**
-	 * Generic setter method to set the best score of the Search.
+	 * Generic getter method to get the current best state of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
-	 * @param bestScore Best Score of the Search
+	 * @return Current Best State of the Search
 	 */
-	public void setBestScore(float bestScore)
+	public Table getBestState()
 	{
-		this.bestScore = bestScore;
+		return bestState;
 	}
 	/**
-	 * Generic getter method to get the depth of the Search.
+	 * Generic getter method to get the current player of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
-	 * @return Depth of the Search
+	 * @return Current player of the Search
 	 */
-	public int getSearchDepth()
+	public Player getCurrentPlayer()
 	{
-		return searchDepth;
-	}
-	/**
-	 * Generic setter method to set the depth of the Search.
-	 * It, being a private variable, can only be accessed using public
-	 * getter and setter methods.
-	 * @param searchDepth Depth of the Search
-	 */
-	public void setSearchDepth(int searchDepth)
-	{
-		this.searchDepth = searchDepth;
-	}
-	/**
-	 * Generic getter method of the currentSearchState data member
-	 * @return The current search state, as an object of type <code>Table</code>.
-	 */
-	public Table getCurrentSearchState()
-	{
-		return currentSearchState;
-	}
-	/**
-	 * Generic setter method of the currentSearchState data member
-	 * @param currentSearchState current search state, as an object of type <code>Table</code>.
-	 */
-	public void setCurrentSearchState(Table currentSearchState)
-	{
-		this.currentSearchState = currentSearchState;
+		return currentPlayer;
 	}
 	/**
 	 * Generic getter method to access the currentScore of the search.
@@ -207,81 +210,31 @@ public class Search
 		return currentScore;
 	}
 	/**
-	 * Generic setter method to set the currentScore of the search.
-	 * @param currentScore The current score of the <code>Search</code>
+	 * Generic getter method of the currentSearchState data member
+	 * @return The current search state, as an object of type <code>Table</code>.
 	 */
-	public void setCurrentScore(float currentScore)
+	public Table getCurrentSearchState()
 	{
-		this.currentScore = currentScore;
+		return currentSearchState;
 	}
 	/**
-	 * Generic getter method to get the time limit of the Search.
+	 * Generic getter method to get the current state of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
-	 * @return Time Limit of the Search in milliseconds
+	 * @return Current State of the Search
 	 */
-	public float getTime()
+	public Table getCurrentState()
 	{
-		return time;
+		return currentState;
 	}
 	/**
-	 * Generic setter method to set the time limit of the Search.
-	 * It, being a private variable, can only be accessed using public
-	 * getter and setter methods.
-	 * @param time Time Limit of the Search in milliseconds
+	 * Generic getter method to access the maxMoves in a search.
+	 * Used by the miniMax or negaMax (or other future) search functions.
+	 * @return The maximum number of generated moves
 	 */
-	public void setTime(float time)
+	public int getMaxMoves()
 	{
-		this.time = time;
-	}
-	/**
-	 * The generic getter for the bestMove variable has been modified such
-	 * that it generates moves using the moveGen() function, and reads
-	 * every move from the moveStack, evaluates the resulting states (table
-	 * positions) and then picks the best move out of the moveStack and
-	 * sets this as the best move, before returning it.
-	 * @return Best Move found in the current Search
-	 */
-	public Move getBestMove()
-	{
-		bestScore=-100000;
-		currentScore=bestScore;
-		moveGen();
-		for(int i=0;i<maxMoves;i++)
-		{
-			currentSearchState=currentState.makeMove(moveStack[i]);
-			currentScore=negaMax(currentSearchState,searchDepth,currentPlayer);
-			if(currentScore>bestScore)
-			{
-				setBestScore(currentScore);
-				setBestMove(moveStack[i]);
-			}
-		}
-		return bestMove;
-	}
-	/**
-	 * Basic negaMax function to determine best score and move
-	 * @param nodeTable Current node of search tree
-	 * @param depth Depth of search
-	 * @param current Current player (for sign change and move generation)
-	 * @return The best score in negaMax fashion
-	 */
-	private float negaMax(Table nodeTable, int depth, Player current)
-	{
-		Table node=nodeTable.clone();
-		if((depth==0)||(node.isComplete()!=-1))
-			return node.getScore();
-		float alpha=-100000;
-		Player tempPlayer;
-		if(current.getPlayerSign()!='X')
-			tempPlayer=new Player("Temp");
-		else
-			tempPlayer=new Player();
-		Search tempSearch=new Search(node, tempPlayer);
-		tempSearch.moveGen();
-		for(int i=0;i<tempSearch.getMaxMoves();i++)
-			alpha=Math.max(alpha,-negaMax(node.makeMove(tempSearch.getMove(i)),depth-1,tempPlayer));
-		return alpha;
+		return maxMoves;
 	}
 	/**
 	 * This function is used to get a move of the move stack generated.
@@ -304,41 +257,24 @@ public class Search
 		return moveStack;
 	}
 	/**
-	 * Generic setter method to set the moveStack in a search.
-	 * Not used by me. Simply declared as a good programming practice.
-	 * @param moveStack The stack of moves to be set
-	 */
-	public void setMoveStack(Move[] moveStack)
-	{
-		this.moveStack = moveStack;
-	}
-	/**
-	 * Generic getter method to access the maxMoves in a search.
-	 * Used by the miniMax or negaMax (or other future) search functions.
-	 * @return The maximum number of generated moves
-	 */
-	public int getMaxMoves()
-	{
-		return maxMoves;
-	}
-	/**
-	 * Generic setter method to set the maximum number of moves in a
-	 * search
-	 * @param maxMoves Maximum number of legal moves
-	 */
-	public void setMaxMoves(int maxMoves)
-	{
-		this.maxMoves = maxMoves;
-	}
-	/**
-	 * Generic setter method to set the best move of the Search.
+	 * Generic getter method to get the depth of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
-	 * @param bestMove Best Move of the Search
+	 * @return Depth of the Search
 	 */
-	public void setBestMove(Move bestMove)
+	public int getSearchDepth()
 	{
-		this.bestMove = bestMove;
+		return searchDepth;
+	}
+	/**
+	 * Generic getter method to get the time limit of the Search.
+	 * It, being a private variable, can only be accessed using public
+	 * getter and setter methods.
+	 * @return Time Limit of the Search in milliseconds
+	 */
+	public float getTime()
+	{
+		return time;
 	}
 	/**
 	 * This method generates the legal moves for the current Search object
@@ -365,14 +301,34 @@ public class Search
 			}
 	}
 	/**
-	 * Generic getter method to get the current player of the Search.
+	 * Generic setter method to set the best move of the Search.
 	 * It, being a private variable, can only be accessed using public
 	 * getter and setter methods.
-	 * @return Current player of the Search
+	 * @param bestMove Best Move of the Search
 	 */
-	public Player getCurrentPlayer()
+	public void setBestMove(Move bestMove)
 	{
-		return currentPlayer;
+		this.bestMove = bestMove;
+	}
+	/**
+	 * Generic setter method to set the best score of the Search.
+	 * It, being a private variable, can only be accessed using public
+	 * getter and setter methods.
+	 * @param bestScore Best Score of the Search
+	 */
+	public void setBestScore(float bestScore)
+	{
+		this.bestScore = bestScore;
+	}
+	/**
+	 * Generic setter method to set the current best state of the Search.
+	 * It, being a private variable, can only be accessed using public
+	 * getter and setter methods.
+	 * @param bestState Current Best State of the Search
+	 */
+	public void setBestState(Table bestState)
+	{
+		this.bestState = bestState;
 	}
 	/**
 	 * Generic setter method to set the current player of the Search.
@@ -383,5 +339,69 @@ public class Search
 	public void setCurrentPlayer(Player currentPlayer)
 	{
 		this.currentPlayer = currentPlayer;
+	}
+	/**
+	 * Generic setter method to set the currentScore of the search.
+	 * @param currentScore The current score of the <code>Search</code>
+	 */
+	public void setCurrentScore(float currentScore)
+	{
+		this.currentScore = currentScore;
+	}
+	/**
+	 * Generic setter method of the currentSearchState data member
+	 * @param currentSearchState current search state, as an object of type <code>Table</code>.
+	 */
+	public void setCurrentSearchState(Table currentSearchState)
+	{
+		this.currentSearchState = currentSearchState;
+	}
+	/**
+	 * Generic setter method to set the current state of the Search.
+	 * It, being a private variable, can only be accessed using public
+	 * getter and setter methods.
+	 * @param currentState Current State of the Search
+	 */
+	public void setCurrentState(Table currentState)
+	{
+		this.currentState = currentState;
+	}
+	/**
+	 * Generic setter method to set the maximum number of moves in a
+	 * search
+	 * @param maxMoves Maximum number of legal moves
+	 */
+	public void setMaxMoves(int maxMoves)
+	{
+		this.maxMoves = maxMoves;
+	}
+	/**
+	 * Generic setter method to set the moveStack in a search.
+	 * Not used by me. Simply declared as a good programming practice.
+	 * @param moveStack The stack of moves to be set
+	 */
+	public void setMoveStack(Move[] moveStack)
+	{
+		this.moveStack = moveStack;
+	}
+	/**
+	 * Generic setter method to set the depth of the Search.
+	 * It, being a private variable, can only be accessed using public
+	 * getter and setter methods.
+	 * @param searchDepth Depth of the Search
+	 */
+	public void setSearchDepth(int searchDepth)
+	{
+		this.searchDepth = searchDepth;
+	}
+	/**
+	 * Generic setter method to set the time limit of the Search.
+	 * It, being a private variable, can only be accessed using public
+	 * getter and setter methods.
+	 * @param time Time Limit of the Search in milliseconds
+	 */
+	public void setTime(float time)
+	{
+		this.time = time;
 	}
 }
