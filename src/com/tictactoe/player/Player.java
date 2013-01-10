@@ -59,8 +59,6 @@ public class Player
 		setPlayerName(playerName);
 		setPlayerType("User");
 		setPlayerSign('X');
-		playerCount++;
-		
 	}
 	/**
 	 * Generic getter method to obtain the player's name. Being a private variable,it has
