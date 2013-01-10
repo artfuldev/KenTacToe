@@ -114,7 +114,7 @@ public class Search
 	private double alphaBeta(Table nodeTable, int depth, double alpha, double beta, Player current)
 	{
 		Table node=nodeTable.clone();
-		if((depth==0)||(node.isComplete()!=-1))
+		if((depth==1)||(node.isComplete()!=-1))
 			return node.getScore();
 		Player tempPlayer;
 		if(current.getPlayerType()!="User")
