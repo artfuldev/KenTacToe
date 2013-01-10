@@ -1,5 +1,5 @@
 #KenTacToe
-* Author(s): Kenshin Himura *(Sudarsan Balaji)*, Girish Koundinya *(pending contribution)*
+* Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
 * Application Version: 1.3
 * ReadMe Version: 1.3
