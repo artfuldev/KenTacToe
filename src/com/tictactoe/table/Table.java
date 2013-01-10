@@ -632,8 +632,126 @@ public class Table implements Cloneable
 		score-=getXScore();
 		score-=linesWithoutO();
 		score+=linesWithoutX();
-		score/=10;
+		score+=closeForO();
+		score-=closeForX();
+		score/=100;
 		return score;
+	}
+	/**
+	 * This function returns a quantized value of the closeness
+	 * for X to finish the game.
+	 * @return The closeness for X to finish the game, as a
+	 * double value
+	 */
+	private double closeForX()
+	{
+		double returnValue=0;
+		int closenessCount;
+		for(int i=0;i<noOfRows;i++)
+		{
+			closenessCount=0;
+			for(int j=0;j<noOfCols;j++)
+			{
+				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
+				{
+					closenessCount=0;
+					break;
+				}
+				if(rows[i].getCell(j).getValue()=='-')
+					closenessCount++;
+			}
+			returnValue+=closenessCount*i;
+		}
+		for(int i=0;i<noOfRows;i++)
+		{
+			closenessCount=0;
+			for(int j=0;j<noOfCols;j++)
+			{
+				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
+				{
+					closenessCount=0;
+					break;
+				}
+				if(cols[i].getCell(j).getValue()=='-')
+					closenessCount++;
+			}
+			returnValue+=closenessCount*i;
+		}
+		for(int i=0;i<2;i++)
+		{
+			closenessCount=0;
+			for(int j=0;j<noOfCols;j++)
+			{
+				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
+				{
+					closenessCount=0;
+					break;
+				}
+				if(diags[i].getCell(j).getValue()=='-')
+					closenessCount++;
+			}
+			returnValue+=closenessCount*i;
+		}
+		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
+		return returnValue;
+	}
+	/**
+	 * This function returns a quantized value of the closeness
+	 * for O/P to finish the game.
+	 * @return The closeness for AI to finish the game, as a
+	 * double value
+	 */
+	private double closeForO()
+	{
+		double returnValue=0;
+		int closenessCount;
+		for(int i=0;i<noOfRows;i++)
+		{
+			closenessCount=0;
+			for(int j=0;j<noOfCols;j++)
+			{
+				if(rows[i].getCell(j).getValue()=='X')
+				{
+					closenessCount=0;
+					break;
+				}
+				if(rows[i].getCell(j).getValue()=='-')
+					closenessCount++;
+			}
+			returnValue+=closenessCount*i;
+		}
+		for(int i=0;i<noOfRows;i++)
+		{
+			closenessCount=0;
+			for(int j=0;j<noOfCols;j++)
+			{
+				if(cols[i].getCell(j).getValue()=='X')
+				{
+					closenessCount=0;
+					break;
+				}
+				if(cols[i].getCell(j).getValue()=='-')
+					closenessCount++;
+			}
+			returnValue+=closenessCount*i;
+		}
+		for(int i=0;i<2;i++)
+		{
+			closenessCount=0;
+			for(int j=0;j<noOfCols;j++)
+			{
+				if(diags[i].getCell(j).getValue()=='X')
+				{
+					closenessCount=0;
+					break;
+				}
+				if(diags[i].getCell(j).getValue()=='-')
+					closenessCount++;
+			}
+			returnValue+=closenessCount*i;
+		}
+		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
+		return returnValue;
 	}
 	/**
 	 * This function returns the lines without O in the grid.
@@ -667,7 +785,7 @@ public class Table implements Cloneable
 					break;
 				}
 		returnValue+=count1+count2+count3;
-		returnValue*=Math.pow(10,noOfRows);
+		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
 		return returnValue;
 	}
 	/**
@@ -702,7 +820,7 @@ public class Table implements Cloneable
 					break;
 				}
 		returnValue+=count1+count2+count3;
-		returnValue*=Math.pow(10,noOfRows);
+		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
 		return returnValue;
 	}
 	/**
