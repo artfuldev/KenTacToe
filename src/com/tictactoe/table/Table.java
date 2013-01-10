@@ -621,7 +621,7 @@ public class Table implements Cloneable
 	}
 	/**
 	 * This method is used to get the score of the current Table.
-	 * The score calculation is made here.
+	 * The score calculation is made here (This is the evaluation function).
 	 * **This implementation may be changed in the future.
 	 * @return Score of the table as a float value.
 	 */
@@ -630,7 +630,80 @@ public class Table implements Cloneable
 		score=0;
 		score+=getOScore();
 		score-=getXScore();
+		score-=linesWithoutO();
+		score+=linesWithoutX();
+		score/=10;
 		return score;
+	}
+	/**
+	 * This function returns the lines without O in the grid.
+	 * @return The number of lines along which X can be completed,
+	 * that is, the number of rows, columns and diagonals which don't
+	 * have even a single 'O'. 
+	 */
+	public double linesWithoutO()
+	{
+		double returnValue=0;
+		int count1=noOfRows,count2=noOfCols,count3=2;
+		for(int i=0;i<noOfRows;i++)
+			for(int j=0;j<noOfCols;j++)
+				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
+				{
+					count1--;
+					break;
+				}
+		for(int i=0;i<noOfRows;i++)
+			for(int j=0;j<noOfCols;j++)
+				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
+				{
+					count2--;
+					break;
+				}
+		for(int i=0;i<2;i++)
+			for(int j=0;j<noOfRows;j++)
+				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
+				{
+					count3--;
+					break;
+				}
+		returnValue+=count1+count2+count3;
+		returnValue*=Math.pow(10,noOfRows);
+		return returnValue;
+	}
+	/**
+	 * This function returns the lines without X in the grid.
+	 * @return The number of lines along which O or P can be completed,
+	 * that is, the number of rows, columns and diagonals which don't
+	 * have even a single 'X'. 
+	 */
+	public double linesWithoutX()
+	{
+		double returnValue=0;
+		int count1=noOfRows,count2=noOfCols,count3=2;
+		for(int i=0;i<noOfRows;i++)
+			for(int j=0;j<noOfCols;j++)
+				if(rows[i].getCell(j).getValue()=='X')
+				{
+					count1--;
+					break;
+				}
+		for(int i=0;i<noOfRows;i++)
+			for(int j=0;j<noOfCols;j++)
+				if(cols[i].getCell(j).getValue()=='X')
+				{
+					count2--;
+					break;
+				}
+		for(int i=0;i<2;i++)
+			for(int j=0;j<noOfRows;j++)
+				if(diags[i].getCell(j).getValue()=='X')
+				{
+					count3--;
+					break;
+				}
+		returnValue+=count1+count2+count3;
+		returnValue*=Math.pow(10,noOfRows);
+		return returnValue;
 	}
 	/**
 	 * This function is used to get the X's score of the game.
