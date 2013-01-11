@@ -99,7 +99,6 @@ public class Search
 	{
 		setCurrentState(currentState);
 		setCurrentPlayer(currentPlayer);
-		setSearchDepth(this.currentState.getNoOfDs());
 		setCurrentSearchState(getCurrentState());
 	}
 	/**
@@ -114,7 +113,7 @@ public class Search
 	private double alphaBeta(Table nodeTable, int depth, double alpha, double beta, Player current)
 	{
 		Table node=nodeTable.clone();
-		if((depth==1)||(node.isComplete()!=-1))
+		if((depth==0)||(node.isComplete()!=-1))
 			return node.getScore();
 		Player tempPlayer;
 		if(current.getPlayerType()!="User")
@@ -161,6 +160,7 @@ public class Search
 		for(int i=0;i<maxMoves;i++)
 		{
 			currentSearchState=currentState.makeMove(moveStack[i]);
+			setSearchDepth(currentSearchState.getNoOfDs());
 			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
 			if(currentScore>bestScore)
 			{
