@@ -634,7 +634,7 @@ public class Table implements Cloneable
 		score+=linesWithoutX();
 		score+=closeForO();
 		score-=closeForX();
-		score/=100;
+		score/=10;
 		return score;
 	}
 	/**
@@ -647,7 +647,7 @@ public class Table implements Cloneable
 	{
 		double returnValue=0;
 		int closenessCount;
-		for(int i=0;i<noOfRows;i++)
+		for(int i=(noOfRows-1);i>=0;i--)
 		{
 			closenessCount=0;
 			for(int j=0;j<noOfCols;j++)
@@ -661,8 +661,10 @@ public class Table implements Cloneable
 					closenessCount++;
 			}
 			returnValue+=closenessCount*i;
+			if(closenessCount>0)
+				break;
 		}
-		for(int i=0;i<noOfRows;i++)
+		for(int i=(noOfRows-1);i>=0;i--)
 		{
 			closenessCount=0;
 			for(int j=0;j<noOfCols;j++)
@@ -676,8 +678,10 @@ public class Table implements Cloneable
 					closenessCount++;
 			}
 			returnValue+=closenessCount*i;
+			if(closenessCount>0)
+				break;
 		}
-		for(int i=0;i<2;i++)
+		for(int i=1;i>=0;i--)
 		{
 			closenessCount=0;
 			for(int j=0;j<noOfCols;j++)
@@ -691,6 +695,8 @@ public class Table implements Cloneable
 					closenessCount++;
 			}
 			returnValue+=closenessCount*i;
+			if(closenessCount>0)
+				break;
 		}
 		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
 		return returnValue;
@@ -705,7 +711,7 @@ public class Table implements Cloneable
 	{
 		double returnValue=0;
 		int closenessCount;
-		for(int i=0;i<noOfRows;i++)
+		for(int i=(noOfRows-1);i>=0;i--)
 		{
 			closenessCount=0;
 			for(int j=0;j<noOfCols;j++)
@@ -719,8 +725,10 @@ public class Table implements Cloneable
 					closenessCount++;
 			}
 			returnValue+=closenessCount*i;
+			if(closenessCount>0)
+				break;
 		}
-		for(int i=0;i<noOfRows;i++)
+		for(int i=(noOfRows-1);i>=0;i--)
 		{
 			closenessCount=0;
 			for(int j=0;j<noOfCols;j++)
@@ -734,8 +742,10 @@ public class Table implements Cloneable
 					closenessCount++;
 			}
 			returnValue+=closenessCount*i;
+			if(closenessCount>0)
+				break;
 		}
-		for(int i=0;i<2;i++)
+		for(int i=1;i>=0;i--)
 		{
 			closenessCount=0;
 			for(int j=0;j<noOfCols;j++)
@@ -749,6 +759,8 @@ public class Table implements Cloneable
 					closenessCount++;
 			}
 			returnValue+=closenessCount*i;
+			if(closenessCount>0)
+				break;
 		}
 		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
 		return returnValue;
