@@ -634,7 +634,7 @@ public class Table implements Cloneable
 		score+=linesWithoutX();
 		score+=closeForO();
 		score-=closeForX();
-		score/=10;
+		score/=100;
 		return score;
 	}
 	/**
@@ -646,56 +646,74 @@ public class Table implements Cloneable
 	private double closeForX()
 	{
 		double returnValue=0;
-		int closenessCount;
-		for(int i=(noOfRows-1);i>=0;i--)
+		int closenessCount,count1,count2;
+		for(int i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
+			count1=0;
+			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
+				if(rows[i].getCell(j).getValue()=='X')
+					count1++;
 				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
 				{
-					closenessCount=0;
+					count1=0;
 					break;
 				}
 				if(rows[i].getCell(j).getValue()=='-')
-					closenessCount++;
+					count2++;
 			}
-			returnValue+=closenessCount*i;
-			if(closenessCount>0)
+			if(count1!=0)
+				closenessCount=count1+count2;
+			returnValue+=closenessCount;
+			if(closenessCount!=0)
 				break;
 		}
-		for(int i=(noOfRows-1);i>=0;i--)
+		for(int i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
+			count1=0;
+			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
+				if(cols[i].getCell(j).getValue()=='X')
+					count1++;
 				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
 				{
-					closenessCount=0;
+					count1=0;
 					break;
 				}
 				if(cols[i].getCell(j).getValue()=='-')
-					closenessCount++;
+					count2++;
 			}
-			returnValue+=closenessCount*i;
-			if(closenessCount>0)
+			if(count1!=0)
+				closenessCount=count1+count2;
+			returnValue+=closenessCount;
+			if(closenessCount!=0)
 				break;
 		}
-		for(int i=1;i>=0;i--)
+		for(int i=0;i<2;i++)
 		{
 			closenessCount=0;
+			count1=0;
+			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
+				if(diags[i].getCell(j).getValue()=='X')
+					count1++;
 				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
 				{
-					closenessCount=0;
+					count1=0;
 					break;
 				}
 				if(diags[i].getCell(j).getValue()=='-')
-					closenessCount++;
+					count2++;
 			}
-			returnValue+=closenessCount*i;
-			if(closenessCount>0)
+			if(count1!=0)
+				closenessCount=count1+count2;
+			returnValue+=closenessCount;
+			if(closenessCount!=0)
 				break;
 		}
 		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
@@ -710,56 +728,74 @@ public class Table implements Cloneable
 	private double closeForO()
 	{
 		double returnValue=0;
-		int closenessCount;
-		for(int i=(noOfRows-1);i>=0;i--)
+		int closenessCount,count1,count2;
+		for(int i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
+			count1=0;
+			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
+				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
+					count1++;
 				if(rows[i].getCell(j).getValue()=='X')
 				{
-					closenessCount=0;
+					count1=0;
 					break;
 				}
 				if(rows[i].getCell(j).getValue()=='-')
-					closenessCount++;
+						count2++;
 			}
-			returnValue+=closenessCount*i;
-			if(closenessCount>0)
+			if(count1!=0)
+				closenessCount=count1+count2;
+			returnValue+=closenessCount;
+			if(closenessCount!=0)
 				break;
 		}
-		for(int i=(noOfRows-1);i>=0;i--)
+		for(int i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
+			count1=0;
+			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
+				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
+					count1++;
 				if(cols[i].getCell(j).getValue()=='X')
 				{
-					closenessCount=0;
+					count1=0;
 					break;
 				}
 				if(cols[i].getCell(j).getValue()=='-')
-					closenessCount++;
+					count2++;
 			}
-			returnValue+=closenessCount*i;
-			if(closenessCount>0)
+			if(count1!=0)
+				closenessCount=count1+count2;
+			returnValue+=closenessCount;
+			if(closenessCount!=0)
 				break;
 		}
-		for(int i=1;i>=0;i--)
+		for(int i=0;i<2;i++)
 		{
 			closenessCount=0;
+			count1=0;
+			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
+				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
+					count1++;
 				if(diags[i].getCell(j).getValue()=='X')
 				{
-					closenessCount=0;
+					count1=0;
 					break;
 				}
 				if(diags[i].getCell(j).getValue()=='-')
-					closenessCount++;
+					count2++;
 			}
-			returnValue+=closenessCount*i;
-			if(closenessCount>0)
+			if(count1!=0)
+				closenessCount=count1+count2;
+			returnValue+=closenessCount;
+			if(closenessCount!=0)
 				break;
 		}
 		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
@@ -843,7 +879,7 @@ public class Table implements Cloneable
 	{
 		double returnValue=0;
 		int count1,count2,count3;
-		for(int i=1;i<noOfRows;i++)
+		for(int i=1;i<=noOfRows;i++)
 		{
 			count1=0;
 			count2=0;
@@ -865,9 +901,7 @@ public class Table implements Cloneable
 				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
 			if(count3>i)
 				returnValue+=(Math.pow((sizeOfTable+1),i)*i);				
-		}		
-		if(isComplete()==1)
-			returnValue+=(Math.pow((sizeOfTable+1),noOfRows)*noOfRows);
+		}
 		return returnValue;
 	}
 	/**
@@ -878,7 +912,7 @@ public class Table implements Cloneable
 	{
 		double returnValue=0;
 		int count1,count2,count3,index;
-		for(int i=1;i<noOfRows;i++)
+		for(int i=1;i<=noOfRows;i++)
 		{
 			count1=0;
 			count2=0;
@@ -906,9 +940,7 @@ public class Table implements Cloneable
 				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
 			if(count3>i)
 				returnValue+=(Math.pow((sizeOfTable+1),i)*i);
-		}			
-		if(isComplete()==0)
-			returnValue+=(Math.pow((sizeOfTable+1),noOfRows)*noOfRows);
+		}
 		return returnValue;
 	}
 	/**
