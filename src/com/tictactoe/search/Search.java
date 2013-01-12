@@ -23,6 +23,10 @@ public class Search
 	 */
 	private Move bestMove;
 	/**
+	 * Holds the infinity value for the corresponding table.
+	 */
+	private double infinity;
+	/**
 	 * Used to hold the score of the best state found so far in the search.
 	 */
 	private double bestScore;
@@ -88,7 +92,7 @@ public class Search
 		
 	}
 	/**
-	 * Since the <code>Search</code> class is independant of other classes, viz.
+	 * Since the <code>Search</code> class is independent of other classes, viz.
 	 * Player, Game and Table, the current player and the current state of the
 	 * game must be passed on to the constructor to properly initialize an
 	 * instantiation of this class.
@@ -113,8 +117,12 @@ public class Search
 	private double alphaBeta(Table nodeTable, int depth, double alpha, double beta, Player current)
 	{
 		Table node=nodeTable.clone();
-		if((depth==0)||(node.isComplete()!=-1))
+		if(depth==0)
 			return node.getScore();
+		if(node.isComplete()==0)
+			return (infinity-1);
+		if(node.isComplete()==1)
+			return -(infinity-1);
 		Player tempPlayer;
 		if(current.getPlayerType()!="User")
 			tempPlayer=new Player("Temp");
@@ -153,7 +161,7 @@ public class Search
 	 */
 	public Move getBestMove()
 	{
-		double infinity=Math.pow((currentState.getSizeOfTable()+1),(currentState.getNoOfRows()+1));
+		infinity=Math.pow((currentState.getSizeOfTable()+1),(currentState.getNoOfRows()+1));
 		bestScore=-infinity;
 		currentScore=bestScore;
 		moveGen();
