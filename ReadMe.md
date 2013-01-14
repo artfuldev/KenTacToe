@@ -20,6 +20,7 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 * Minor bugfixes in search function.
 * Minor corrections in evaluation and search code.
 * Rewritten large volumes of code to implement these choice based decisions in Game, Player, Table, Search and Main classes.
+* AI still buggy a bit, because evaluation function remains unchanged in core functionality from  version 1.5.
 
 ###Version 1.5
 * Updated evaluation function.
