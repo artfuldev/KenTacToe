@@ -90,6 +90,32 @@ public class Game
 		currentSearch=new Search();
 	}
 	/**
+	 * This is the constructor to be called in the main function of the program,
+	 * if the grid size can be chosen, and when the player wants to be able to
+	 * choose to be the first or the second player.
+	 * It takes in three parameters to personalize the game more effectively
+	 * by taking a parameter for the name of the player and a grid size
+	 * and an integer to decide whether the user needs to be player one or two.
+	 * @param gridSize Size of the grid used in the game (no of rows (or)
+	 * no of columns (ie) both must be equal).
+	 * @param userName Name of the Player
+	 */
+	public Game(int gridSize,String userName,int turn)
+	{
+		gameGrid=new Table(gridSize,gridSize);
+		if(turn==1)
+		{
+			playerOne=new Player(userName);
+			playerTwo=new Player();
+		}
+		else
+		{
+			playerOne=new Player();
+			playerTwo=new Player(userName);
+		}
+		currentSearch=new Search();
+	}
+	/**
 	 * This is the constructor called in the main function of the program.
 	 * It takes in a string parameter to personalize the game more effectively
 	 * by taking a parameter for the name of the player. Creates a 3x3 grid.
@@ -141,7 +167,7 @@ public class Game
 			do{
 				do{
 					if((index<0)||(index>gameGrid.getSizeOfTable()))
-						System.out.println("Please enter valid values for index (0-9).");
+						System.out.println("Please enter valid values for index (0-"+gameGrid.getSizeOfTable()+").");
 					if(!gameGrid.isEmpty(index-1))
 						System.out.println("Please enter the index of an empty box.");
 					System.out.println("Enter the index of the box you want to sign, "+currentPlayer.getPlayerName()+":");
@@ -169,9 +195,9 @@ public class Game
 		for(int i=0;((gameOver==false)&&(i<gameGrid.getSizeOfTable()));i++)
 			getInput();
 		if(gameGrid.isComplete()==1)
-			System.out.println("User won!");
+			System.out.println(playerOne.getPlayerName()+"("+playerOne.getPlayerType()+") won!");
 		else if(gameGrid.isComplete()==0)
-			System.out.println("AI won!");
+			System.out.println(playerTwo.getPlayerName()+"("+playerTwo.getPlayerType()+") won!");
 		else
 			System.out.println("Game drawn!");
 	}

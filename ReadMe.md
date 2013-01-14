@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 1.5
+* Application Version: 1.6
 * ReadMe Version: 1.3
 
 ##Description
@@ -12,6 +12,14 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 
 
 ##Updates
+
+###Version 1.6
+* Now game asks user for choice between playing as X or as O. AI works for any one.
+* Now game asks user to choose grid size, not just 3x3 games anymore.
+* Updated evaluation function and search function to work with all board sizes, and AI can play both as X and O.
+* Minor bugfixes in search function.
+* Minor corrections in evaluation and search code.
+* Rewritten large volumes of code to implement these choice based decisions in Game, Player, Table, Search and Main classes.
 
 ###Version 1.5
 * Updated evaluation function.
