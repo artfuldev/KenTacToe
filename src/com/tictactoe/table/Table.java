@@ -621,19 +621,20 @@ public class Table implements Cloneable
 	}
 	/**
 	 * This method is used to get the score of the current Table.
+	 * Score is returned as a double value, from X's perspective of the game at
+	 * all times.
 	 * The score calculation is made here (This is the evaluation function).
-	 * **This implementation may be changed in the future.
-	 * @return Score of the table as a float value.
+	 * @return Score of the table as a double value.
 	 */
 	public double getScore()
 	{
 		score=0;
-		score+=getOScore();
-		score-=getXScore();
-		score-=linesWithoutO();
-		score+=linesWithoutX();
-		score+=closeForO();
-		score-=closeForX();
+		score-=getOScore();
+		score+=getXScore();
+		score+=linesWithoutO();
+		score-=linesWithoutX();
+		score-=closeForO();
+		score+=closeForX();
 		score/=100;
 		return score;
 	}
@@ -656,7 +657,7 @@ public class Table implements Cloneable
 			{
 				if(rows[i].getCell(j).getValue()=='X')
 					count1++;
-				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
+				if(rows[i].getCell(j).getValue()=='O')
 				{
 					count1=0;
 					break;
@@ -679,7 +680,7 @@ public class Table implements Cloneable
 			{
 				if(cols[i].getCell(j).getValue()=='X')
 					count1++;
-				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
+				if(cols[i].getCell(j).getValue()=='O')
 				{
 					count1=0;
 					break;
@@ -702,7 +703,7 @@ public class Table implements Cloneable
 			{
 				if(diags[i].getCell(j).getValue()=='X')
 					count1++;
-				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
+				if(diags[i].getCell(j).getValue()=='O')
 				{
 					count1=0;
 					break;
@@ -722,7 +723,7 @@ public class Table implements Cloneable
 	/**
 	 * This function returns a quantized value of the closeness
 	 * for O/P to finish the game.
-	 * @return The closeness for AI to finish the game, as a
+	 * @return The closeness for O to finish the game, as a
 	 * double value
 	 */
 	private double closeForO()
@@ -736,7 +737,7 @@ public class Table implements Cloneable
 			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
-				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
+				if(rows[i].getCell(j).getValue()=='O')
 					count1++;
 				if(rows[i].getCell(j).getValue()=='X')
 				{
@@ -759,7 +760,7 @@ public class Table implements Cloneable
 			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
-				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
+				if(cols[i].getCell(j).getValue()=='O')
 					count1++;
 				if(cols[i].getCell(j).getValue()=='X')
 				{
@@ -782,7 +783,7 @@ public class Table implements Cloneable
 			count2=0;
 			for(int j=0;j<noOfCols;j++)
 			{
-				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
+				if(diags[i].getCell(j).getValue()=='O')
 					count1++;
 				if(diags[i].getCell(j).getValue()=='X')
 				{
@@ -813,21 +814,21 @@ public class Table implements Cloneable
 		int count1=noOfRows,count2=noOfCols,count3=2;
 		for(int i=0;i<noOfRows;i++)
 			for(int j=0;j<noOfCols;j++)
-				if((rows[i].getCell(j).getValue()=='O')||(rows[i].getCell(j).getValue()=='P'))
+				if(rows[i].getCell(j).getValue()=='O')
 				{
 					count1--;
 					break;
 				}
 		for(int i=0;i<noOfRows;i++)
 			for(int j=0;j<noOfCols;j++)
-				if((cols[i].getCell(j).getValue()=='O')||(cols[i].getCell(j).getValue()=='P'))
+				if(cols[i].getCell(j).getValue()=='O')
 				{
 					count2--;
 					break;
 				}
 		for(int i=0;i<2;i++)
 			for(int j=0;j<noOfRows;j++)
-				if((diags[i].getCell(j).getValue()=='O')||(diags[i].getCell(j).getValue()=='P'))
+				if(diags[i].getCell(j).getValue()=='O')
 				{
 					count3--;
 					break;
@@ -838,7 +839,7 @@ public class Table implements Cloneable
 	}
 	/**
 	 * This function returns the lines without X in the grid.
-	 * @return The number of lines along which O or P can be completed,
+	 * @return The number of lines along which O can be completed,
 	 * that is, the number of rows, columns and diagonals which don't
 	 * have even a single 'X'. 
 	 */
@@ -906,7 +907,7 @@ public class Table implements Cloneable
 	}
 	/**
 	 * This function is used to get the O's score of the game.
-	 * @return O's score(AI)
+	 * @return O's score
 	 */
 	public double getOScore()
 	{
