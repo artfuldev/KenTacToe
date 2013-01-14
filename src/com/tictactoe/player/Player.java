@@ -7,8 +7,6 @@ package com.tictactoe.player;
  * implementation has very few important attributes to make use of.
  * Name and Type are a must. Sign of the player is also required
  * (players sign in the boxes in Tic Tac Toe).
- * Additionally, a static variable to count the number of Players
- * may be used (if 2 AI are used, for training, etc.)
  * @author Kenshin Himura
  *
  */
@@ -26,26 +24,29 @@ public class Player
 	 */
 	private String playerType;
 	/**
-	 * Holds the sign of the player. Whether he signs as X, O or as P. Used to
+	 * Holds the sign of the player. Whether he signs as X or O. Used to
 	 * update tables.
 	 */
 	private char playerSign;
 	/**
-	 * Keeps count of the number of players to properly set the name of the
-	 * AI player(s). Also helps in choosing a sign for the AI player(s).
+	 * Keeps count of the number of players to properly set the name and sign of 
+	 * both the user and the AI player.
 	 */
 	static private int playerCount=1;
 	/**
 	 * Default constructor of <code>Player</code> class. Used for instantiating
 	 * AI players. Reduced complexity as of now, as it generates default names
-	 * automatically. Also sets the AI player's sign to 'O' if first player of
-	 * the game or 'P' if it is the second player.
+	 * automatically. Also sets the AI player's sign to 'X' if first player of
+	 * the game or 'O' if it is the second player.
 	 */
 	public Player()
 	{
 		setPlayerName("DefaultPlayer"+playerCount);
 		setPlayerType("AI");
-		setPlayerSign((char)('O'+playerCount-1));
+		if((playerCount%2)==1)
+			setPlayerSign('X');
+		else
+			setPlayerSign('O');
 		playerCount++;
 	}
 	/**
@@ -58,7 +59,11 @@ public class Player
 	{
 		setPlayerName(playerName);
 		setPlayerType("User");
-		setPlayerSign('X');
+		if((playerCount%2)==1)
+			setPlayerSign('X');
+		else
+			setPlayerSign('O');
+		playerCount++;
 	}
 	/**
 	 * Generic getter method to obtain the player's name. Being a private variable,it has
