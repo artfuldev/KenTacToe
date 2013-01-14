@@ -104,6 +104,7 @@ public class Search
 		setCurrentState(currentState);
 		setCurrentPlayer(currentPlayer);
 		setCurrentSearchState(getCurrentState());
+		setSearchDepth(currentState.getNoOfDs()-1);
 	}
 	/**
 	 * Mini-max with alpha beta pruning to determine best score and move
@@ -117,12 +118,8 @@ public class Search
 	private double alphaBeta(Table nodeTable, int depth, double alpha, double beta, Player current)
 	{
 		Table node=nodeTable.clone();
-		if(depth==0)
+		if((depth==0)||(node.isComplete()!=-1))
 			return node.getScore();
-		if(node.isComplete()==0)
-			return (infinity-1);
-		if(node.isComplete()==1)
-			return -(infinity-1);
 		Player tempPlayer;
 		if(current.getPlayerType()!="User")
 			tempPlayer=new Player("Temp");
@@ -130,7 +127,7 @@ public class Search
 			tempPlayer=new Player();
 		Search tempSearch=new Search(node, tempPlayer);
 		tempSearch.moveGen();
-		if(tempPlayer.getPlayerType()=="User")
+		if(tempPlayer.getPlayerSign()=='O')
 		{
 			for(int i=0;i<tempSearch.getMaxMoves();i++)
 			{
@@ -168,7 +165,6 @@ public class Search
 		for(int i=0;i<maxMoves;i++)
 		{
 			currentSearchState=currentState.makeMove(moveStack[i]);
-			setSearchDepth(currentSearchState.getNoOfDs());
 			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
 			if(currentScore>bestScore)
 			{
