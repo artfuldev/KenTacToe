@@ -455,9 +455,14 @@ public class Table implements Cloneable
 	 */
 	private int sizeOfTable;
 	/**
-	 * Represents the score of the table as a signed double value.
+	 * Represents the score of the table as a signed double value,
+	 * from X's perspective.
 	 */
 	private double score=0;
+	/**
+	 * Holds the winning score of the table, from X's perspective.
+	 */
+	private double winScore;
 	/**
 	 * Default Constructor of <code>Table</code> class.
 	 * Never used, simply defined to define parameterized constructors.
@@ -491,6 +496,7 @@ public class Table implements Cloneable
 		diags=new Diag[2];
 		for(int i=0;i<2;i++)
 			diags[i]=new Diag();
+		setWinScore(Math.pow(sizeOfTable+1, sizeOfTable+1)-1);
 		init();
 	}
 	/**
@@ -645,6 +651,9 @@ public class Table implements Cloneable
 	 * eg, if there is a fork, the winning chance of the forking side is 2 in a 3x3
 	 * game. Consequently in an nxn game, there may be many moves which may produce
 	 * more than one winning chance.
+	 * Specifically, it calculates the number of winning chances for X and then O
+	 * and then returns the difference, multiplied by the one with a greater
+	 * closeness to finish the game.
 	 * @return The winning chances, positive if there are more winning chances for
 	 * X and negative if there are more winning chances for O, as scoring is done
 	 * from X's perspective always.
@@ -1011,6 +1020,23 @@ public class Table implements Cloneable
 	public int getSizeOfTable()
 	{
 		return sizeOfTable;
+	}
+	/**
+	 * Generic getter method for accessing the winning score of a particular
+	 * table after it has been created.
+	 * @return The winning score of the table, from X's perspective
+	 */
+	public double getWinScore() {
+		return winScore;
+	}
+	/**
+	 * Generic setter method to set the value of the private variable
+	 * winScore of the Table. Defined as good programming practice and
+	 * used during construction.
+	 * @param winScore The winning score of the table.
+	 */
+	public void setWinScore(double winScore) {
+		this.winScore = winScore;
 	}
 	/**
 	 * A makeMove method, but this one returns the resulting table.
