@@ -107,6 +107,26 @@ public class Search
 		setSearchDepth(currentState.getNoOfDs()-1);
 	}
 	/**
+	 * Since the <code>Search</code> class is independent of other classes, viz.
+	 * Player, Game and Table, the current player and the current state of the
+	 * game must be passed on to the constructor to properly initialize an
+	 * instantiation of this class. Additionally, a definite search depth parameter
+	 * can be passed, if need be.
+	 * @param currentState Current State of the Game (Type <code>Table</code>)
+	 * @param currentPlayer Current Player of the Game (Type <code>Player</code>)
+	 * @param searchDepth Depth of search, mentioned in half-plies (or half-moves)
+	 */
+	public Search(Table currentState,Player currentPlayer, int searchDepth)
+	{
+		setCurrentState(currentState);
+		setCurrentPlayer(currentPlayer);
+		setCurrentSearchState(getCurrentState());
+		if(searchDepth<(currentState.getNoOfDs()-1))
+			setSearchDepth(searchDepth);
+		else
+			setSearchDepth(currentState.getNoOfDs()-1);
+	}
+	/**
 	 * Mini-max with alpha beta pruning to determine best score and move
 	 * @param nodeTable Current node of search tree
 	 * @param depth Depth of search

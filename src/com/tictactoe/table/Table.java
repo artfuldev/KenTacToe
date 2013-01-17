@@ -912,7 +912,7 @@ public class Table implements Cloneable
 	public double getOScore()
 	{
 		double returnValue=0;
-		int count1,count2,count3,index;
+		int count1,count2,count3;
 		for(int i=1;i<=noOfRows;i++)
 		{
 			count1=0;
@@ -922,17 +922,13 @@ public class Table implements Cloneable
 			{
 				for(int k=0;k<noOfCols;k++)
 				{
-					index=(j*noOfRows)+k;
-					if(!isEmpty(index))
-					{
-						if(rows[j].getCell(k).getValue()!='X')
-							count1++;
-						if(cols[j].getCell(k).getValue()!='X')
-							count2++;
-						if(j<2)
-							if(diags[j].getCell(k).getValue()!='X')
-								count3++;
-					}
+					if(rows[j].getCell(k).getValue()=='O')
+						count1++;
+					if(cols[j].getCell(k).getValue()=='O')
+						count2++;
+					if(j<2)
+						if(diags[j].getCell(k).getValue()=='O')
+							count3++;
 				}
 			}
 			if(count1>i)
