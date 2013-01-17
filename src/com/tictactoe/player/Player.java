@@ -51,7 +51,7 @@ public class Player
 	}
 	/**
 	 * Constructor of the <code>Player</code> class used to instantiate a Player
-	 * of type "User" with a specified name. Also sets the player's sign to 'X'.
+	 * of type "User" with a specified name. Also sets the player's sign.
 	 * Currently only one human player per game can be created.
 	 * @param playerName Name of the player to be created.
 	 */

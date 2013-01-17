@@ -19,7 +19,10 @@ public class Main
 		int turnNumber=inputStream.nextInt();
 		System.out.println("Enter grid size you want to play in (n means nxn grid):");
 		int gridSize=inputStream.nextInt();
-		Game ticTacToe=new Game(gridSize,userName,turnNumber);
+		System.out.println("Enter search depth (zero or negative values take" +
+				"default search depth as moves available):");
+		int searchDepth=inputStream.nextInt();
+		Game ticTacToe=new Game(gridSize, userName, turnNumber, searchDepth);
 		ticTacToe.init();
 		ticTacToe.play();
 		inputStream.close();

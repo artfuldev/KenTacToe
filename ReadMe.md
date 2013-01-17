@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 1.6
+* Application Version: 1.7
 * ReadMe Version: 1.3
 
 ##Description
@@ -12,6 +12,13 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 
 
 ##Updates
+
+###Version 1.7
+* Now game asks for search depth, to implement fixed search depth in cases where grid size varies.
+* Invalid search depths are corrected with default values.
+* Wrote new constructors and callers to implement search depth functionality utilization.
+* Corrected evaluation function, now symmetric boards (same chance for winning for both X and O) give an evaluation score of "0.0".
+* AI still buggy a bit, have to investigate.
 
 ###Version 1.6
 * Now game asks user for choice between playing as X or as O. AI works for any one.
