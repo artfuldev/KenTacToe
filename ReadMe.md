@@ -8,7 +8,7 @@
 A basic Tic Tac Toe (TTT) game engine able to present an AI capable of playing Tic Tac Toe with humans on boards upto 11x11 boxes.
 The entire game engine has been completed. Game has grid and players and is made up of moves and searches.
 Game has minimax search with alpha-beta pruning and an evaluation function which has the capability to work in any grid size.
-*See **Misc** section of Updates for further information.*
+*See __Misc__ section of Updates for further information.*
 
 ##Updates
 
