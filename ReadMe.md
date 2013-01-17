@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 1.7
+* Application Version: 1.8
 * ReadMe Version: 1.3
 
 ##Description
@@ -12,6 +12,11 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 
 
 ##Updates
+
+###Version 1.8
+* Updated Evaluation Function.
+* Fixed the buggy AI (at last!).
+* Minor bug fixes.
 
 ###Version 1.7
 * Now game asks for search depth, to implement fixed search depth in cases where grid size varies.
