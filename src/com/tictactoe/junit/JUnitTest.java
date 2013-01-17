@@ -12,17 +12,17 @@ public class JUnitTest {
 	public void test() {
 		Table t=new Table(3,3);
 		t.updateTable(0,'X');
-		//t.updateTable(1,'X');
-		//t.updateTable(2,'O');
-		t.updateTable(3,'O');
-		//t.updateTable(4,'O');
-		t.updateTable(5,'X');
-		//t.updateTable(6,'O');
-		//t.updateTable(7,'X');
-		t.updateTable(8,'O');
+		t.updateTable(1,'X');
+		t.updateTable(2,'O');
+		t.updateTable(3,'X');
+		t.updateTable(4,'O');
+		//t.updateTable(5,'O');
+		t.updateTable(6,'O');
+		//t.updateTable(7,'O');
+		//t.updateTable(8,'O');
 		System.out.println(t.getScore());
 		System.out.println(t.isComplete());
-		assertEquals("Done",40000,t.getScore(),180000);
+		assertEquals("Done",10E9,t.getScore(),20E9);
 		t.printTable();
 	}
 

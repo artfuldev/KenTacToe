@@ -140,14 +140,14 @@ public class Search
 		Table node=nodeTable.clone();
 		if((depth==0)||(node.isComplete()!=-1))
 			return node.getScore();
-		Player tempPlayer;
-		if(current.getPlayerType()!="User")
-			tempPlayer=new Player("Temp");
+		Player tempPlayer=new Player();
+		if(current.getPlayerSign()=='X')
+			tempPlayer.setPlayerSign('O');
 		else
-			tempPlayer=new Player();
+			tempPlayer.setPlayerSign('X');
 		Search tempSearch=new Search(node, tempPlayer);
 		tempSearch.moveGen();
-		if(tempPlayer.getPlayerSign()=='O')
+		if(tempPlayer.getPlayerSign()=='X')
 		{
 			for(int i=0;i<tempSearch.getMaxMoves();i++)
 			{
@@ -178,19 +178,43 @@ public class Search
 	 */
 	public Move getBestMove()
 	{
-		infinity=Math.pow((currentState.getSizeOfTable()+1),(currentState.getNoOfRows()+1));
+		infinity=Math.pow((currentState.getSizeOfTable()+1),(currentState.getSizeOfTable()+1));
+		double winScore=infinity-1;
 		bestScore=-infinity;
+		if(currentPlayer.getPlayerSign()=='O')
+		{
+			winScore=-infinity+1;
+			bestScore=infinity;
+		}
 		currentScore=bestScore;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
 		{
 			currentSearchState=currentState.makeMove(moveStack[i]);
-			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
-			if(currentScore>bestScore)
+			currentSearchState.printTable();
+			if(currentSearchState.getScore()==winScore)
 			{
-				setBestScore(currentScore);
+				setBestScore(currentSearchState.getScore());
 				setBestMove(moveStack[i]);
+				return bestMove;
 			}
+			System.out.println(currentSearchState.getScore());
+			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
+			System.out.println(currentScore);
+			if(currentPlayer.getPlayerSign()=='O')
+			{
+				if(currentScore<bestScore)
+				{
+					setBestScore(currentScore);
+					setBestMove(moveStack[i]);
+				}
+			}
+			else
+				if(currentScore>bestScore)
+				{
+					setBestScore(currentScore);
+					setBestMove(moveStack[i]);
+				}
 		}
 		return bestMove;
 	}
@@ -310,7 +334,7 @@ public class Search
 			int j=-1;
 			for(int i=0;i<maxMoves;i++)
 			{
-				for(;j<8;)
+				for(;j<(currentSearchState.getSizeOfTable()-1);)
 				{
 					j++;
 					if(currentSearchState.isEmpty(j))
