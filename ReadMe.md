@@ -1,23 +1,23 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 1.9.1
-* ReadMe Version: 1.4
+* Application Version: 2.0
+* ReadMe Version: 1.5
 
 ##Description
-A basic Tic Tac Toe (TTT) game engine with a vision to be able to present an AI capable of playing Tic Tac Toe with humans on boards upto 255x255 boxes.
-Only basic framework has been built.
-Game has grid and players and is made up of moves and searches.
-Game has minimax search with alpha-beta pruning. Still a bit buggy though.
-
+A basic Tic Tac Toe (TTT) game engine able to present an AI capable of playing Tic Tac Toe with humans on boards upto 11x11 boxes.
+The entire game engine has been completed. Game has grid and players and is made up of moves and searches.
+Game has minimax search with alpha-beta pruning and an evaluation function which has the capability to work in any grid size.
+*See **Misc** section of Updates for further information.*
 
 ##Updates
 
-###Version 1.9.1
+###Version 2.0
 * Removed debug Messages.
 * Added exported Executable-JAR file.
+* All aims of project achieved. Hopefully no more TODO's until requests from others. :)
 
-####Version 1.9
+###Version 1.9
 * Various optimizations.
 * Restructured various functions and their definitions.
 * Minor stability updates.
@@ -79,9 +79,10 @@ Game has minimax search with alpha-beta pruning. Still a bit buggy though.
 ###Misc
 * Efforts have taken to make the source code readable by adding comments wherever absolutely required.
 * Additional commentary will be provided if required (or on request).
-* Prime aim of this project is to make legible and understandable well-commented code, but that doesn't mean every line of code has been commented. If additional assistance is required by anyone reading the code, please do post a message asking for such assistance as can be provided (basically, more comments in the source code, that's all!).
+* An important aim of this project is to make legible and understandable well-commented code, but that doesn't mean every line of code has been commented. If additional assistance is required by anyone reading the code, please do post a message asking for such assistance as can be provided (basically, more comments in the source code, that's all!).
 * ReadMe updated to reflect version changes chronologially now.
+* With version 2.0, the main aim of the project has been accomplished. Further optimization suggestions are welcome.
+* Description updated stating 11x11 boxes instead of the original vision of 255x255 boxes, due to the limitations placed on the double data type used to calculate the score. To provide for more boxes, either the evaulation function should be modified or something else has to be done. Mmmm, not sure. Let's leave it as such. Isn't playing on 11x11 boxes enough? :D
 
 ##Visions
-* PVS with Alpha Beta Negamax approach envisioned.
-* Play on any grid size (supported by int data type!).
+* Optimizations of any sort on the existing code.
