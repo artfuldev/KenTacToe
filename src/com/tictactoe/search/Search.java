@@ -178,14 +178,11 @@ public class Search
 	 */
 	public Move getBestMove()
 	{
-		infinity=Math.pow((currentState.getSizeOfTable()+1),(currentState.getSizeOfTable()+1));
-		double winScore=infinity-1;
-		bestScore=-infinity;
+		infinity=currentState.getWinScore()+1;
+		double winScore=currentState.getWinScore();
 		if(currentPlayer.getPlayerSign()=='O')
-		{
-			winScore=-infinity+1;
-			bestScore=infinity;
-		}
+			winScore*=-1;
+		bestScore=-infinity;
 		currentScore=bestScore;
 		moveGen();
 		for(int i=0;i<maxMoves;i++)
@@ -198,23 +195,14 @@ public class Search
 				setBestMove(moveStack[i]);
 				return bestMove;
 			}
-			System.out.println(currentSearchState.getScore());
 			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
-			System.out.println(currentScore);
 			if(currentPlayer.getPlayerSign()=='O')
+				currentScore*=-1;
+			if(currentScore>bestScore)
 			{
-				if(currentScore<bestScore)
-				{
-					setBestScore(currentScore);
-					setBestMove(moveStack[i]);
-				}
+				setBestScore(currentScore);
+				setBestMove(moveStack[i]);
 			}
-			else
-				if(currentScore>bestScore)
-				{
-					setBestScore(currentScore);
-					setBestMove(moveStack[i]);
-				}
 		}
 		return bestMove;
 	}
