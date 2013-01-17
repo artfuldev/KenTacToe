@@ -188,7 +188,6 @@ public class Search
 		for(int i=0;i<maxMoves;i++)
 		{
 			currentSearchState=currentState.makeMove(moveStack[i]);
-			currentSearchState.printTable();
 			if(currentSearchState.getScore()==winScore)
 			{
 				setBestScore(currentSearchState.getScore());
