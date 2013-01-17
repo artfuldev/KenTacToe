@@ -11,7 +11,7 @@ public class JUnitTest {
 	@Test
 	public void test() {
 		Table t=new Table(3,3);
-		//t.updateTable(0,'X');
+		t.updateTable(0,'X');
 		//t.updateTable(1,'X');
 		//t.updateTable(2,'O');
 		t.updateTable(3,'O');
@@ -19,7 +19,7 @@ public class JUnitTest {
 		t.updateTable(5,'X');
 		//t.updateTable(6,'O');
 		//t.updateTable(7,'X');
-		//t.updateTable(8,'X');
+		t.updateTable(8,'O');
 		System.out.println(t.getScore());
 		System.out.println(t.isComplete());
 		assertEquals("Done",40000,t.getScore(),180000);
