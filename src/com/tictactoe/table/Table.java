@@ -628,26 +628,31 @@ public class Table implements Cloneable
 	 */
 	public double getScore()
 	{
+		if(isComplete()==1)
+			return (Math.pow(sizeOfTable+1,sizeOfTable+1)-1);
+		if(isComplete()==0)
+			return -(Math.pow(sizeOfTable+1,sizeOfTable+1)-1);
 		score=0;
 		score-=getOScore();
 		score+=getXScore();
 		score+=linesWithoutO();
 		score-=linesWithoutX();
-		score-=closeForO();
-		score+=closeForX();
-		score/=100;
+		score+=winningChances();
 		return score;
 	}
 	/**
-	 * This function returns a quantized value of the closeness
-	 * for X to finish the game.
-	 * @return The closeness for X to finish the game, as a
-	 * double value
+	 * This method is used to find the winning chances of both sides in the game,
+	 * eg, if there is a fork, the winning chance of the forking side is 2 in a 3x3
+	 * game. Consequently in an nxn game, there may be many moves which may produce
+	 * more than one winning chance.
+	 * @return The winning chances, positive if there are more winning chances for
+	 * X and negative if there are more winning chances for O, as scoring is done
+	 * from X's perspective always.
 	 */
-	private double closeForX()
-	{
+	private double winningChances() {
 		double returnValue=0;
-		int closenessCount,count1,count2;
+		int maxCloseness=-1, closenessCount, count1, count2, maxCloseCountX=-1;
+		int maxCloseCountO=-1;
 		for(int i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
@@ -667,9 +672,16 @@ public class Table implements Cloneable
 			}
 			if(count1!=0)
 				closenessCount=count1+count2;
-			returnValue+=closenessCount;
 			if(closenessCount!=0)
-				break;
+			{
+				if(closenessCount>maxCloseness)
+				{
+					maxCloseness=closenessCount;
+					maxCloseCountX=1;
+				}
+				if(closenessCount==maxCloseness)
+					maxCloseCountX++;
+			}
 		}
 		for(int i=0;i<noOfRows;i++)
 		{
@@ -690,9 +702,16 @@ public class Table implements Cloneable
 			}
 			if(count1!=0)
 				closenessCount=count1+count2;
-			returnValue+=closenessCount;
 			if(closenessCount!=0)
-				break;
+			{
+				if(closenessCount>maxCloseness)
+				{
+					maxCloseness=closenessCount;
+					maxCloseCountX=1;
+				}
+				if(closenessCount==maxCloseness)
+					maxCloseCountX++;
+			}
 		}
 		for(int i=0;i<2;i++)
 		{
@@ -713,23 +732,19 @@ public class Table implements Cloneable
 			}
 			if(count1!=0)
 				closenessCount=count1+count2;
-			returnValue+=closenessCount;
 			if(closenessCount!=0)
-				break;
+			{
+				if(closenessCount>maxCloseness)
+				{
+					maxCloseness=closenessCount;
+					maxCloseCountX=1;
+				}
+				if(closenessCount==maxCloseness)
+					maxCloseCountX++;
+			}
 		}
-		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
-		return returnValue;
-	}
-	/**
-	 * This function returns a quantized value of the closeness
-	 * for O/P to finish the game.
-	 * @return The closeness for O to finish the game, as a
-	 * double value
-	 */
-	private double closeForO()
-	{
-		double returnValue=0;
-		int closenessCount,count1,count2;
+		returnValue+=(maxCloseCountX*Math.pow(sizeOfTable+1,maxCloseness));
+		maxCloseness=-1;
 		for(int i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
@@ -745,13 +760,20 @@ public class Table implements Cloneable
 					break;
 				}
 				if(rows[i].getCell(j).getValue()=='-')
-						count2++;
+					count2++;
 			}
 			if(count1!=0)
 				closenessCount=count1+count2;
-			returnValue+=closenessCount;
 			if(closenessCount!=0)
-				break;
+			{
+				if(closenessCount>maxCloseness)
+				{
+					maxCloseness=closenessCount;
+					maxCloseCountO=1;
+				}
+				if(closenessCount==maxCloseness)
+					maxCloseCountO++;
+			}
 		}
 		for(int i=0;i<noOfRows;i++)
 		{
@@ -772,9 +794,16 @@ public class Table implements Cloneable
 			}
 			if(count1!=0)
 				closenessCount=count1+count2;
-			returnValue+=closenessCount;
 			if(closenessCount!=0)
-				break;
+			{
+				if(closenessCount>maxCloseness)
+				{
+					maxCloseness=closenessCount;
+					maxCloseCountO=1;
+				}
+				if(closenessCount==maxCloseness)
+					maxCloseCountO++;
+			}
 		}
 		for(int i=0;i<2;i++)
 		{
@@ -795,11 +824,18 @@ public class Table implements Cloneable
 			}
 			if(count1!=0)
 				closenessCount=count1+count2;
-			returnValue+=closenessCount;
 			if(closenessCount!=0)
-				break;
+			{
+				if(closenessCount>maxCloseness)
+				{
+					maxCloseness=closenessCount;
+					maxCloseCountO=1;
+				}
+				if(closenessCount==maxCloseness)
+					maxCloseCountO++;
+			}
 		}
-		returnValue*=Math.pow((sizeOfTable+1),(noOfRows-1));
+		returnValue-=(maxCloseCountO*Math.pow(sizeOfTable+1,maxCloseness));
 		return returnValue;
 	}
 	/**
