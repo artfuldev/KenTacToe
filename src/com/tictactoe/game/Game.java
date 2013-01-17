@@ -49,6 +49,12 @@ public class Game
 	 */
 	private boolean gameOver=false;
 	/**
+	 * An integer to denote the fixed search depth of the game
+	 * in half-plies (half-moves).
+	 * Initialized to '-1' to mean value not set.
+	 */
+	private int searchDepth=-1;
+	/**
 	 * Default constructor of the <code>Game</code> class.
 	 * Creates a 3x3 Table for use with the game and a two players,
 	 * one of type "User" with name "UserPlayer" and another of Type AI.
@@ -99,6 +105,8 @@ public class Game
 	 * @param gridSize Size of the grid used in the game (no of rows (or)
 	 * no of columns (ie) both must be equal).
 	 * @param userName Name of the Player
+	 * @param turn Number representing the turn of the player (1 means play as
+	 * X, any other value is taken to mean play as O)
 	 */
 	public Game(int gridSize,String userName,int turn)
 	{
@@ -116,7 +124,48 @@ public class Game
 		currentSearch=new Search();
 	}
 	/**
-	 * This is the constructor called in the main function of the program.
+	 * This is the constructor to be called in the main function of the program,
+	 * if the grid size can be chosen, and when the player wants to be able to
+	 * choose to be the first or the second player.
+	 * It takes in three parameters to personalize the game more effectively
+	 * by taking a parameter for the name of the player and a grid size
+	 * and an integer to decide whether the user needs to be player one or two.
+	 * @param gridSize Size of the grid used in the game (no of rows (or)
+	 * no of columns (ie) both must be equal).
+	 * @param userName Name of the Player
+	 * @param turn Number representing the turn of the player (1 means play as
+	 * X, any other value is taken to mean play as O)
+	 * @param searchDepth depth of search necessary, should be non-zero and
+	 * less than the number of cells in the generated table.
+	 */
+	public Game(int gridSize,String userName,int turn, int searchDepth)
+	{
+		gameGrid=new Table(gridSize,gridSize);
+		if(turn==1)
+		{
+			playerOne=new Player(userName);
+			playerTwo=new Player();
+		}
+		else
+		{
+			playerOne=new Player();
+			playerTwo=new Player(userName);
+		}
+		currentSearch=new Search();
+		if((searchDepth>0)&&(searchDepth<=(gridSize*gridSize)))	
+			setSearchDepth(searchDepth);
+	}
+	/**
+	 * Generic setter method of the searchDepth variable. Defined as good
+	 * programming practice, to access private members of a class.
+	 * @param searchDepth depth of serach, fixed, in half-plies (half-moves)
+	 */
+	public void setSearchDepth(int searchDepth) {
+		this.searchDepth = searchDepth;
+	}
+	/**
+	 * This is the constructor called in the main function of the program
+	 * if a 3x3 grid is to e used by default.
 	 * It takes in a string parameter to personalize the game more effectively
 	 * by taking a parameter for the name of the player. Creates a 3x3 grid.
 	 * @param userName Name of the Player.
@@ -158,7 +207,10 @@ public class Game
 		Scanner inputStream=new Scanner(System.in);
 		if(currentPlayer.getPlayerType()=="AI")
 		{
-			currentSearch=new Search(gameGrid,currentPlayer);
+			if(searchDepth!=-1)
+				currentSearch=new Search(gameGrid,currentPlayer,searchDepth);
+			else
+				currentSearch=new Search(gameGrid,currentPlayer);
 			moveToMake=currentSearch.getBestMove();
 			gameGrid=gameGrid.makeMove(moveToMake);
 		}
