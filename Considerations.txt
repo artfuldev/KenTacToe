@@ -1,6 +1,0 @@
-TicTacToeAIConsiderations
-Evaluation function
-->Number of empty boxes
-	*High means high chance of winning
-->Number of rows/cols/diags with no opponent sign
-	*High means high chance of winning
