@@ -12,6 +12,12 @@ Game has minimax search with alpha-beta pruning and an evaluation function which
 
 ##Updates
 
+###Version 2.1
+* Added choice for users to play against AI or against another user(human).
+* Rewrote Main to allow for this choice.
+* Wrote another Game constructor to implement this choice.
+* Added a Win-32 exe to run on java-enabled Windows PCs.
+
 ###Version 2.0
 * Removed debug Messages.
 * Added exported Executable-JAR file.

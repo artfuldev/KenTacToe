@@ -156,6 +156,20 @@ public class Game
 			setSearchDepth(searchDepth);
 	}
 	/**
+	 * This is the constructor of game used when two human players
+	 * should play.
+	 * @param gridSize Size of the grid to be used in the game.
+	 * @param userOneName Name of the first player.
+	 * @param userTwoName Name of the second player.
+	 */
+	public Game(int gridSize, String userOneName, String userTwoName)
+	{
+		gameGrid=new Table(gridSize,gridSize);
+		playerOne=new Player(userOneName);
+		playerTwo=new Player(userTwoName);
+		currentSearch=new Search();
+	}
+	/**
 	 * Generic setter method of the searchDepth variable. Defined as good
 	 * programming practice, to access private members of a class.
 	 * @param searchDepth depth of serach, fixed, in half-plies (half-moves)
@@ -247,9 +261,11 @@ public class Game
 		for(int i=0;((gameOver==false)&&(i<gameGrid.getSizeOfTable()));i++)
 			getInput();
 		if(gameGrid.isComplete()==1)
-			System.out.println(playerOne.getPlayerName()+"("+playerOne.getPlayerType()+") won!");
+			System.out.println(playerOne.getPlayerName()+
+					"("+playerOne.getPlayerType()+") won!");
 		else if(gameGrid.isComplete()==0)
-			System.out.println(playerTwo.getPlayerName()+"("+playerTwo.getPlayerType()+") won!");
+			System.out.println(playerTwo.getPlayerName()+
+					"("+playerTwo.getPlayerType()+") won!");
 		else
 			System.out.println("Game drawn!");
 	}
