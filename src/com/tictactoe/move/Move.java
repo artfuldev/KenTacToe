@@ -7,8 +7,7 @@ import com.tictactoe.table.Table;
  * have some players and many moves. To represent this is a programming fashion,
  * this class has been defined. Several move objects can be placed on a move stack
  * of the Game (later, not as of now). Also, a Search must generate a set of possible
- * legal moves and then process them to find a best move (also not fully implemented
- * now).
+ * legal moves and then process them to find a best move.
  * It contains two tables, a source and a destination.
  * @author Kenshin Himura
  *
