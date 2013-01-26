@@ -26,7 +26,7 @@ public class Table implements Cloneable
 		/**
 		 * Represents the value of the cell.
 		 * Represents a character.
-		 * Usually will be set to '-'(empty cell),'X'(user),OR 'O' or 'P'(AI)
+		 * Usually will be set to '-'(empty cell),'X' or 'O'
 		 */
 		private char value;
 		/**
