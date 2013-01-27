@@ -32,7 +32,7 @@ public class Player
 	 * Keeps count of the number of players to properly set the name and sign of 
 	 * both the user and the AI player.
 	 */
-	static private int playerCount=1;
+	static private byte playerCount=1;
 	/**
 	 * Default constructor of <code>Player</code> class. Used for instantiating
 	 * AI players. Reduced complexity as of now, as it generates default names
