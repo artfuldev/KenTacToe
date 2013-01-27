@@ -49,11 +49,11 @@ public class Game
 	 */
 	private boolean gameOver=false;
 	/**
-	 * An integer to denote the fixed search depth of the game
+	 * A byte to denote the fixed search depth of the game
 	 * in half-plies (half-moves).
 	 * Initialized to '-1' to mean value not set.
 	 */
-	private int searchDepth=-1;
+	private byte searchDepth=-1;
 	/**
 	 * Default constructor of the <code>Game</code> class.
 	 * Creates a 3x3 Table for use with the game and a two players,
@@ -61,7 +61,7 @@ public class Game
 	 */
 	public Game()
 	{
-		gameGrid=new Table(3,3);
+		gameGrid=new Table((byte)3,(byte)3);
 		playerOne=new Player("UserPlayer");
 		playerTwo=new Player();
 		currentSearch=new Search();
@@ -72,7 +72,7 @@ public class Game
 	 * @param gridSize Size of the grid used in the game (no of rows (or)
 	 * no of columns (ie) both must be equal).
 	 */
-	public Game(int gridSize)
+	public Game(byte gridSize)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		playerOne=new Player("UserPlayer");
@@ -88,7 +88,7 @@ public class Game
 	 * no of columns (ie) both must be equal).
 	 * @param userName Name of the Player
 	 */
-	public Game(int gridSize,String userName)
+	public Game(byte gridSize,String userName)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		playerOne=new Player(userName);
@@ -101,14 +101,14 @@ public class Game
 	 * choose to be the first or the second player.
 	 * It takes in three parameters to personalize the game more effectively
 	 * by taking a parameter for the name of the player and a grid size
-	 * and an integer to decide whether the user needs to be player one or two.
+	 * and a byte to decide whether the user needs to be player one or two.
 	 * @param gridSize Size of the grid used in the game (no of rows (or)
 	 * no of columns (ie) both must be equal).
 	 * @param userName Name of the Player
 	 * @param turn Number representing the turn of the player (1 means play as
 	 * X, any other value is taken to mean play as O)
 	 */
-	public Game(int gridSize,String userName,int turn)
+	public Game(byte gridSize,String userName,byte turn)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		if(turn==1)
@@ -129,7 +129,7 @@ public class Game
 	 * choose to be the first or the second player.
 	 * It takes in three parameters to personalize the game more effectively
 	 * by taking a parameter for the name of the player and a grid size
-	 * and an integer to decide whether the user needs to be player one or two.
+	 * and a byte to decide whether the user needs to be player one or two.
 	 * @param gridSize Size of the grid used in the game (no of rows (or)
 	 * no of columns (ie) both must be equal).
 	 * @param userName Name of the Player
@@ -138,7 +138,7 @@ public class Game
 	 * @param searchDepth depth of search necessary, should be non-zero and
 	 * less than the number of cells in the generated table.
 	 */
-	public Game(int gridSize,String userName,int turn, int searchDepth)
+	public Game(byte gridSize,String userName,byte turn, byte searchDepth)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		if(turn==1)
@@ -162,7 +162,7 @@ public class Game
 	 * @param userOneName Name of the first player.
 	 * @param userTwoName Name of the second player.
 	 */
-	public Game(int gridSize, String userOneName, String userTwoName)
+	public Game(byte gridSize, String userOneName, String userTwoName)
 	{
 		gameGrid=new Table(gridSize,gridSize);
 		playerOne=new Player(userOneName);
@@ -174,7 +174,7 @@ public class Game
 	 * programming practice, to access private members of a class.
 	 * @param searchDepth depth of serach, fixed, in half-plies (half-moves)
 	 */
-	public void setSearchDepth(int searchDepth) {
+	public void setSearchDepth(byte searchDepth) {
 		this.searchDepth = searchDepth;
 	}
 	/**
@@ -186,7 +186,7 @@ public class Game
 	 */
 	public Game(String userName)
 	{
-		gameGrid=new Table(3,3);
+		gameGrid=new Table((byte)3,(byte)3);
 		playerOne=new Player(userName);
 		playerTwo=new Player();
 		currentSearch=new Search();
@@ -215,7 +215,7 @@ public class Game
 	 */
 	public void getInput()
 	{
-		int index=gameGrid.getFirstDashIndex();
+		byte index=gameGrid.getFirstDashIndex();
 		Move moveToMake;
 		@SuppressWarnings("resource")
 		Scanner inputStream=new Scanner(System.in);
@@ -234,13 +234,13 @@ public class Game
 				do{
 					if((index<0)||(index>gameGrid.getSizeOfTable()))
 						System.out.println("Please enter valid values for index (0-"+gameGrid.getSizeOfTable()+").");
-					if(!gameGrid.isEmpty(index-1))
+					if(!gameGrid.isEmpty((byte)(index-1)))
 						System.out.println("Please enter the index of an empty box.");
 					System.out.println("Enter the index of the box you want to sign, "+currentPlayer.getPlayerName()+":");
-					index=inputStream.nextInt();
+					index=inputStream.nextByte();
 				}while((index<0)||(index>gameGrid.getSizeOfTable()));
-			}while(!gameGrid.isEmpty(index-1));
-			gameGrid.updateTable(index-1, currentPlayer.getPlayerSign());
+			}while(!gameGrid.isEmpty((byte)(index-1)));
+			gameGrid.updateTable((byte)(index-1), currentPlayer.getPlayerSign());
 		}
 		if(currentPlayer==playerOne)
 			currentPlayer=playerTwo;
