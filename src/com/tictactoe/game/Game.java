@@ -193,7 +193,7 @@ public class Game
 	}
 	/**
 	 * Initialization method of the <code>Game</code> class.
-	 * Initially, simple used as a debug-friendly method to know if things were
+	 * Initially, simply used as a debug-friendly method to know if things were
 	 * working. Now, its the start of the program once it receives enough
 	 * parameters for creating the game. It tells the sign of the players and
 	 * their respective names. Also sets the reference of current player to
@@ -253,11 +253,12 @@ public class Game
 	}
 	/**
 	 * This is the method of the game called by the main function of the program.
-	 * It just gets the values from both players and keeps updating the grid until
-	 * the game is over.
+	 * It just initializes the game, gets the values from both players and keeps
+	 * updating the grid until the game is over.
 	 */
 	public void play()
 	{
+		init();
 		for(int i=0;((gameOver==false)&&(i<gameGrid.getSizeOfTable()));i++)
 			getInput();
 		if(gameGrid.isComplete()==1)
