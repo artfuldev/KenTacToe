@@ -10,11 +10,11 @@ public class Main
 	public static void main(String[] args)
 	{
 		Scanner inputStream=new Scanner(System.in);
-		int aiOrUser=0, turnNumber=0;
+		byte aiOrUser=0, turnNumber=0;
 		Game ticTacToe;
 		String userName, secondUserName="NoName";
 		System.out.println("Play against AI or human? Enter 0 for AI:");
-		aiOrUser=inputStream.nextInt();
+		aiOrUser=inputStream.nextByte();
 		System.out.println("Enter your name:");
 		userName=inputStream.next();
 		if(aiOrUser!=0)
@@ -33,15 +33,15 @@ public class Main
 		if(aiOrUser==0)
 		{
 			System.out.println("Enter you turn to play (1 for X, 2 for O):");
-			turnNumber=inputStream.nextInt();
+			turnNumber=inputStream.nextByte();
 		}
 		System.out.println("Enter grid size you want to play in (n means nxn grid):");
-		int gridSize=inputStream.nextInt();
+		byte gridSize=inputStream.nextByte();
 		if(aiOrUser==0)
 		{
 			System.out.println("Enter search depth (zero or negative values take " +
 					"default search depth as moves available):");
-			int searchDepth=inputStream.nextInt();
+			byte searchDepth=inputStream.nextByte();
 			ticTacToe=new Game(gridSize, userName, turnNumber, searchDepth);
 		}
 		else
