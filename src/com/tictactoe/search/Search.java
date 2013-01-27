@@ -64,7 +64,7 @@ public class Search
 	 * state and so by default acts as the sizeOf() or length member of the
 	 * moveStack array.
 	 */
-	private int maxMoves;
+	private byte maxMoves;
 	/**
 	 * The moveStack is an array of objects of type <code>Move</code>
 	 * and is produced by adding all legal moves on the current state
@@ -76,7 +76,7 @@ public class Search
 	 * Holds the required search depth for the current instance of class
 	 * <code>Search</code>.
 	 */
-	private int searchDepth;
+	private byte searchDepth;
 	/**
 	 * Unused as of now, but may be used to enforce a time constraint on
 	 * the search. Will most likely be specified in milliseconds.
@@ -104,7 +104,7 @@ public class Search
 		setCurrentState(currentState);
 		setCurrentPlayer(currentPlayer);
 		setCurrentSearchState(getCurrentState());
-		setSearchDepth(currentState.getNoOfDs()-1);
+		setSearchDepth((byte)(currentState.getNoOfDs()-1));
 	}
 	/**
 	 * Since the <code>Search</code> class is independent of other classes, viz.
@@ -116,7 +116,7 @@ public class Search
 	 * @param currentPlayer Current Player of the Game (Type <code>Player</code>)
 	 * @param searchDepth Depth of search, mentioned in half-plies (or half-moves)
 	 */
-	public Search(Table currentState,Player currentPlayer, int searchDepth)
+	public Search(Table currentState,Player currentPlayer, byte searchDepth)
 	{
 		setCurrentState(currentState);
 		setCurrentPlayer(currentPlayer);
@@ -124,7 +124,7 @@ public class Search
 		if(searchDepth<(currentState.getNoOfDs()-1))
 			setSearchDepth(searchDepth);
 		else
-			setSearchDepth(currentState.getNoOfDs()-1);
+			setSearchDepth((byte)(currentState.getNoOfDs()-1));
 	}
 	/**
 	 * Mini-max with alpha beta pruning to determine best score and move
@@ -135,7 +135,7 @@ public class Search
 	 * @param current Current player (for sign change and move generation)
 	 * @return The best score in negaMax fashion
 	 */
-	private double alphaBeta(Table nodeTable, int depth, double alpha, double beta, Player current)
+	private double alphaBeta(Table nodeTable, byte depth, double alpha, double beta, Player current)
 	{
 		Table node=nodeTable.clone();
 		if((depth==0)||(node.isComplete()!=-1))
@@ -149,9 +149,9 @@ public class Search
 		tempSearch.moveGen();
 		if(tempPlayer.getPlayerSign()=='X')
 		{
-			for(int i=0;i<tempSearch.getMaxMoves();i++)
+			for(byte i=0;i<tempSearch.getMaxMoves();i++)
 			{
-				alpha=Math.max(alpha,alphaBeta(node.makeMove(tempSearch.getMove(i)),depth-1,alpha,beta,tempPlayer));
+				alpha=Math.max(alpha,alphaBeta(node.makeMove(tempSearch.getMove(i)),(byte)(depth-1),alpha,beta,tempPlayer));
 				if(beta<=alpha)
 					break;
 			}
@@ -159,9 +159,9 @@ public class Search
 		}
 		else
 		{
-			for(int i=0;i<tempSearch.getMaxMoves();i++)
+			for(byte i=0;i<tempSearch.getMaxMoves();i++)
 			{
-				beta=Math.min(beta,alphaBeta(node.makeMove(tempSearch.getMove(i)),depth-1,alpha,beta,tempPlayer));
+				beta=Math.min(beta,alphaBeta(node.makeMove(tempSearch.getMove(i)),(byte)(depth-1),alpha,beta,tempPlayer));
 				if(alpha>=beta)
 					break;
 			}
@@ -185,7 +185,7 @@ public class Search
 		bestScore=-infinity;
 		currentScore=bestScore;
 		moveGen();
-		for(int i=0;i<maxMoves;i++)
+		for(byte i=0;i<maxMoves;i++)
 		{
 			currentSearchState=currentState.makeMove(moveStack[i]);
 			if(currentSearchState.getScore()==winScore)
@@ -266,7 +266,7 @@ public class Search
 	 * Used by the miniMax or negaMax (or other future) search functions.
 	 * @return The maximum number of generated moves
 	 */
-	public int getMaxMoves()
+	public byte getMaxMoves()
 	{
 		return maxMoves;
 	}
@@ -277,7 +277,7 @@ public class Search
 	 * @param moveNo The index of the move in the move stack.
 	 * @return The move found in the specified index of the moveStack.
 	 */
-	public Move getMove(int moveNo)
+	public Move getMove(byte moveNo)
 	{
 		return moveStack[moveNo];
 	}
@@ -296,7 +296,7 @@ public class Search
 	 * getter and setter methods.
 	 * @return Depth of the Search
 	 */
-	public int getSearchDepth()
+	public byte getSearchDepth()
 	{
 		return searchDepth;
 	}
@@ -318,8 +318,8 @@ public class Search
 	{
 			maxMoves=currentSearchState.getNoOfDs();
 			moveStack=new Move[maxMoves];
-			int j=-1;
-			for(int i=0;i<maxMoves;i++)
+			byte j=-1;
+			for(byte i=0;i<maxMoves;i++)
 			{
 				for(;j<(currentSearchState.getSizeOfTable()-1);)
 				{
@@ -405,7 +405,7 @@ public class Search
 	 * search
 	 * @param maxMoves Maximum number of legal moves
 	 */
-	public void setMaxMoves(int maxMoves)
+	public void setMaxMoves(byte maxMoves)
 	{
 		this.maxMoves = maxMoves;
 	}
@@ -424,7 +424,7 @@ public class Search
 	 * getter and setter methods.
 	 * @param searchDepth Depth of the Search
 	 */
-	public void setSearchDepth(int searchDepth)
+	public void setSearchDepth(byte searchDepth)
 	{
 		this.searchDepth = searchDepth;
 	}
