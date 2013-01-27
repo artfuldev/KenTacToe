@@ -10,19 +10,12 @@ public class JUnitTest {
 
 	@Test
 	public void test() {
-		Table t=new Table(3,3);
-		t.updateTable(0,'X');
-		t.updateTable(1,'X');
-		t.updateTable(2,'O');
-		t.updateTable(3,'X');
-		t.updateTable(4,'O');
-		//t.updateTable(5,'O');
-		t.updateTable(6,'O');
-		//t.updateTable(7,'O');
-		//t.updateTable(8,'O');
+		Table t=new Table((byte)3,(byte)3);
+		t.updateTable((byte)0,'X');
+		t.updateTable((byte)8,'O');
 		System.out.println(t.getScore());
 		System.out.println(t.isComplete());
-		assertEquals("Done",10E9,t.getScore(),20E9);
+		assertEquals("Done",0,t.getScore(),0);
 		t.printTable();
 	}
 
