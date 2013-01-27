@@ -32,11 +32,11 @@ public class Table implements Cloneable
 		/**
 		 * Holds the row index of the cell in the parent table.
 		 */
-		private int rowIndex;
+		private byte rowIndex;
 		/**
 		 * Holds the column index of the cell in the parent table.
 		 */
-		private int colIndex;
+		private byte colIndex;
 		/**
 		 * Constructor of Cell.
 		 * Sets the default value of the cell to <code>'-'</code>
@@ -58,7 +58,7 @@ public class Table implements Cloneable
 		 * This method is used to get the column index of the cell.
 		 * @return	Column Index of the cell
 		 */
-		public int getColIndex()
+		public byte getColIndex()
 		{
 			return colIndex;
 		}
@@ -75,7 +75,7 @@ public class Table implements Cloneable
 		 * This method is used to get the row index of the cell.
 		 * @return	Row Index of the cell
 		 */
-		public int getRowIndex()
+		public byte getRowIndex()
 		{
 			return rowIndex;
 		}
@@ -101,7 +101,7 @@ public class Table implements Cloneable
 		 * Used automatically during Table construction.
 		 * Need/Must not be used anywhere else.
 		 */
-		public void setColIndex(int colIndex)
+		public void setColIndex(byte colIndex)
 		{
 			this.colIndex=colIndex;
 		}
@@ -110,7 +110,7 @@ public class Table implements Cloneable
 		 * Used automatically during Table construction.
 		 * Need/Must not be used anywhere else.
 		 */
-		public void setRowIndex(int rowIndex)
+		public void setRowIndex(byte rowIndex)
 		{
 			this.rowIndex=rowIndex;
 		}
@@ -143,7 +143,7 @@ public class Table implements Cloneable
 		/**
 		 * Holds the column index of the colummn in its parent table.
 		 */
-		private int colIndex;
+		private byte colIndex;
 		/**
 		 * Default constructor of class
 		 * <code>Col</code>, which represents columns of a <code>Table</code> class.
@@ -151,7 +151,7 @@ public class Table implements Cloneable
 		public Col()
 		{
 			cells=new Cell[noOfRows];
-			for(int i=0;i<noOfRows;i++)
+			for(byte i=0;i<noOfRows;i++)
 				cells[i]=new Cell();
 		}
 		/**
@@ -160,7 +160,7 @@ public class Table implements Cloneable
 		 * @return Cell of the particular row index(i) in the column(j),
 		 * (i.e.)Cell[i][j] of Table
 		 */
-		public Cell getCell(int rowIndex)
+		public Cell getCell(byte rowIndex)
 		{
 			return cells[rowIndex];
 		}
@@ -169,7 +169,7 @@ public class Table implements Cloneable
 		 * @param rowIndex row index of the cell
 		 * @param cell Cell to be set
 		 */
-		public void setCell(int rowIndex, Cell cell)
+		public void setCell(byte rowIndex, Cell cell)
 		{
 			this.cells[rowIndex]=cell;
 		}
@@ -185,7 +185,7 @@ public class Table implements Cloneable
 		 * This method is used to get the column index of the column in table it pertains to.
 		 * @return Column index
 		 */
-		public int getColIndex()
+		public byte getColIndex()
 		{
 			return colIndex;
 		}
@@ -204,12 +204,12 @@ public class Table implements Cloneable
 		 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
 		 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
 		 */
-		public int isComplete()
+		public byte isComplete()
 		{
 			if(cells[0].getValue()!='-')
 			{
-				int j=0;
-				for(int i=0;i<(noOfRows-1);i++)
+				byte j=0;
+				for(byte i=0;i<(noOfRows-1);i++)
 					if(cells[i].getValue()==cells[i+1].getValue())
 						j++;
 				if(j==(noOfRows-1))
@@ -226,7 +226,7 @@ public class Table implements Cloneable
 		 * Generic setter method to set column index of the column of the table
 		 * @param colIndex
 		 */
-		public void setColIndex(int colIndex)
+		public void setColIndex(byte colIndex)
 		{
 			this.colIndex = colIndex;
 		}
@@ -252,7 +252,7 @@ public class Table implements Cloneable
 		public Diag()
 		{
 			cells=new Cell[noOfRows];
-			for(int i=0;i<noOfRows;i++)
+			for(byte i=0;i<noOfRows;i++)
 				cells[i]=new Cell();
 		}
 		/**
@@ -261,7 +261,7 @@ public class Table implements Cloneable
 		 * @return Cell of the particular row index(i) in the column(i),
 		 * (i.e.)Cell[i][i] of Table
 		 */
-		public Cell getCell(int index)
+		public Cell getCell(byte index)
 		{
 			return cells[index];
 		}
@@ -279,12 +279,12 @@ public class Table implements Cloneable
 		 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
 		 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
 		 */
-		public int isComplete()
+		public byte isComplete()
 		{
 			if(cells[0].getValue()!='-')
 			{
-				int j=0;
-				for(int i=0;i<(noOfRows-1);i++)
+				byte j=0;
+				for(byte i=0;i<(noOfRows-1);i++)
 					if(cells[i].getValue()==cells[i+1].getValue())
 						j++;
 				if(j==(noOfRows-1))
@@ -311,7 +311,7 @@ public class Table implements Cloneable
 		 * @param i index of the cell in the diagonal
 		 * @param cell Cell to be set
 		 */
-		public void setCell(int i, Cell cell)
+		public void setCell(byte i, Cell cell)
 		{
 			this.cells[i]=cell;
 		}
@@ -334,14 +334,14 @@ public class Table implements Cloneable
 		/**
 		 * Holds the column index of the row in its parent table.
 		 */
-		private int rowIndex;
+		private byte rowIndex;
 		/**
 		 * Default constructor of the <code>Row</code> class
 		 */
 		public Row()
 		{
 			cells=new Cell[noOfCols];
-			for(int i=0;i<noOfCols;i++)
+			for(byte i=0;i<noOfCols;i++)
 				cells[i]=new Cell();
 		}
 		/**
@@ -350,7 +350,7 @@ public class Table implements Cloneable
 		 * @return Cell of the particular column index(j) in the row(i),
 		 * (i.e.)Cell[i][j] of Table
 		 */
-		public Cell getCell(int colIndex)
+		public Cell getCell(byte colIndex)
 		{
 			return cells[colIndex];
 		}
@@ -359,7 +359,7 @@ public class Table implements Cloneable
 		 * @param colIndex column index of the cell
 		 * @param cell Cell to be set
 		 */
-		public void setCell(int colIndex, Cell cell)
+		public void setCell(byte colIndex, Cell cell)
 		{
 			this.cells[colIndex]=cell;
 		}
@@ -375,7 +375,7 @@ public class Table implements Cloneable
 		 * This method is used to get the row index of the row in table it pertains to.
 		 * @return Row index
 		 */
-		public int getRowIndex()
+		public byte getRowIndex()
 		{
 			return rowIndex;
 		}
@@ -394,12 +394,12 @@ public class Table implements Cloneable
 		 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
 		 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
 		 */
-		public int isComplete()
+		public byte isComplete()
 		{
 			if(cells[0].getValue()!='-')
 			{
-				int j=0;
-				for(int i=0;i<(noOfCols-1);i++)
+				byte j=0;
+				for(byte i=0;i<(noOfCols-1);i++)
 					if(cells[i].getValue()==cells[i+1].getValue())
 						j++;
 				if(j==(noOfCols-1))
@@ -416,7 +416,7 @@ public class Table implements Cloneable
 		 * Generic setter method to set row index of the row of the table
 		 * @param rowIndex
 		 */
-		public void setRowIndex(int rowIndex)
+		public void setRowIndex(byte rowIndex)
 		{
 			this.rowIndex = rowIndex;
 		}
@@ -444,16 +444,16 @@ public class Table implements Cloneable
 	/**
 	 * Holds the number of rows of the table at any time.
 	 */
-	private int noOfRows;
+	private byte noOfRows;
 	/**
 	 * Holds the number of columns of the table at any time.
 	 */
-	private int noOfCols;
+	private byte noOfCols;
 	/**
 	 * Holds the number of cells (rows * cols) of the table at any time.
 	 * Set to 0 if the number of rows and columns are zero.
 	 */
-	private int sizeOfTable;
+	private byte sizeOfTable;
 	/**
 	 * Represents the score of the table as a signed double value,
 	 * from X's perspective.
@@ -479,22 +479,22 @@ public class Table implements Cloneable
 	 * @param noOfRows The number of rows in the table to be created.
 	 * @param noOfCols The number of columns in the table to be created.
 	 */
-	public Table(int noOfRows,int noOfCols)
+	public Table(byte noOfRows,byte noOfCols)
 	{
 		this.noOfRows=noOfRows;
 		this.noOfCols=noOfCols;
-		this.sizeOfTable=noOfRows*noOfCols;
+		this.sizeOfTable=(byte)(noOfRows*noOfCols);
 		rows=new Row[this.noOfRows];
-		for(int i=0;i<noOfRows;i++)
+		for(byte i=0;i<noOfRows;i++)
 			rows[i]=new Row();
 		cols=new Col[this.noOfCols];
-		for(int i=0;i<noOfCols;i++)
+		for(byte i=0;i<noOfCols;i++)
 			cols[i]=new Col();
 		cells=new Cell[this.sizeOfTable];
-		for(int i=0;i<sizeOfTable;i++)
+		for(byte i=0;i<sizeOfTable;i++)
 			cells[i]=new Cell();
 		diags=new Diag[2];
-		for(int i=0;i<2;i++)
+		for(byte i=0;i<2;i++)
 			diags[i]=new Diag();
 		setWinScore(Math.pow(sizeOfTable+1, sizeOfTable+1)-1);
 		init();
@@ -504,7 +504,7 @@ public class Table implements Cloneable
 	 * @param colIndex Index of the column in the table
 	 * @return Array of type <code>Cell</code> of the specified column of the table
 	 */
-	public Col getCol(int colIndex)
+	public Col getCol(byte colIndex)
 	{
 		return cols[colIndex];
 	}
@@ -513,7 +513,7 @@ public class Table implements Cloneable
 	 * Almost never used.
 	 * @return The number of columns of the <code>Table</code>.
 	 */
-	public int getNoOfCols()
+	public byte getNoOfCols()
 	{
 		return noOfCols;
 	}
@@ -522,7 +522,7 @@ public class Table implements Cloneable
 	 * Almost never used.
 	 * @return The number of rows of the <code>Table</code>.
 	 */
-	public int getNoOfRows()
+	public byte getNoOfRows()
 	{
 		return noOfRows;
 	}
@@ -531,7 +531,7 @@ public class Table implements Cloneable
 	 * @param rowIndex Index of the row in the table
 	 * @return Array of type <code>Cell</code> of the specified row of the table
 	 */
-	public Row getRow(int rowIndex)
+	public Row getRow(byte rowIndex)
 	{
 		return rows[rowIndex];
 	}
@@ -541,11 +541,11 @@ public class Table implements Cloneable
 	 */
 	public void init()
 	{
-		int index;
-		for(int i=0;i<this.noOfRows;i++)
-			for(int j=0;j<this.noOfCols;j++)
+		byte index;
+		for(byte i=0;i<this.noOfRows;i++)
+			for(byte j=0;j<this.noOfCols;j++)
 			{
-				index=(i*noOfRows)+j;
+				index=(byte)((i*noOfRows)+j);
 				getRow(i).setCell(j, cells[index]);
 				getCol(j).setCell(i, cells[index]);
 				getRow(i).getCell(j).setColIndex(j);
@@ -566,9 +566,9 @@ public class Table implements Cloneable
 	 */
 	public void printTable()
 	{
-		for(int i=0;i<noOfRows;i++)
+		for(byte i=0;i<noOfRows;i++)
 		{
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 				System.out.print(getRow(i).getCell(j).getValue()+" ");
 			System.out.println();
 		}
@@ -578,7 +578,7 @@ public class Table implements Cloneable
 	 * @param index Index of the cell of the table to be updated, can take values between 0 to (sizeOfTable-1).
 	 * @param updateChar Character to be updated in the specified <code>Cell</code>'s value data member.
 	 */
-	public void updateTable(int index, char updateChar)
+	public void updateTable(byte index, char updateChar)
 	{
 		cells[index].setValue(updateChar);
 	}
@@ -588,15 +588,15 @@ public class Table implements Cloneable
 	 * Note that '-' denotes an empty cell and does not fulfill the completion criterion.
 	 * @return -1 if not Complete, 1 if X is Complete, 0 if O is Complete
 	 */
-	public int isComplete()
+	public byte isComplete()
 	{
-		for(int i=0;i<2;i++)
+		for(byte i=0;i<2;i++)
 			if(diags[i].isComplete()!=-1)
 				return diags[i].isComplete();
-		for(int i=0;i<this.noOfRows;i++)
+		for(byte i=0;i<this.noOfRows;i++)
 			if(rows[i].isComplete()!=-1)
 				return rows[i].isComplete();
-		for(int i=0;i<this.noOfCols;i++)
+		for(byte i=0;i<this.noOfCols;i++)
 			if(cols[i].isComplete()!=-1)
 				return cols[i].isComplete();
 		return -1;	
@@ -606,7 +606,7 @@ public class Table implements Cloneable
 	 * @param index Index of the cell of the table, can take values from 0 to (sizeOfTable-1).
 	 * @return <code>True</code> if the specified <code>Cell</code> is empty, <code>False</code> otherwise.
 	 */
-	public boolean isEmpty(int index)
+	public boolean isEmpty(byte index)
 	{
 		if(cells[index].getValue()=='-')
 			return true;
@@ -617,10 +617,10 @@ public class Table implements Cloneable
 	 * Used in calculation of score, and in the generation of next possible moves. 
 	 * @return The total number of blank cells in the table.
 	 */
-	public int getNoOfDs()
+	public byte getNoOfDs()
 	{
-		int returnValue=0;
-		for(int i=0;i<sizeOfTable;i++)
+		byte returnValue=0;
+		for(byte i=0;i<sizeOfTable;i++)
 			if(isEmpty(i))
 				returnValue++;
 		return returnValue;
@@ -660,14 +660,16 @@ public class Table implements Cloneable
 	 */
 	private double winningChances() {
 		double returnValue=0;
-		int maxCloseness=-1, closenessCount, count1, count2, maxCloseCountX=-1;
-		int maxCloseCountO=-1;
-		for(int i=0;i<noOfRows;i++)
+		int maxCloseness=-1;
+		byte count1, count2, maxCloseCountX=-1;
+		int closenessCount;
+		byte maxCloseCountO=-1;
+		for(byte i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
 			count1=0;
 			count2=0;
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 			{
 				if(rows[i].getCell(j).getValue()=='X')
 					count1++;
@@ -692,12 +694,12 @@ public class Table implements Cloneable
 					maxCloseCountX++;
 			}
 		}
-		for(int i=0;i<noOfRows;i++)
+		for(byte i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
 			count1=0;
 			count2=0;
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 			{
 				if(cols[i].getCell(j).getValue()=='X')
 					count1++;
@@ -722,12 +724,12 @@ public class Table implements Cloneable
 					maxCloseCountX++;
 			}
 		}
-		for(int i=0;i<2;i++)
+		for(byte i=0;i<2;i++)
 		{
 			closenessCount=0;
 			count1=0;
 			count2=0;
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 			{
 				if(diags[i].getCell(j).getValue()=='X')
 					count1++;
@@ -754,12 +756,12 @@ public class Table implements Cloneable
 		}
 		returnValue+=(maxCloseCountX*Math.pow(sizeOfTable+1,maxCloseness));
 		maxCloseness=-1;
-		for(int i=0;i<noOfRows;i++)
+		for(byte i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
 			count1=0;
 			count2=0;
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 			{
 				if(rows[i].getCell(j).getValue()=='O')
 					count1++;
@@ -784,12 +786,12 @@ public class Table implements Cloneable
 					maxCloseCountO++;
 			}
 		}
-		for(int i=0;i<noOfRows;i++)
+		for(byte i=0;i<noOfRows;i++)
 		{
 			closenessCount=0;
 			count1=0;
 			count2=0;
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 			{
 				if(cols[i].getCell(j).getValue()=='O')
 					count1++;
@@ -814,12 +816,12 @@ public class Table implements Cloneable
 					maxCloseCountO++;
 			}
 		}
-		for(int i=0;i<2;i++)
+		for(byte i=0;i<2;i++)
 		{
 			closenessCount=0;
 			count1=0;
 			count2=0;
-			for(int j=0;j<noOfCols;j++)
+			for(byte j=0;j<noOfCols;j++)
 			{
 				if(diags[i].getCell(j).getValue()=='O')
 					count1++;
@@ -856,23 +858,23 @@ public class Table implements Cloneable
 	public double linesWithoutO()
 	{
 		double returnValue=0;
-		int count1=noOfRows,count2=noOfCols,count3=2;
-		for(int i=0;i<noOfRows;i++)
-			for(int j=0;j<noOfCols;j++)
+		byte count1=noOfRows,count2=noOfCols,count3=2;
+		for(byte i=0;i<noOfRows;i++)
+			for(byte j=0;j<noOfCols;j++)
 				if(rows[i].getCell(j).getValue()=='O')
 				{
 					count1--;
 					break;
 				}
-		for(int i=0;i<noOfRows;i++)
-			for(int j=0;j<noOfCols;j++)
+		for(byte i=0;i<noOfRows;i++)
+			for(byte j=0;j<noOfCols;j++)
 				if(cols[i].getCell(j).getValue()=='O')
 				{
 					count2--;
 					break;
 				}
-		for(int i=0;i<2;i++)
-			for(int j=0;j<noOfRows;j++)
+		for(byte i=0;i<2;i++)
+			for(byte j=0;j<noOfRows;j++)
 				if(diags[i].getCell(j).getValue()=='O')
 				{
 					count3--;
@@ -891,23 +893,23 @@ public class Table implements Cloneable
 	public double linesWithoutX()
 	{
 		double returnValue=0;
-		int count1=noOfRows,count2=noOfCols,count3=2;
-		for(int i=0;i<noOfRows;i++)
-			for(int j=0;j<noOfCols;j++)
+		byte count1=noOfRows,count2=noOfCols,count3=2;
+		for(byte i=0;i<noOfRows;i++)
+			for(byte j=0;j<noOfCols;j++)
 				if(rows[i].getCell(j).getValue()=='X')
 				{
 					count1--;
 					break;
 				}
-		for(int i=0;i<noOfRows;i++)
-			for(int j=0;j<noOfCols;j++)
+		for(byte i=0;i<noOfRows;i++)
+			for(byte j=0;j<noOfCols;j++)
 				if(cols[i].getCell(j).getValue()=='X')
 				{
 					count2--;
 					break;
 				}
-		for(int i=0;i<2;i++)
-			for(int j=0;j<noOfRows;j++)
+		for(byte i=0;i<2;i++)
+			for(byte j=0;j<noOfRows;j++)
 				if(diags[i].getCell(j).getValue()=='X')
 				{
 					count3--;
@@ -924,14 +926,14 @@ public class Table implements Cloneable
 	public double getXScore()
 	{
 		double returnValue=0;
-		int count1,count2,count3;
-		for(int i=1;i<=noOfRows;i++)
+		byte count1,count2,count3;
+		for(byte i=1;i<=noOfRows;i++)
 		{
 			count1=0;
 			count2=0;
 			count3=0;
-			for(int j=0;j<noOfRows;j++)
-				for(int k=0;k<noOfCols;k++)
+			for(byte j=0;j<noOfRows;j++)
+				for(byte k=0;k<noOfCols;k++)
 				{
 					if(rows[j].getCell(k).getValue()=='X')
 						count1++;
@@ -957,15 +959,15 @@ public class Table implements Cloneable
 	public double getOScore()
 	{
 		double returnValue=0;
-		int count1,count2,count3;
-		for(int i=1;i<=noOfRows;i++)
+		byte count1,count2,count3;
+		for(byte i=1;i<=noOfRows;i++)
 		{
 			count1=0;
 			count2=0;
 			count3=0;
-			for(int j=0;j<noOfRows;j++)
+			for(byte j=0;j<noOfRows;j++)
 			{
-				for(int k=0;k<noOfCols;k++)
+				for(byte k=0;k<noOfCols;k++)
 				{
 					if(rows[j].getCell(k).getValue()=='O')
 						count1++;
@@ -992,7 +994,7 @@ public class Table implements Cloneable
 	public Table clone()
 	{
 			Table returnTable=new Table(this.noOfRows,this.noOfCols);
-			for(int i=0;i<this.sizeOfTable;i++)
+			for(byte i=0;i<this.sizeOfTable;i++)
 			{
 				returnTable.cells[i]=new Cell();
 				returnTable.cells[i].setValue(this.cells[i].getValue());
@@ -1004,10 +1006,10 @@ public class Table implements Cloneable
 	 * This method returns the index of the first empty cell of the table.
 	 * Useful for some things, as we will see in the code.
 	 */
-	public int getFirstDashIndex()
+	public byte getFirstDashIndex()
 	{
-		int returnValue = 0;
-		for(int i=0;i<sizeOfTable;i++)
+		byte returnValue = 0;
+		for(byte i=0;i<sizeOfTable;i++)
 			if(isEmpty(i))
 				returnValue=i;
 		return returnValue;
@@ -1017,7 +1019,7 @@ public class Table implements Cloneable
 	 * Very useful to check for game end.
 	 * @return Size of the table (no of rows * no of columns)
 	 */
-	public int getSizeOfTable()
+	public byte getSizeOfTable()
 	{
 		return sizeOfTable;
 	}
