@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 2.1
+* Application Version: 2.2
 * ReadMe Version: 1.5
 
 ##Description
@@ -11,6 +11,11 @@ Game has minimax search with alpha-beta pruning and an evaluation function which
 *See __Misc__ section of Updates for further information.*
 
 ##Updates
+
+###Version 2.2
+* Major overhaul of a lot of code.
+* Tremendous amount of optimization.
+* Changed all possible integers to byte, thereby reducing memory footprint. *(Even 11x11 box has only 121 boxes, less than 8-bit byte)*
 
 ###Version 2.1
 * Added choice for users to play against AI or against another user(human).
