@@ -2,6 +2,7 @@ package com.tictactoe.main;
 
 import java.util.Scanner;
 import com.tictactoe.game.*;
+import com.tictactoe.player.Player;
 public class Main
 {
 	public static final String appName="KenTacToe";
@@ -18,6 +19,7 @@ public class Main
 		String userName, secondUserName="NoName";
 		while(playAgain!=0)
 		{
+			Player.playerCount=0;
 			System.out.println(appName+" "+appVersion);
 			System.out.println("by "+appAuthor);
 			System.out.println("Play against AI or human? Enter 0 for AI:");
