@@ -1,5 +1,6 @@
 package com.tictactoe.search;
 
+import com.javamex.classmexer.*;
 import com.tictactoe.move.*;
 import com.tictactoe.player.*;
 import com.tictactoe.table.*;
@@ -194,6 +195,9 @@ public class Search
 				setBestMove(moveStack[i]);
 				return bestMove;
 			}
+			byte maxSearchDepth=(byte)(Runtime.getRuntime().freeMemory()/(MemoryUtil.deepMemoryUsageOf(currentSearchState)*maxMoves));
+			if(searchDepth>maxSearchDepth)
+				searchDepth=maxSearchDepth;
 			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
 			if(currentPlayer.getPlayerSign()=='O')
 				currentScore*=-1;
