@@ -440,6 +440,17 @@ public class Search
 	{
 		this.time = time;
 	}
+	/**
+	 * This is the function which is used to optimize the search depth
+	 * depending upon the free memory available to the JAVA Virtual Machine.
+	 * It makes use of ClassMexer jar files to use MemoryUtil.deepMemory-
+	 * UsageOf() function to give the memory usage of the Tables used.
+	 * For each searchDepth, the memory usage is calculated and the max
+	 * possible searchDepth is calculated. Then it is compared with preset
+	 * conditions to minimize search depth to improve speed on larger
+	 * board sizes. Used so that this app may be ported to Android with
+	 * a GUI! :D
+	 */
 	public void optimizeSearchDepth()
 	{
 
@@ -456,6 +467,13 @@ public class Search
 			usedMemory=expectedTables*MemoryUtil.deepMemoryUsageOf(currentSearchState);
 		}
 		searchDepth=(byte)Math.min(searchDepth,maxSearchDepth);
-		System.out.println(searchDepth);
+		if((searchDepth/10)>1)
+			searchDepth=(byte)Math.min(10,searchDepth);
+		if(currentState.getNoOfRows()>3)
+			searchDepth=(byte)Math.min(5,searchDepth);
+		if(currentState.getNoOfRows()>5)
+			searchDepth=(byte)Math.min(3,searchDepth);
+		if(currentState.getNoOfRows()>7)
+			searchDepth=(byte)Math.min(1,searchDepth);
 	}
 }
