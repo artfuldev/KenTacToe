@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 2.3
+* Application Version: 2.4
 * ReadMe Version: 1.5
 
 ##Description
@@ -10,7 +10,21 @@ The entire game engine has been completed. Game has grid and players and is made
 Game has minimax search with alpha-beta pruning and an evaluation function which has the capability to work in any grid size.
 *See __Misc__ section of Updates for further information.*
 
+##Features
+* Automatic Optimum Search Depth calculation.
+* Mini-Max search with Alpha-Beta Pruning.
+* Player vs. Player / AI.
+* Play on upto 11x11 grids.
+* Robust Evaluation Function.
+* Ultra-Strong AI.
+* Close-to-real-world in-game representation of the game, thanks to maximally implemented OOPS concept *(suggestions for impreovement welcome)*.
+
 ##Updates
+
+###Version 2.4
+* Included classmexer.jar
+* Included classmexer readme.txt
+* Now automatically selects maximum search depth depending upon available free memory *(thanks to classmexer)*.
 
 ###Version 2.3
 * Included application name, version and author definitions.
