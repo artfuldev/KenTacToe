@@ -1,7 +1,7 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
-* Application Version: 2.6
+* Application Version: 2.7
 * ReadMe Version: 1.7
 
 ##Description
@@ -21,6 +21,9 @@ Game has minimax search with alpha-beta pruning and an evaluation function which
 * Close-to-real-world in-game representation of the game, thanks to maximally implemented OOPS concept *(suggestions for impreovement welcome)*.
 
 ##Updates
+
+###Version 2.7
+* Fixed issue with Play Again.
 
 ###Version 2.6
 * Further optimization
