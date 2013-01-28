@@ -179,6 +179,7 @@ public class Search
 	 */
 	public Move getBestMove()
 	{
+		optimizeSearchDepth();
 		infinity=currentState.getWinScore()+1;
 		double winScore=currentState.getWinScore();
 		if(currentPlayer.getPlayerSign()=='O')
@@ -195,9 +196,6 @@ public class Search
 				setBestMove(moveStack[i]);
 				return bestMove;
 			}
-			byte maxSearchDepth=(byte)(Runtime.getRuntime().freeMemory()/(MemoryUtil.deepMemoryUsageOf(currentSearchState)*maxMoves));
-			if(searchDepth>maxSearchDepth)
-				searchDepth=maxSearchDepth;
 			currentScore=alphaBeta(currentSearchState,searchDepth,-infinity,infinity,currentPlayer);
 			if(currentPlayer.getPlayerSign()=='O')
 				currentScore*=-1;
@@ -441,5 +439,23 @@ public class Search
 	public void setTime(float time)
 	{
 		this.time = time;
+	}
+	public void optimizeSearchDepth()
+	{
+
+		long freeMemory=(Runtime.getRuntime().freeMemory());
+		int expectedTables=1;
+		long usedMemory=0;
+		byte maxSearchDepth;
+		for(maxSearchDepth=2;(freeMemory>usedMemory)&&(maxSearchDepth<=searchDepth);maxSearchDepth++)
+		{
+			usedMemory=0;
+			expectedTables=maxMoves;
+			for(byte k=0;k<maxSearchDepth;k++)
+				expectedTables*=currentSearchState.getNoOfDs()-k;
+			usedMemory=expectedTables*MemoryUtil.deepMemoryUsageOf(currentSearchState);
+		}
+		searchDepth=(byte)Math.min(searchDepth,maxSearchDepth);
+		System.out.println(searchDepth);
 	}
 }
