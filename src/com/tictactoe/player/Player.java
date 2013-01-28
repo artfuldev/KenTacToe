@@ -32,7 +32,7 @@ public class Player
 	 * Keeps count of the number of players to properly set the name and sign of 
 	 * both the user and the AI player.
 	 */
-	static private byte playerCount=1;
+	public static byte playerCount=0;
 	/**
 	 * Default constructor of <code>Player</code> class. Used for instantiating
 	 * AI players. Reduced complexity as of now, as it generates default names
@@ -43,7 +43,7 @@ public class Player
 	{
 		setPlayerName("DefaultPlayer"+playerCount);
 		setPlayerType("AI");
-		if((playerCount%2)==1)
+		if((playerCount%2)==0)
 			setPlayerSign('X');
 		else
 			setPlayerSign('O');
@@ -59,7 +59,7 @@ public class Player
 	{
 		setPlayerName(playerName);
 		setPlayerType("User");
-		if((playerCount%2)==1)
+		if((playerCount%2)==0)
 			setPlayerSign('X');
 		else
 			setPlayerSign('O');
