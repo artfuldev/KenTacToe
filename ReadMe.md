@@ -2,7 +2,7 @@
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
 * License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
 * Application Version: 2.7
-* ReadMe Version: 1.7
+* ReadMe Version: 1.8
 
 ##Description
 A basic Tic Tac Toe (TTT) game engine able to present an AI capable of playing Tic Tac Toe with humans on boards upto 11x11 boxes.
@@ -18,7 +18,7 @@ Game has minimax search with alpha-beta pruning and an evaluation function which
 * Play on upto 11x11 grids.
 * Robust Evaluation Function.
 * Ultra-Strong AI.
-* Close-to-real-world in-game representation of the game, thanks to maximally implemented OOPS concept *(suggestions for impreovement welcome)*.
+* Close-to-real-world in-game representation of the game, thanks to maximally implemented OOPS concept *(suggestions for improvement welcome)*.
 
 ##Updates
 
