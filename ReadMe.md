@@ -1,6 +1,6 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
-* License: *GNU GPL v3 and CC-BY-NC-SA Licenses* (see gpl.txt and ccbyncsa.txt)
+* License: *GNU GPL v3* (see COPYING.txt)
 * Application Version: 2.7
 * ReadMe Version: 1.8
 
