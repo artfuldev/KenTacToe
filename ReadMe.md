@@ -1,8 +1,8 @@
 #KenTacToe
 * Author(s): Kenshin Himura *(Sudarsan Balaji)*
-* License: *GNU GPL v3* (see COPYING.txt)
+* License: *GNU GPL v3* (see COPYING.texi)
 * Application Version: 2.7
-* ReadMe Version: 1.8
+* ReadMe Version: 1.9
 
 ##Description
 A basic Tic Tac Toe (TTT) game engine able to present an AI capable of playing Tic Tac Toe with humans on boards upto 11x11 boxes.
