@@ -1,5 +1,5 @@
 #KenTacToe
-* Author(s): Kenshin Himura *(Sudarsan Balaji)*
+* Author(s): Kenshin The Battōsai *(Sudarsan Balaji)*
 * License: *GNU GPL v3* (see COPYING.texi)
 * Application Version: 2.7
 * ReadMe Version: 1.9
