@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="KenTacToe">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/KenTacToe.jar!/" />
+      <root url="jar://$PROJECT_DIR$/classmexer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

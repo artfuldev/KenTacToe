@@ -18,7 +18,6 @@
 
 package com.tictactoe.search;
 
-import com.javamex.classmexer.*;
 import com.tictactoe.move.*;
 import com.tictactoe.player.*;
 import com.tictactoe.table.*;
@@ -461,8 +460,6 @@ public class Search
 	/**
 	 * This is the function which is used to optimize the search depth
 	 * depending upon the free memory available to the JAVA Virtual Machine.
-	 * It makes use of ClassMexer jar files to use MemoryUtil.deepMemory-
-	 * UsageOf() function to give the memory usage of the Tables used.
 	 * For each searchDepth, the memory usage is calculated and the max
 	 * possible searchDepth is calculated. Then it is compared with preset
 	 * conditions to minimize search depth to improve speed on larger
@@ -471,18 +468,13 @@ public class Search
 	 */
 	public void optimizeSearchDepth()
 	{
-
-		long freeMemory=(Runtime.getRuntime().freeMemory());
 		int expectedTables=1;
-		long usedMemory=0;
 		byte maxSearchDepth;
-		for(maxSearchDepth=2;(freeMemory>usedMemory)&&(maxSearchDepth<=searchDepth);maxSearchDepth++)
+		for(maxSearchDepth=2;(maxSearchDepth<=searchDepth);maxSearchDepth++)
 		{
-			usedMemory=0;
 			expectedTables=maxMoves;
 			for(byte k=0;k<maxSearchDepth;k++)
 				expectedTables*=currentSearchState.getNoOfDs()-k;
-			usedMemory=expectedTables*MemoryUtil.deepMemoryUsageOf(currentSearchState);
 		}
 		searchDepth=(byte)Math.min(searchDepth,maxSearchDepth);
 		if((searchDepth/10)>1)
